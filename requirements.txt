@@ -1,0 +1,8 @@
+# Minimal requirements for the GUI demo + graph view and numpy-based pieces
+streamlit>=1.36
+numpy>=1.26
+networkx>=3.2
+pyvis>=0.3.2
+pandas
+pydantic
+pytest
