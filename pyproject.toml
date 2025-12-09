@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agi-system"
+version = "0.1.0"
+description = "AGI system core framework and factory modules."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Otto Lecuona" }]
+
+# Keep runtime deps in requirements.txt for now
+dependencies = []
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
