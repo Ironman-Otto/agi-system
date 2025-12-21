@@ -21,6 +21,15 @@ CMB_CHANNEL_PORTS = {
     "IC": 6009,   # Introspection Channel
     "TC": 6010    # Threat Channel
 }
+# Ports offset by 1000 for Subscription channels
+def get_subscription_offset():
+    return 1000
+    
+def get_subscription_port(channel_name: str) -> int:
+    base_port = CMB_CHANNEL_PORTS.get(channel_name)
+    if base_port is None:
+        raise ValueError(f"Unknown CMB channel: {channel_name}")
+    return base_port + get_subscription_offset()
 
 # Optional utility function to fetch port by channel
 

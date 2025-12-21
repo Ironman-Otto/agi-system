@@ -13,6 +13,7 @@ import json
 from dataclasses import dataclass, asdict
 
 
+
 @dataclass
 class CognitiveMessage:
     message_id: str              # Global unique identifier
@@ -73,6 +74,9 @@ class CognitiveMessage:
 
     def to_bytes(self) -> bytes:
         return self.to_json().encode("utf-8")
+
+    def to_dict(self) -> dict:
+        return asdict(self)
 
     @staticmethod
     def from_bytes(data: bytes) -> "CognitiveMessage":

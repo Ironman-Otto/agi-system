@@ -13,13 +13,14 @@ Depends: cognitive_message >= 0.1.0, module_endpoint >= 0.1.0, cmb_channel_confi
 import zmq
 import threading
 from src.core.messages.cognitive_message import CognitiveMessage
-from src.core.cmb.cmb_channel_config import get_channel_port
+from src.core.cmb.cmb_channel_config import get_channel_port, get_subscription_offset
+
 
 class CMBRouter:
     def __init__(self, channel_name: str):
         self.channel_name = channel_name
-        self.port_in = get_channel_port(channel_name) + 0  # ROUTER/PULL input port
-        self.port_out = get_channel_port(channel_name) + 1  # PUB output port
+        self.port_in = get_channel_port(channel_name)  # ROUTER/PULL input port
+        self.port_out = get_channel_port(channel_name) + get_subscription_offset()  # PUB output port
         self.context = zmq.Context()
 
         # Socket to receive messages (ROUTER for future identity-based routing)
@@ -40,6 +41,7 @@ class CMBRouter:
             try:
                 identity, raw_msg = self.router_socket.recv_multipart()
                 msg = CognitiveMessage.from_bytes(raw_msg)
+                print(f"[Router] {self.channel_name} received message from {msg.source}")
                 for target in msg.targets:
                     self.pub_socket.send_multipart([
                         target.encode(),

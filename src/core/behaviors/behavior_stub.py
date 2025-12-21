@@ -12,14 +12,14 @@ Depends on: module_endpoint >= 0.1.0, cognitive_message >= 0.1.0, cmb_channel_co
 
 import time
 from src.core.cmb.module_endpoint import ModuleEndpoint
-from src.core.cmb.cmb_channel_config import get_channel_port
+from src.core.cmb.cmb_channel_config import get_channel_port, get_subscription_port
 
 
 def main():
-    cc_port_pub = get_channel_port("CC") + 1  # Listen on PUB port of Control Channel
-    cc_port_push = get_channel_port("CC") + 0  # Not used here but required by interface
+    cc_port_pub = get_subscription_port("CC")   # Listen on PUB port of Control Channel
+    cc_port_push = get_channel_port("CC")  # Not used here but required by interface
 
-    behavior = ModuleEndpoint("behavior", pub_port=cc_port_pub, push_port=cc_port_push)
+    behavior = ModuleEndpoint("behavior", sub_port=cc_port_pub, push_port=cc_port_push)
 
     try:
         print("[BehaviorStub] Listening for control messages on CC...")

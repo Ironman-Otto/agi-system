@@ -12,25 +12,28 @@ import zmq
 from src.core.messages.cognitive_message import CognitiveMessage
 
 class ModuleEndpoint:
-    def __init__(self, module_name: str, pub_port: int = 5556, push_port: int = 5555):
+    def __init__(self, module_name: str, sub_port: int = 5556, push_port: int = 5555):
         self.module_name = module_name
         self.context = zmq.Context()
 
         # SUB socket to receive messages tagged for this module
         self.sub_socket = self.context.socket(zmq.SUB)
         self.sub_socket.setsockopt(zmq.SUBSCRIBE, module_name.encode())
-        self.sub_socket.connect(f"tcp://localhost:{pub_port}")
+        self.sub_socket.connect(f"tcp://localhost:{sub_port}")
 
         # PUSH socket to send messages into the CMB router
         self.push_socket = self.context.socket(zmq.PUSH)
         self.push_socket.connect(f"tcp://localhost:{push_port}")
+        print(f"ModuleEndpoint initialized for {module_name} on ports {sub_port} and {push_port}")
 
     def send(self, message: CognitiveMessage):
         assert isinstance(message, CognitiveMessage)
         self.push_socket.send_multipart([
-            message.source.encode(),
-            message.to_bytes()
-        ])
+        message.source.encode(),
+        message.to_bytes()
+    ])
+        print(f"Sent message from {message.source} to {message.targets}")
+
 
     def receive(self) -> CognitiveMessage:
         topic, raw_msg = self.sub_socket.recv_multipart()
@@ -40,3 +43,4 @@ class ModuleEndpoint:
         self.push_socket.close()
         self.sub_socket.close()
         self.context.term()
+ 

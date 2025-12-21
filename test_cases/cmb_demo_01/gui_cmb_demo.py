@@ -14,16 +14,21 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import json
 import threading
+import zmq
 from src.core.cmb.module_endpoint import ModuleEndpoint
 from src.core.messages.cognitive_message import CognitiveMessage
+from src.core.messages.message_module import MessageType
+from src.core.cmb.cmb_channel_config import get_channel_port, get_subscription_port
 
 class CMBDemoGUI:
     def __init__(self, master):
         self.master = master
         master.title("CMB Demo Interface")
-
-        #self.endpoint = ModuleEndpoint("gui", channel="CC")
-        self.endpoint = ModuleEndpoint("gui")
+        self.in_channel = get_subscription_port("CC")
+        self.out_channel = get_channel_port("CC")
+        self.endpoint = ModuleEndpoint("gui", self.in_channel, self.out_channel)
+        print(f"[GUI] Using in_channel: {self.in_channel}, out_channel: {self.out_channel}")
+        #self.endpoint = ModuleEndpoint("gui")
 
         # Layout components
         self.create_widgets()
@@ -63,37 +68,65 @@ class CMBDemoGUI:
         self.log_box = tk.Text(self.master, height=10, width=70)
         self.log_box.grid(row=5, column=1)
 
+        self.exit_button = tk.Button(
+        self.master,
+        text="Exit",
+        command=self.shutdown)
+        self.exit_button.grid(row=6, column=1, pady=5)
+
+    def shutdown(self):
+        self.log("[GUI] Shutting down...")
+        self.endpoint.close()
+        self.master.quit()
+        self.master.destroy()
+
+
     def log(self, message):
         self.log_box.insert(tk.END, message + "\n")
         self.log_box.see(tk.END)
 
-    def send_message_thread(self):
+    def send_message_thread(self): 
         threading.Thread(target=self.send_message).start()
 
     def send_message(self):
         print("[GUI] Send button clicked")
         try:
+            #Build the message details
+            msg_type = MessageType.COMMAND.value
+            msg_version = "0.1.0"
             source = self.source_entry.get()
-            target = self.target_entry.get()
-            channel = self.channel_entry.get()
+            targets = self.target_entry.get()
+            context_tag ="demo"
+            correlation_id = "demo 01"
             payload_text = self.payload_text.get("1.0", tk.END)
             payload = json.loads(payload_text)
+            priority = 1
+            ttl = 10
+            signature = None
 
-            msg = CognitiveMessage(
-                source=source,
-                targets=[target],
-                channel=channel,
-                payload=payload
+            #Create the message
+            msg = CognitiveMessage.create(
+            schema_version="1.0",
+            msg_type=msg_type,
+            msg_version=msg_version,
+            source=source,
+            targets=[targets],
+            context_tag=context_tag,
+            correlation_id=correlation_id,
+            payload=payload,
+            priority=priority,
+            ttl=ttl,
+            signature=signature
             )
 
             print("[GUI] Message created:", msg.to_dict())
             print("[GUI] Sending message via ModuleEndpoint...")
-            self.log(f"[GUI] Sending message from {source} to {target} on {channel}...")
+            self.log(f"[GUI] Sending message from {source} to {targets} on {self.channel_entry.get()}...")
 
             try:
-                self.endpoint.socket.send_json(msg.to_dict(), flags=self.endpoint.zmq.NOBLOCK)
+                self.endpoint.send(msg)
                 self.log("[GUI] Message sent successfully.")
-            except self.endpoint.zmq.Again:
+            except zmq.Again:
                 self.log("[GUI ERROR] Could not send message: ZMQ queue full or router unavailable.")
 
         except json.JSONDecodeError:
