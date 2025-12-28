@@ -9,29 +9,37 @@ and logs received messages. This stub allows for testing message routing from th
 Depends on: module_endpoint >= 0.1.0, cognitive_message >= 0.1.0, cmb_channel_config >= 0.1.0
 """
 
-
+import zmq
 import time
 from src.core.cmb.module_endpoint import ModuleEndpoint
-from src.core.cmb.cmb_channel_config import get_channel_port, get_subscription_port
+from src.core.cmb.cmb_channel_config import get_channel_publish_port
+from src.core.messages.cognitive_message import CognitiveMessage
 
 
 def main():
-    cc_port_pub = get_subscription_port("CC")   # Listen on PUB port of Control Channel
-    cc_port_push = get_channel_port("CC")  # Not used here but required by interface
+    module_name = "behavior"
 
-    behavior = ModuleEndpoint("behavior", sub_port=cc_port_pub, push_port=cc_port_push)
+    # Initialize the Behavior Module with the appropriate ports
+    context = zmq.Context()
+    sub_port = get_channel_publish_port("CC")  # Listen on PUB port of Control Channel
+    socket = context.socket(zmq.SUB)
+    socket.connect(f"tcp://localhost:{sub_port}")
+    socket.setsockopt_string(zmq.SUBSCRIBE, module_name)  # Subscribe to all messages
 
     try:
         print("[BehaviorStub] Listening for control messages on CC...")
         while True:
-            msg = behavior.receive()
-            print(f"[BehaviorStub] Received message from {msg.source} with payload: {msg.payload}")
+            raw_msg = socket.recv_multipart()
+            identity = raw_msg[0]
+            msg = CognitiveMessage.from_bytes(raw_msg[-1])
+
+            print(f"[BehaviorStub] Received message from {msg.source}")
 
     except KeyboardInterrupt:
         print("[BehaviorStub] Interrupted by user.")
 
     finally:
-        behavior.close()
+        socket.close()
         print("[BehaviorStub] Shutdown.")
 
 

@@ -9,7 +9,7 @@ def main():
     args = parser.parse_args()
 
     router = CMBRouter(channel_name=args.channel)
-    router.start()   # or start(), loop(), etc.
+    router.route_loop_cmb()   # or start(), loop(), etc.
     
 
 if __name__ == "__main__":

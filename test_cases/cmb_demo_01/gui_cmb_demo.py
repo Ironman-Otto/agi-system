@@ -10,6 +10,7 @@ Depends on: module_endpoint >= 0.1.0, cognitive_message >= 0.1.0, cmb_channel_co
 """
 
 
+import time
 import tkinter as tk
 from tkinter import ttk, messagebox
 import json
@@ -18,16 +19,22 @@ import zmq
 from src.core.cmb.module_endpoint import ModuleEndpoint
 from src.core.messages.cognitive_message import CognitiveMessage
 from src.core.messages.message_module import MessageType
-from src.core.cmb.cmb_channel_config import get_channel_port, get_subscription_port
+from src.core.cmb.cmb_channel_config import get_channel_port 
+from src.core.cmb.cmb_channel_router_port import ChannelRouterPort
 
 class CMBDemoGUI:
     def __init__(self, master):
         self.master = master
         master.title("CMB Demo Interface")
-        self.in_channel = get_subscription_port("CC")
-        self.out_channel = get_channel_port("CC")
-        self.endpoint = ModuleEndpoint("gui", self.in_channel, self.out_channel)
-        print(f"[GUI] Using in_channel: {self.in_channel}, out_channel: {self.out_channel}")
+    
+        # Initialize the router with the appropriate ports
+        #self.channel_name = "CC"
+        #self.endpoint = ChannelRouterPort(module_name="gui", channel_name=self.channel_name)
+        #print(f"[GUI] Using endpoint: {self.channel_name}")
+
+        #self.in_channel = get_subscription_port("CC")
+        #self.router = get_channel_port("CC")
+        #self.endpoint = ModuleEndpoint("gui", self.in_channel, self.router)
         #self.endpoint = ModuleEndpoint("gui")
 
         # Layout components
@@ -60,7 +67,7 @@ class CMBDemoGUI:
         self.payload_text.insert("1.0", '{"directive": "start_behavior", "behavior": "explore_area"}')
 
         # Send button
-        self.send_button = tk.Button(self.master, text="Send Message", command=self.send_message_thread)
+        self.send_button = tk.Button(self.master, text="Send Message", command=self.send_message)
         self.send_button.grid(row=4, column=1, pady=10)
 
         # Log box
@@ -90,6 +97,16 @@ class CMBDemoGUI:
 
     def send_message(self):
         print("[GUI] Send button clicked")
+        self.log("[GUI] Send button clicked")
+        router_port = get_channel_port(self.channel_entry.get())
+        print(f"[GUI] Connecting to router port: {router_port}")
+        self.log(f"[GUI] Connecting to router port: {router_port}")
+        context = zmq.Context()
+        socket = context.socket(zmq.DEALER)
+        socket.setsockopt_string(zmq.IDENTITY, "gui")
+        socket.connect(f"tcp://localhost:{router_port}")
+        self.log("[GUI] Connected to router.")
+
         try:
             #Build the message details
             msg_type = MessageType.COMMAND.value
@@ -124,8 +141,13 @@ class CMBDemoGUI:
             self.log(f"[GUI] Sending message from {source} to {targets} on {self.channel_entry.get()}...")
 
             try:
-                self.endpoint.send(msg)
+                socket.send_multipart([
+                msg.source.encode(),
+                msg.to_bytes()
+                ])
                 self.log("[GUI] Message sent successfully.")
+                socket.close()
+                context.term()
             except zmq.Again:
                 self.log("[GUI ERROR] Could not send message: ZMQ queue full or router unavailable.")
 
@@ -133,7 +155,7 @@ class CMBDemoGUI:
             self.log("[GUI ERROR] Invalid JSON payload.")
         except Exception as e:
             self.log(f"[GUI ERROR] Exception occurred: {str(e)}")
-
+        
 
 def main():
     root = tk.Tk()

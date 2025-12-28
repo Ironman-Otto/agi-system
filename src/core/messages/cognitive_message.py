@@ -11,6 +11,7 @@ import uuid
 import time
 import json
 from dataclasses import dataclass, asdict
+from src.core.messages.ack_message import AckMessage
 
 
 
@@ -61,6 +62,16 @@ class CognitiveMessage:
             ttl=ttl,
             signature=signature
         )
+    
+    @staticmethod
+    def system_ack(payload: dict) -> "AckMessage":
+        return AckMessage(
+           message_id=str(uuid.uuid4()),
+           source="CMB_ROUTER",
+           targets=[],
+           payload=payload,
+           priority=0
+    )
 
     @staticmethod
     def get_schema_version():
