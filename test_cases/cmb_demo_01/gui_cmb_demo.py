@@ -156,10 +156,12 @@ class CMBDemoGUI:
                 while True:
                     frames = ack_socket.recv_multipart()
                     print("[GUI] ACK received.")
+                    self.log("[GUI] ACK received.")
                     identity = frames[0]
                     raw_msg = frames[-1]
                     msg = AckMessage.from_bytes(raw_msg)
                     print(f"[GUI] {self.channel_entry.get()} received message from {msg.source} {msg.msg_type}")
+                    self.log(f"[GUI] {self.channel_entry.get()} received ACK from {msg.source} {msg.msg_type}")
                     break
 
             except zmq.Again:
