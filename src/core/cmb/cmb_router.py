@@ -67,7 +67,7 @@ class CMBRouter:
         print(f"[ROUTER] Ack channel router running on port {self.port_ack_ingress}")
 
         # Initialize Ack publisher socket
-        ack_port_out = context.socket(zmq.PUB)
+        ack_port_out = context.socket(zmq.ROUTER)
         ack_port_out.bind(f"tcp://localhost:{self.port_ack_egress}")
         print(f"[ROUTER] Ack channel publisher running on port {self.port_ack_egress}")
 
@@ -120,7 +120,7 @@ class CMBRouter:
                     AckMessage.to_bytes(ack)]
                 )
 
-                print(f"[CMBRouter] Sent ACK to {msg.source} for message {msg.message_id}")
+                print(f"[CMBRouter] Sent ACK to {msg.source} for message {msg.message_id} identity {identity}")
 
             except Exception as e:
                 print(f"[CMBRouter] Error routing message: {e}")

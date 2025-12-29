@@ -10,6 +10,7 @@ Depends on: module_endpoint >= 0.1.0, cognitive_message >= 0.1.0, cmb_channel_co
 """
 
 
+from socket import socket
 import time
 import tkinter as tk
 from tkinter import ttk, messagebox
@@ -19,7 +20,8 @@ import zmq
 from src.core.cmb.module_endpoint import ModuleEndpoint
 from src.core.messages.cognitive_message import CognitiveMessage
 from src.core.messages.message_module import MessageType
-from src.core.cmb.cmb_channel_config import get_channel_port 
+from src.core.cmb.cmb_channel_config import get_channel_port, get_ack_Egress_port
+from src.core.messages.ack_message import AckMessage 
 from src.core.cmb.cmb_channel_router_port import ChannelRouterPort
 
 class CMBDemoGUI:
@@ -27,16 +29,6 @@ class CMBDemoGUI:
         self.master = master
         master.title("CMB Demo Interface")
     
-        # Initialize the router with the appropriate ports
-        #self.channel_name = "CC"
-        #self.endpoint = ChannelRouterPort(module_name="gui", channel_name=self.channel_name)
-        #print(f"[GUI] Using endpoint: {self.channel_name}")
-
-        #self.in_channel = get_subscription_port("CC")
-        #self.router = get_channel_port("CC")
-        #self.endpoint = ModuleEndpoint("gui", self.in_channel, self.router)
-        #self.endpoint = ModuleEndpoint("gui")
-
         # Layout components
         self.create_widgets()
         self.log("[GUI] Ready.")
@@ -83,7 +75,7 @@ class CMBDemoGUI:
 
     def shutdown(self):
         self.log("[GUI] Shutting down...")
-        self.endpoint.close()
+        #self.endpoint.close()
         self.master.quit()
         self.master.destroy()
 
@@ -98,14 +90,26 @@ class CMBDemoGUI:
     def send_message(self):
         print("[GUI] Send button clicked")
         self.log("[GUI] Send button clicked")
+
+        # Connect to the appropriate router port based on selected channel
         router_port = get_channel_port(self.channel_entry.get())
         print(f"[GUI] Connecting to router port: {router_port}")
         self.log(f"[GUI] Connecting to router port: {router_port}")
+
         context = zmq.Context()
         socket = context.socket(zmq.DEALER)
         socket.setsockopt_string(zmq.IDENTITY, "gui")
         socket.connect(f"tcp://localhost:{router_port}")
         self.log("[GUI] Connected to router.")
+
+        # Connect to Ack port
+        ack_port = get_ack_Egress_port(self.channel_entry.get())
+        print(f"[GUI] Connecting to ACK port: {ack_port}")
+        self.log(f"[GUI] Connecting to ACK port: {ack_port}")
+        context2 = zmq.Context()
+        ack_socket = context2.socket(zmq.DEALER)
+        ack_socket.setsockopt_string(zmq.IDENTITY, "gui")
+        ack_socket.connect(f"tcp://localhost:{ack_port}")
 
         try:
             #Build the message details
@@ -146,8 +150,18 @@ class CMBDemoGUI:
                 msg.to_bytes()
                 ])
                 self.log("[GUI] Message sent successfully.")
-                socket.close()
-                context.term()
+
+                # Wait for ACK
+    
+                while True:
+                    frames = ack_socket.recv_multipart()
+                    print("[GUI] ACK received.")
+                    identity = frames[0]
+                    raw_msg = frames[-1]
+                    msg = AckMessage.from_bytes(raw_msg)
+                    print(f"[GUI] {self.channel_entry.get()} received message from {msg.source} {msg.msg_type}")
+                    break
+
             except zmq.Again:
                 self.log("[GUI ERROR] Could not send message: ZMQ queue full or router unavailable.")
 

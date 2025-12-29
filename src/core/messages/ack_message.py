@@ -61,10 +61,10 @@ class AckMessage:
         return asdict(self)
 
     @staticmethod
-    def from_bytes(data: bytes) -> "CognitiveMessage":
+    def from_bytes(data: bytes) -> "AckMessage":
         obj = json.loads(data.decode("utf-8"))
-        return CognitiveMessage(**obj)
+        return AckMessage(**obj)
 
     @staticmethod
-    def from_json(json_str: str) -> "CognitiveMessage":
-        return CognitiveMessage(**json.loads(json_str))
+    def from_json(json_str: str) -> "AckMessage":
+        return AckMessage(**json.loads(json_str))
