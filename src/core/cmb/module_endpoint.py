@@ -4,67 +4,12 @@ from __future__ import annotations
 import threading
 import time
 import queue
-from dataclasses import dataclass
 from typing import Optional, Callable, Any
-from dataclasses import dataclass
 from typing import Dict
 import zmq
-from enum import Enum
 
-class InboundDelivery(Enum):
-    DIRECTED = "DIRECTED"    # ROUTER -> DEALER
-    BROADCAST = "BROADCAST"  # PUB -> SUB
-    NONE = "NONE"
-
-
-@dataclass(frozen=True)
-class ChannelConfig:
-    """
-    Configuration for a single CMB channel.
-
-    Each channel has exactly one inbound delivery semantic.
-    """
-
-    name: str
-
-    # Outbound (module -> router)
-    router_port: int
-    outbound_socket_type: int = zmq.DEALER
-
-    # Inbound semantics
-    inbound_delivery: InboundDelivery = InboundDelivery.DIRECTED
-    inbound_port: Optional[int] = None
-
-    # ACK path (optional, meaningful only for DIRECTED)
-    ack_port: Optional[int] = None
-    ack_socket_type: int = zmq.DEALER
-
-
-
-@dataclass(frozen=True)
-class MultiChannelEndpointConfig:
-    """
-    Configuration for a module endpoint supporting multiple channels.
-
-    One ModuleEndpoint instance
-    One module identity
-    Multiple channel connections
-    """
-
-    module_id: str                        # e.g. "behavior.executor.1"
-    channels: Dict[str, ChannelConfig]   # keyed by channel name
-    host: str = "localhost"
-
-    poll_timeout_ms: int = 50
-
-    def channel_names(self) -> list[str]:
-        return list(self.channels.keys())
-
-    def get_channel(self, name: str) -> ChannelConfig:
-        if name not in self.channels:
-            raise KeyError(f"Channel '{name}' not configured for module '{self.module_id}'")
-        return self.channels[name]
-
+from src.core.cmb.endpoint_config import MultiChannelEndpointConfig
+from src.core.cmb.channel_registry import InboundDelivery
 
 
 class ModuleEndpoint:
@@ -84,7 +29,7 @@ class ModuleEndpoint:
 
     def __init__(
         self,
-        config: EndpointConfig,
+        config: MultiChannelEndpointConfig,
         *,
         logger: Optional[Callable[[str], None]] = None,
         serializer: Optional[Callable[[Any], bytes]] = None,
@@ -97,7 +42,7 @@ class ModuleEndpoint:
         self._to_bytes = serializer or (lambda x: x if isinstance(x, (bytes, bytearray)) else str(x).encode("utf-8"))
         self._from_bytes = deserializer or (lambda b: b)
 
-        self._send_q: "queue.Queue[tuple[bytes, bytes]]" = queue.Queue()
+        self._send_q: "queue.Queue[tuple[str,bytes, bytes]]" = queue.Queue()
         self._in_q: "queue.Queue[Any]" = queue.Queue()
         self._ack_q: "queue.Queue[Any]" = queue.Queue()
 
@@ -106,10 +51,14 @@ class ModuleEndpoint:
 
         # These exist only in endpoint thread
         self._ctx = None
-        self._out_sock = None
-        self._in_sock = None
-        self._ack_sock = None
+        self._out_socks: dict[str, zmq.Socket] = {}
+        self._in_socks: dict[str, zmq.Socket] = {}
+        self._ack_socks: dict[str, zmq.Socket] = {}
         self._poller = None
+
+        self._sock_to_channel: dict[zmq.Socket, str] = {}
+        self._sock_is_ack: dict[zmq.Socket, bool] = {}
+
 
     # --------------------------
     # Public API (module side)
@@ -129,14 +78,15 @@ class ModuleEndpoint:
             self._thread.join(timeout=join_timeout)
         self._log(f"[Endpoint] Stopped for {self.cfg.module_id}")
 
-    def send(self, target_id: str, message: Any) -> None:
+    
+    def send(self, channel: str, target_id: str, message: Any) -> None:
         """
         Enqueue an outbound message. Non-blocking (queue put).
         ROUTER-style addressing: first frame is destination identity.
         """
         dest = target_id.encode("utf-8")
         payload = self._to_bytes(message)
-        self._send_q.put((dest, payload))
+        self._send_q.put((channel, dest, payload))
 
     def recv(self, timeout: Optional[float] = None) -> Optional[Any]:
         """Receive a normal inbound message (not ACK)."""
@@ -184,37 +134,77 @@ class ModuleEndpoint:
             self._teardown_zmq()
 
     def _setup_zmq(self) -> None:
+        """
+        Create and connect ZMQ sockets for all configured channels.
+        Runs exclusively inside the endpoint thread.
+        """
         self._ctx = zmq.Context.instance()
 
-        # Outbound socket (DEALER -> ROUTER)
-        self._out_sock = self._ctx.socket(self.cfg.outbound_socket_type)
-        self._out_sock.setsockopt_string(zmq.IDENTITY, self.cfg.module_id)
-        self._out_sock.connect(f"tcp://{self.cfg.host}:{self.cfg.router_port}")
-        self._log(f"[Endpoint] {self.cfg.module_id} outbound connected to {self.cfg.router_port}")
-
-        # Inbound socket (optional)
-        if self.cfg.inbound_port is not None:
-            self._in_sock = self._ctx.socket(self.cfg.inbound_socket_type)
-            self._in_sock.setsockopt_string(zmq.IDENTITY, self.cfg.module_id)
-
-            # If you later switch inbound_socket_type to SUB, you'll add:
-            # self._in_sock.setsockopt(zmq.SUBSCRIBE, b"")
-            self._in_sock.connect(f"tcp://{self.cfg.host}:{self.cfg.inbound_port}")
-            self._log(f"[Endpoint] {self.cfg.module_id} inbound connected to {self.cfg.inbound_port}")
-
-        # ACK socket (optional)
-        if self.cfg.ack_port is not None:
-            self._ack_sock = self._ctx.socket(self.cfg.ack_socket_type)
-            self._ack_sock.setsockopt_string(zmq.IDENTITY, self.cfg.module_id)
-            self._ack_sock.connect(f"tcp://{self.cfg.host}:{self.cfg.ack_port}")
-            self._log(f"[Endpoint] {self.cfg.module_id} ACK connected to {self.cfg.ack_port}")
-
-        # Poller for inbound + ack
+        # Poller for all inbound + ACK sockets
         self._poller = zmq.Poller()
-        if self._in_sock is not None:
-            self._poller.register(self._in_sock, zmq.POLLIN)
-        if self._ack_sock is not None:
-            self._poller.register(self._ack_sock, zmq.POLLIN)
+
+        for ch_name, ch_cfg in self.cfg.channels.items():
+            # ---------------------------
+            # Outbound socket (DEALER -> ROUTER)
+            # ---------------------------
+            out_sock = self._ctx.socket(ch_cfg.outbound_socket_type)
+            out_sock.setsockopt_string(zmq.IDENTITY, self.cfg.module_id)
+            out_sock.connect(f"tcp://{self.cfg.host}:{ch_cfg.router_port}")
+
+            self._out_socks[ch_name] = out_sock
+            self._log(
+                f"[Endpoint] {self.cfg.module_id} outbound[{ch_name}] "
+                f"connected to {ch_cfg.router_port}"
+            )
+
+            # ---------------------------
+            # Inbound socket (optional)
+            # ---------------------------
+            if ch_cfg.inbound_port is not None:
+                if ch_cfg.inbound_delivery == InboundDelivery.BROADCAST:
+                    in_sock = self._ctx.socket(zmq.SUB)
+                    in_sock.setsockopt(zmq.SUBSCRIBE, b"")
+                else:
+                    in_sock = self._ctx.socket(zmq.DEALER)
+                    in_sock.setsockopt_string(zmq.IDENTITY, self.cfg.module_id)
+
+
+                # Identity is required for DEALER, ignored for SUB
+                in_sock.setsockopt_string(zmq.IDENTITY, self.cfg.module_id)
+
+                # SUB sockets must subscribe explicitly
+                if ch_cfg.inbound_delivery.name == "BROADCAST":
+                    in_sock.setsockopt(zmq.SUBSCRIBE, b"")
+
+                in_sock.connect(f"tcp://{self.cfg.host}:{ch_cfg.inbound_port}")
+
+                self._in_socks[ch_name] = in_sock
+                self._sock_to_channel[in_sock] = ch_name
+                self._sock_is_ack[in_sock] = False
+                self._poller.register(in_sock, zmq.POLLIN)
+                self._log(
+                    f"[Endpoint] {self.cfg.module_id} inbound[{ch_name}] "
+                    f"connected to {ch_cfg.inbound_port} "
+                    f"({ch_cfg.inbound_delivery.value})"
+                )
+
+            # ---------------------------
+            # ACK socket (optional, DIRECTED only)
+            # ---------------------------
+            if ch_cfg.ack_port is not None:
+                ack_sock = self._ctx.socket(ch_cfg.ack_socket_type)
+                ack_sock.setsockopt_string(zmq.IDENTITY, self.cfg.module_id)
+                ack_sock.connect(f"tcp://{self.cfg.host}:{ch_cfg.ack_port}")
+
+                self._ack_socks[ch_name] = ack_sock
+                self._sock_to_channel[ack_sock] = ch_name
+                self._sock_is_ack[ack_sock] = True
+                self._poller.register(ack_sock, zmq.POLLIN)
+
+                self._log(
+                    f"[Endpoint] {self.cfg.module_id} ACK[{ch_name}] "
+                    f"connected to {ch_cfg.ack_port}"
+                )
 
     def _teardown_zmq(self) -> None:
         # Close sockets created in thread
@@ -234,40 +224,66 @@ class ModuleEndpoint:
         self._ctx = None
 
     def _loop(self) -> None:
+        """
+        Main endpoint event loop.
+        Handles outbound flushing and inbound/ACK dispatch
+        across all configured channels.
+        """
         while not self._stop_evt.is_set():
-            # 1) Flush outbound send queue
+
+            # 1) Flush outbound messages (fair, bounded)
             self._flush_outbound(max_per_tick=50)
 
-            # 2) Poll inbound/ack sockets
+            # 2) Poll inbound + ACK sockets
             if self._poller is None:
                 time.sleep(0.01)
                 continue
 
-            events = dict(self._poller.poll(self.cfg.poll_timeout_ms))
+            try:
+                events = dict(self._poller.poll(self.cfg.poll_timeout_ms))
+            except zmq.ZMQError as e:
+                # Context terminated or shutting down
+                self._log(f"[Endpoint] Poller error: {e!r}")
+                return
 
-            if self._in_sock is not None and self._in_sock in events:
-                self._handle_inbound(self._in_sock, is_ack=False)
+            # 3) Dispatch ready sockets
+            for sock in events:
+                is_ack = self._sock_is_ack.get(sock, False)
+                self._handle_inbound(sock, is_ack=is_ack)
 
-            if self._ack_sock is not None and self._ack_sock in events:
-                self._handle_inbound(self._ack_sock, is_ack=True)
 
     def _flush_outbound(self, max_per_tick: int) -> None:
+        """
+        Flush outbound messages across all channels.
+        Respects backpressure and preserves message ordering per channel.
+        """
         sent = 0
+
         while sent < max_per_tick:
             try:
-                dest, payload = self._send_q.get_nowait()
+                ch_name, dest, payload = self._send_q.get_nowait()
             except queue.Empty:
                 return
 
-            # ROUTER addressing pattern:
-            # send_multipart([dest_identity, b"", payload]) is common when talking to ROUTER.
-            # If your router expects no empty delimiter, remove b"".
+            out_sock = self._out_socks.get(ch_name)
+            if out_sock is None:
+                self._log(
+                    f"[Endpoint ERROR] No outbound socket for channel '{ch_name}'"
+                )
+                continue
+
             try:
-                self._out_sock.send_multipart([dest, b"", payload], flags=zmq.NOBLOCK)
+                # ROUTER addressing pattern:
+                # [dest_identity][empty][payload]
+                out_sock.send_multipart(
+                    [dest, b"", payload],
+                    flags=zmq.NOBLOCK
+                )
                 sent += 1
+
             except zmq.Again:
-                # router backpressure; requeue and retry next tick
-                self._send_q.put((dest, payload))
+                # Backpressure: requeue and retry next loop
+                self._send_q.put((ch_name, dest, payload))
                 return
 
     def _handle_inbound(self, sock, *, is_ack: bool) -> None:
