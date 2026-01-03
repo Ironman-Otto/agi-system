@@ -97,3 +97,25 @@ class CognitiveMessage:
     @staticmethod
     def from_json(json_str: str) -> "CognitiveMessage":
         return CognitiveMessage(**json.loads(json_str))
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "CognitiveMessage":
+        try:
+            return cls(
+                message_id=data["message_id"],
+                schema_version=data["schema_version"],
+                msg_type=data["msg_type"],
+                msg_version=data.get("msg_version", "0.0.0"),
+                source=data["source"],
+                targets=data.get("targets", []),
+                context_tag=data.get("context_tag"),
+                correlation_id=data.get("correlation_id"),
+                payload=data.get("payload", {}),
+                priority=data.get("priority", 0),
+                ttl=data.get("ttl", 0),
+                timestamp=data.get("timestamp"),
+                signature=data.get("signature"),
+            )
+        except KeyError as e:
+            raise ValueError(f"Missing required CognitiveMessage field: {e}")
+    

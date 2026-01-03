@@ -68,9 +68,9 @@ class ModuleEndpoint:
         if self._thread and self._thread.is_alive():
             return
         self._stop_evt.clear()
-        self._thread = threading.Thread(target=self._run, name=f"Endpoint[{self.cfg.module_id}]", daemon=True)
+        self._thread = threading.Thread(target=self._run, name=f"Endpoint[{self.cfg.module_id}]", daemon=False)
         self._thread.start()
-        self._log(f"[Endpoint] Started for {self.cfg.module_id}")
+        self._log(f"[Endpoint.{self.cfg.module_id}] Started for {self.cfg.module_id}")
 
     def stop(self, join_timeout: float = 2.0) -> None:
         self._stop_evt.set()
@@ -129,7 +129,7 @@ class ModuleEndpoint:
             self._setup_zmq()
             self._loop()
         except Exception as e:
-            self._log(f"[Endpoint ERROR] {self.cfg.module_id}: {e!r}")
+            self._log(f"[Endpoint.{self.cfg.module_id} ERROR] {self.cfg.module_id}: {e!r}")
         finally:
             self._teardown_zmq()
 
@@ -153,7 +153,7 @@ class ModuleEndpoint:
 
             self._out_socks[ch_name] = out_sock
             self._log(
-                f"[Endpoint] {self.cfg.module_id} outbound[{ch_name}] "
+                f"[Endpoint.{self.cfg.module_id}] outbound[{ch_name}] "
                 f"connected to {ch_cfg.router_port}"
             )
 
@@ -183,7 +183,7 @@ class ModuleEndpoint:
                 self._sock_is_ack[in_sock] = False
                 self._poller.register(in_sock, zmq.POLLIN)
                 self._log(
-                    f"[Endpoint] {self.cfg.module_id} inbound[{ch_name}] "
+                    f"[Endpoint.{self.cfg.module_id}] inbound[{ch_name}] "
                     f"connected to {ch_cfg.inbound_port} "
                     f"({ch_cfg.inbound_delivery.value})"
                 )
@@ -202,22 +202,22 @@ class ModuleEndpoint:
                 self._poller.register(ack_sock, zmq.POLLIN)
 
                 self._log(
-                    f"[Endpoint] {self.cfg.module_id} ACK[{ch_name}] "
+                    f"[Endpoint.{self.cfg.module_id}] ACK[{ch_name}] "
                     f"connected to {ch_cfg.ack_port}"
                 )
 
     def _teardown_zmq(self) -> None:
         # Close sockets created in thread
-        for s in (self._out_sock, self._in_sock, self._ack_sock):
+        for s in (self._out_socks, self._in_socks, self._ack_socks):
             try:
                 if s is not None:
                     s.close(linger=0)
             except Exception:
                 pass
 
-        self._out_sock = None
-        self._in_sock = None
-        self._ack_sock = None
+        self._out_socks = None
+        self._in_socks = None
+        self._ack_socks = None
         self._poller = None
 
         # Do NOT terminate Context.instance() here; other endpoints may use it.
@@ -243,7 +243,7 @@ class ModuleEndpoint:
                 events = dict(self._poller.poll(self.cfg.poll_timeout_ms))
             except zmq.ZMQError as e:
                 # Context terminated or shutting down
-                self._log(f"[Endpoint] Poller error: {e!r}")
+                self._log(f"[Endpoint.{self.cfg.module_id}] Poller error: {e!r}")
                 return
 
             # 3) Dispatch ready sockets
@@ -262,13 +262,14 @@ class ModuleEndpoint:
         while sent < max_per_tick:
             try:
                 ch_name, dest, payload = self._send_q.get_nowait()
+
             except queue.Empty:
                 return
 
             out_sock = self._out_socks.get(ch_name)
             if out_sock is None:
                 self._log(
-                    f"[Endpoint ERROR] No outbound socket for channel '{ch_name}'"
+                    f"[Endpoint.{self.cfg.module_id} ERROR] No outbound socket for channel '{ch_name}'"
                 )
                 continue
 
@@ -276,10 +277,11 @@ class ModuleEndpoint:
                 # ROUTER addressing pattern:
                 # [dest_identity][empty][payload]
                 out_sock.send_multipart(
-                    [dest, b"", payload],
+                    [payload],
                     flags=zmq.NOBLOCK
                 )
                 sent += 1
+                self._log(f"[Endpoint.{self.cfg.module_id}] SEND ch={ch_name} dest={dest!r}")
 
             except zmq.Again:
                 # Backpressure: requeue and retry next loop
@@ -293,6 +295,7 @@ class ModuleEndpoint:
         We keep this tolerant because your framing is still evolving.
         """
         frames = sock.recv_multipart()
+        print(f"[Endpoint.{self.cfg.module_id} DEBUG] Received frames: {frames}")
 
         # Most common cases:
         # - ROUTER->DEALER: [sender_id, b"", payload] or [sender_id, payload]

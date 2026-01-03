@@ -17,12 +17,18 @@ from tkinter import ttk, messagebox
 import json
 import threading
 import zmq
-from src.core.cmb.module_endpoint import ModuleEndpoint
-from src.core.messages.cognitive_message import CognitiveMessage
+
 from src.core.messages.message_module import MessageType
-from src.core.cmb.cmb_channel_config import get_channel_port, get_ack_Egress_port
-from src.core.messages.ack_message import AckMessage 
+from src.core.cmb.cmb_channel_config import get_channel_port, get_ack_port
 from src.core.cmb.cmb_channel_router_port import ChannelRouterPort
+
+from src.core.cmb.channel_registry import ChannelRegistry
+from src.core.cmb.endpoint_config import MultiChannelEndpointConfig
+from src.core.cmb.module_endpoint import ModuleEndpoint
+
+from src.core.messages.ack_message import AckMessage
+from src.core.messages.cognitive_message import CognitiveMessage
+
 
 class CMBDemoGUI:
     def __init__(self, master):
@@ -32,6 +38,34 @@ class CMBDemoGUI:
         # Layout components
         self.create_widgets()
         self.log("[GUI] Ready.")
+
+        self.endpoint = None
+        # Build ChannelRegistry once
+        ChannelRegistry.initialize()
+
+        # Decide which channels the GUI participates in.
+        # Start minimal for the demo: choose the channel(s) you use in the dropdown.
+        gui_channels = ["CC", "SMC", "VB", "BFC", "DAC", "EIG", "PC", "MC", "IC", "TC"]
+
+        cfg = MultiChannelEndpointConfig.from_channel_names(
+            module_id="executive",  # Identity of this module on the bus
+            channel_names=gui_channels,
+            host="localhost",
+            poll_timeout_ms=50,
+        )
+
+        # Create endpoint (logger uses your GUI log function)
+        self.endpoint = ModuleEndpoint(
+            config=cfg,
+            logger=self.log,
+            serializer=lambda x: x if isinstance(x, (bytes, bytearray)) else str(x).encode("utf-8"),
+            deserializer=lambda b: b,  # Keep bytes; GUI will parse ACK vs MSG
+        )
+        self.master.after(100, self._poll_endpoint)
+
+        self.endpoint.start()
+        self.log("[GUI] Endpoint started.")
+
 
     def create_widgets(self):
         # Source Module
@@ -75,7 +109,8 @@ class CMBDemoGUI:
 
     def shutdown(self):
         self.log("[GUI] Shutting down...")
-        #self.endpoint.close()
+        if self.endpoint:
+            self.endpoint.stop()
         self.master.quit()
         self.master.destroy()
 
@@ -84,6 +119,35 @@ class CMBDemoGUI:
         self.log_box.insert(tk.END, message + "\n")
         self.log_box.see(tk.END)
 
+    def _poll_endpoint(self) -> None:
+        #self.log("[GUI] poll tick")
+        assert self.endpoint is not None
+        #Drain a few ACKs per tick
+        for _ in range(10):
+            raw = self.endpoint.recv_ack(timeout=0)
+            if raw is None:
+                break
+            try:
+                ack = AckMessage.from_bytes(raw)
+                self.log(f"[GUI] ACK: {ack.ack_type} status={ack.status} from {ack.source}")
+            except Exception:
+                self.log("[GUI] ACK: (unparsed bytes)")
+
+        # Drain a few inbound messages per tick
+        for _ in range(10):
+            raw = self.endpoint.recv(timeout=0)
+            if raw is None:
+                break
+            try:
+                msg = CognitiveMessage.from_bytes(raw)
+                self.log(f"[GUI] IN: {msg.msg_type} from {msg.source} -> {msg.targets}")
+            except Exception:
+                self.log("[GUI] IN: (unparsed bytes)")
+
+        # Schedule next poll
+        self.master.after(100, self._poll_endpoint)
+
+
     def send_message_thread(self): 
         threading.Thread(target=self.send_message).start()
 
@@ -91,32 +155,13 @@ class CMBDemoGUI:
         print("[GUI] Send button clicked")
         self.log("[GUI] Send button clicked")
 
-        # Connect to the appropriate router port based on selected channel
-        router_port = get_channel_port(self.channel_entry.get())
-        print(f"[GUI] Connecting to router port: {router_port}")
-        self.log(f"[GUI] Connecting to router port: {router_port}")
-
-        context = zmq.Context()
-        socket = context.socket(zmq.DEALER)
-        socket.setsockopt_string(zmq.IDENTITY, "gui")
-        socket.connect(f"tcp://localhost:{router_port}")
-        self.log("[GUI] Connected to router.")
-
-        # Connect to Ack port
-        ack_port = get_ack_Egress_port(self.channel_entry.get())
-        print(f"[GUI] Connecting to ACK port: {ack_port}")
-        self.log(f"[GUI] Connecting to ACK port: {ack_port}")
-        context2 = zmq.Context()
-        ack_socket = context2.socket(zmq.DEALER)
-        ack_socket.setsockopt_string(zmq.IDENTITY, "gui")
-        ack_socket.connect(f"tcp://localhost:{ack_port}")
-
+    
         try:
             #Build the message details
             msg_type = MessageType.COMMAND.value
             msg_version = "0.1.0"
             source = self.source_entry.get()
-            targets = self.target_entry.get()
+            target = self.target_entry.get().strip()
             context_tag ="demo"
             correlation_id = "demo 01"
             payload_text = self.payload_text.get("1.0", tk.END)
@@ -125,13 +170,15 @@ class CMBDemoGUI:
             ttl = 10
             signature = None
 
+            channel = self.channel_entry.get().strip()
+
             #Create the message
             msg = CognitiveMessage.create(
             schema_version="1.0",
             msg_type=msg_type,
             msg_version=msg_version,
             source=source,
-            targets=[targets],
+            targets=[target],
             context_tag=context_tag,
             correlation_id=correlation_id,
             payload=payload,
@@ -140,33 +187,11 @@ class CMBDemoGUI:
             signature=signature
             )
 
-            print("[GUI] Message created:", msg.to_dict())
-            print("[GUI] Sending message via ModuleEndpoint...")
-            self.log(f"[GUI] Sending message from {source} to {targets} on {self.channel_entry.get()}...")
+           # IMPORTANT: endpoint now sends bytes payload
+            self.endpoint.send(channel=channel, target_id=target, message=msg.to_bytes())
 
-            try:
-                socket.send_multipart([
-                msg.source.encode(),
-                msg.to_bytes()
-                ])
-                self.log("[GUI] Message sent successfully.")
-
-                # Wait for ACK
-    
-                while True:
-                    frames = ack_socket.recv_multipart()
-                    print("[GUI] ACK received.")
-                    self.log("[GUI] ACK received.")
-                    identity = frames[0]
-                    raw_msg = frames[-1]
-                    msg = AckMessage.from_bytes(raw_msg)
-                    print(f"[GUI] {self.channel_entry.get()} received message from {msg.source} {msg.msg_type}")
-                    self.log(f"[GUI] {self.channel_entry.get()} received ACK from {msg.source} {msg.msg_type}")
-                    break
-
-            except zmq.Again:
-                self.log("[GUI ERROR] Could not send message: ZMQ queue full or router unavailable.")
-
+            self.log(f"[GUI] Queued message on {channel} from {source} to {target}.")
+        
         except json.JSONDecodeError:
             self.log("[GUI ERROR] Invalid JSON payload.")
         except Exception as e:

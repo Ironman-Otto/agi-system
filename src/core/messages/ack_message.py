@@ -68,3 +68,20 @@ class AckMessage:
     @staticmethod
     def from_json(json_str: str) -> "AckMessage":
         return AckMessage(**json.loads(json_str))
+    
+    @classmethod
+    def from_dict(cls, data: dict) -> "AckMessage":
+        try:
+            return cls(
+                message_id=data["message_id"],
+                msg_type=data["msg_type"],
+                ack_type=data["ack_type"],
+                status=data["status"],
+                source=data["source"],
+                targets=data.get("targets", []),
+                correlation_id=data.get("correlation_id"),
+                payload=data.get("payload", {})
+            )
+        except KeyError as e:
+            raise ValueError(f"Missing required AckMessage field: {e}")
+

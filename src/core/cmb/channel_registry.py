@@ -56,7 +56,9 @@ class ChannelConfig:
 # Legacy port assignments
 # ----------------------------
 
-CMB_CHANNEL_PORTS = {
+# Dictionary mapping each channel acronym to a TCP port base
+# These ports must match bindings in the CMB routers and the endpoints
+CMB_CHANNEL_INGRESS_PORTS = {
     "CC":   6001,   # Control Channel
     "SMC":  6002,   # Symbolic Message Channel
     "VB":   6003,   # Vector Bus
@@ -68,8 +70,46 @@ CMB_CHANNEL_PORTS = {
     "IC":   6009,   # Introspection Channel
     "TC":   6010    # Threat Channel
 }
+CMB_CHANNEL_EGRESS_PORTS = {
+    "CC":   7001,   # Control Channel
+    "SMC":  7002,   # Symbolic Message Channel
+    "VB":   7003,   # Vector Bus
+    "BFC":  7004,   # Behavioral Flow Channel
+    "DAC":  7005,   # Diagnostic and Awareness Channel
+    "EIG":  7006,   # External Interface Gateway
+    "PC":   7007,   # Perception Channel
+    "MC":   7008,   # Memory Channel
+    "IC":   7009,   # Introspection Channel
+    "TC":   7010    # Threat Channel
+}
 
-CMB_ACK_PORT = 6101        # Shared ACK ingress/egress (current policy)
+CMB_ACK_INGRESS_PORTS = {
+    "CC":  6101,   # Control Channel
+    "SMC": 6101,   # Symbolic Message Channel
+    "VB":  6101,   # Vector Bus
+    "BFC": 6101,   # Behavioral Flow Channel
+    "DAC": 6101,   # Diagnostic and Awareness Channel
+    "EIG": 6101,   # External Interface Gateway
+    "PC":  6101,   # Perception Channel
+    "MC":  6101,   # Memory Channel
+    "IC":  6101,   # Introspection Channel
+    "TC":  6101    # Threat Channel
+}
+
+CMB_ACK_EGRESS_PORTS = {
+    "CC":  6102,   # Control Channel
+    "SMC": 6102,   # Symbolic Message Channel
+    "VB":  6102,   # Vector Bus
+    "BFC": 6102,   # Behavioral Flow Channel
+    "DAC": 6102,   # Diagnostic and Awareness Channel
+    "EIG": 6102,   # External Interface Gateway
+    "PC":  6102,   # Perception Channel
+    "MC":  6102,   # Memory Channel
+    "IC":  6102,   # Introspection Channel
+    "TC":  6102    # Threat Channel
+}
+
+CMB_ACK_PORT = 6102        # Shared ACK ingress/egress (current policy)
 SUBSCRIPTION_OFFSET = 1000
 
 
@@ -95,88 +135,89 @@ class ChannelRegistry:
             # Control-plane channels (DIRECTED)
             "CC": ChannelConfig(
                 name="CC",
-                router_port=CMB_CHANNEL_PORTS["CC"],
+                router_port=CMB_CHANNEL_INGRESS_PORTS["CC"],
                 inbound_delivery=InboundDelivery.DIRECTED,
-                inbound_port=CMB_CHANNEL_PORTS["CC"],
-                ack_port=CMB_ACK_PORT,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["CC"],
+                ack_port=CMB_ACK_EGRESS_PORTS["CC"],
             ),
 
             "SMC": ChannelConfig(
                 name="SMC",
-                router_port=CMB_CHANNEL_PORTS["SMC"],
+                router_port=CMB_CHANNEL_INGRESS_PORTS["SMC"],
                 inbound_delivery=InboundDelivery.DIRECTED,
-                inbound_port=CMB_CHANNEL_PORTS["SMC"],
-                ack_port=CMB_ACK_PORT,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["SMC"],
+                ack_port=CMB_ACK_EGRESS_PORTS["SMC"],
             ),
 
             "VB": ChannelConfig(
                 name="VB",
-                router_port=CMB_CHANNEL_PORTS["VB"],
+                router_port=CMB_CHANNEL_INGRESS_PORTS["VB"],
                 inbound_delivery=InboundDelivery.DIRECTED,
-                inbound_port=CMB_CHANNEL_PORTS["VB"],
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["VB"],
                 ack_port=CMB_ACK_PORT,
             ),
 
             "BFC": ChannelConfig(
                 name="BFC",
-                router_port=CMB_CHANNEL_PORTS["BFC"],
+                router_port=CMB_CHANNEL_INGRESS_PORTS["BFC"],
                 inbound_delivery=InboundDelivery.DIRECTED,
-                inbound_port=CMB_CHANNEL_PORTS["BFC"],
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["BFC"],
                 ack_port=CMB_ACK_PORT,
             ),
 
             "DAC": ChannelConfig(
                 name="DAC",
-                router_port=CMB_CHANNEL_PORTS["DAC"],
+                router_port=CMB_CHANNEL_INGRESS_PORTS["DAC"],
                 inbound_delivery=InboundDelivery.DIRECTED,
-                inbound_port=CMB_CHANNEL_PORTS["DAC"],
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["DAC"],
                 ack_port=CMB_ACK_PORT,
             ),
 
             "IC": ChannelConfig(
                 name="IC",
-                router_port=CMB_CHANNEL_PORTS["IC"],
+                router_port=CMB_CHANNEL_INGRESS_PORTS["IC"],
                 inbound_delivery=InboundDelivery.DIRECTED,
-                inbound_port=CMB_CHANNEL_PORTS["IC"],
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["IC"],
                 ack_port=CMB_ACK_PORT,
             ),
 
             "TC": ChannelConfig(
                 name="TC",
-                router_port=CMB_CHANNEL_PORTS["TC"],
+                router_port=CMB_CHANNEL_INGRESS_PORTS["TC"],
                 inbound_delivery=InboundDelivery.DIRECTED,
-                inbound_port=CMB_CHANNEL_PORTS["TC"],
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["TC"],
                 ack_port=CMB_ACK_PORT,
             ),
 
             # Broadcast-style channels
             "PC": ChannelConfig(
                 name="PC",
-                router_port=CMB_CHANNEL_PORTS["PC"],
+                router_port=CMB_CHANNEL_INGRESS_PORTS["PC"],
                 inbound_delivery=InboundDelivery.BROADCAST,
-                inbound_port=CMB_CHANNEL_PORTS["PC"] + SUBSCRIPTION_OFFSET,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["PC"] + SUBSCRIPTION_OFFSET,
                 ack_port=None,
             ),
 
             "MC": ChannelConfig(
                 name="MC",
-                router_port=CMB_CHANNEL_PORTS["MC"],
+                router_port=CMB_CHANNEL_INGRESS_PORTS["MC"],
                 inbound_delivery=InboundDelivery.BROADCAST,
-                inbound_port=CMB_CHANNEL_PORTS["MC"] + SUBSCRIPTION_OFFSET,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["MC"] + SUBSCRIPTION_OFFSET,
                 ack_port=None,
             ),
 
             "EIG": ChannelConfig(
                 name="EIG",
-                router_port=CMB_CHANNEL_PORTS["EIG"],
+                router_port=CMB_CHANNEL_INGRESS_PORTS["EIG"],
                 inbound_delivery=InboundDelivery.BROADCAST,
-                inbound_port=CMB_CHANNEL_PORTS["EIG"] + SUBSCRIPTION_OFFSET,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["EIG"] + SUBSCRIPTION_OFFSET,
                 ack_port=None,
             ),
         }
 
     @classmethod
     def get(cls, channel_name: str) -> ChannelConfig:
+        print(f"ChannelRegistry: get('{channel_name}')")
         if channel_name not in cls._channels:
             raise KeyError(f"Unknown CMB channel: {channel_name}")
         return cls._channels[channel_name]

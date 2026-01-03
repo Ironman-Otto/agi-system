@@ -9,7 +9,7 @@ This file should be treated as a central reference for routing and interface con
 
 # Dictionary mapping each channel acronym to a TCP port base
 # These ports must match bindings in the CMB routers and the endpoints
-CMB_CHANNEL_PORTS = {
+CMB_CHANNEL_INGRESS_PORTS = {
     "CC":   6001,   # Control Channel
     "SMC":  6002,   # Symbolic Message Channel
     "VB":   6003,   # Vector Bus
@@ -20,6 +20,18 @@ CMB_CHANNEL_PORTS = {
     "MC":   6008,   # Memory Channel
     "IC":   6009,   # Introspection Channel
     "TC":   6010    # Threat Channel
+}
+CMB_CHANNEL_EGRESS_PORTS = {
+    "CC":   7001,   # Control Channel
+    "SMC":  7002,   # Symbolic Message Channel
+    "VB":   7003,   # Vector Bus
+    "BFC":  7004,   # Behavioral Flow Channel
+    "DAC":  7005,   # Diagnostic and Awareness Channel
+    "EIG":  7006,   # External Interface Gateway
+    "PC":   7007,   # Perception Channel
+    "MC":   7008,   # Memory Channel
+    "IC":   7009,   # Introspection Channel
+    "TC":   7010    # Threat Channel
 }
 
 CMB_ACK_INGRESS_PORTS = {
@@ -62,16 +74,31 @@ def get_channel_publish_port(channel_name: str) -> int:
 
 # Utility function to fetch port by channel
 def get_channel_port(channel_name: str) -> int:
-    if channel_name not in CMB_CHANNEL_PORTS:
+    if channel_name not in CMB_CHANNEL_INGRESS_PORTS:
         raise ValueError(f"Unknown CMB channel: {channel_name}")
-    return CMB_CHANNEL_PORTS[channel_name]
+    return CMB_CHANNEL_INGRESS_PORTS[channel_name]
 
-def get_ack_Ingress_port(channel_name: str) -> int:
+def get_channel_ingress_port(channel_name: str) -> int:
+    if channel_name not in CMB_CHANNEL_INGRESS_PORTS:
+        raise ValueError(f"Unknown CMB channel: {channel_name}")
+    return CMB_CHANNEL_INGRESS_PORTS[channel_name]
+
+def get_channel_egress_port(channel_name: str) -> int:
+    if channel_name not in CMB_CHANNEL_EGRESS_PORTS:
+        raise ValueError(f"Unknown CMB channel: {channel_name}")
+    return CMB_CHANNEL_EGRESS_PORTS[channel_name]
+
+def get_ack_ingress_port(channel_name: str) -> int:
     if channel_name not in CMB_ACK_INGRESS_PORTS:
         raise ValueError(f"Unknown CMB channel: {channel_name}")
     return CMB_ACK_INGRESS_PORTS[channel_name] 
 
-def get_ack_Egress_port(channel_name: str) -> int:
+def get_ack_port(channel_name: str) -> int:
+    if channel_name not in CMB_ACK_EGRESS_PORTS:
+        raise ValueError(f"Unknown CMB channel: {channel_name}")
+    return CMB_ACK_EGRESS_PORTS[channel_name] 
+
+def get_ack_egress_port(channel_name: str) -> int:
     if channel_name not in CMB_ACK_EGRESS_PORTS:
         raise ValueError(f"Unknown CMB channel: {channel_name}")
     return CMB_ACK_EGRESS_PORTS[channel_name] 

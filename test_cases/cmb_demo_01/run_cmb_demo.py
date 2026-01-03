@@ -92,7 +92,15 @@ def main():
     except KeyboardInterrupt:
         print("[Launcher] Shutting down...")
         for p in procs:
-            p.terminate()
+            p.send_signal(subprocess.signal.SIGINT)
+
+        # Give children time to exit cleanly
+        for p in procs:
+            try:
+                p.wait(timeout=2.0)
+            except subprocess.TimeoutExpired:
+                p.terminate()
+
 
 if __name__ == "__main__":
     main()

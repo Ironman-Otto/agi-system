@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Dict, Iterable
 
-from core.cmb.channel_registry import ChannelRegistry, ChannelConfig
+from src.core.cmb.channel_registry import ChannelRegistry, ChannelConfig
 
 
 @dataclass(frozen=True)
@@ -37,7 +37,7 @@ class MultiChannelEndpointConfig:
 
         for name in channel_names:
             channels[name] = ChannelRegistry.get(name)
-
+            print(f"[EndpointConfig] Module '{module_id}' joining channel '{name}'")
         return cls(
             module_id=module_id,
             channels=channels,
