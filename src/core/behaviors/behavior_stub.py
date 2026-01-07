@@ -60,7 +60,7 @@ def main():
                 logger("[BehaviorStub] No message received (timeout)")
                 continue
 
-            msg = CognitiveMessage.from_bytes(raw_msg)
+            msg = raw_msg
 
             logger(f"[BehaviorStub] Received {msg.msg_type} from {msg.source}")
             logger(f"[BehaviorStub] Payload: {msg.payload}")

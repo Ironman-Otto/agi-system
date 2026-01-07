@@ -120,16 +120,17 @@ class CMBDemoGUI:
         self.log_box.see(tk.END)
 
     def _poll_endpoint(self) -> None:
-        #self.log("[GUI] poll tick")
         assert self.endpoint is not None
+        
         #Drain a few ACKs per tick
         for _ in range(10):
             raw = self.endpoint.recv_ack(timeout=0)
+            print(f"Type of raw = {type(raw)}")
             if raw is None:
                 break
             try:
-                ack = AckMessage.from_bytes(raw)
-                self.log(f"[GUI] ACK: {ack.ack_type} status={ack.status} from {ack.source}")
+                #ack = AckMessage.from_bytes(raw)
+                self.log(f"[GUI] ACK: {raw.ack_type} status={raw.status} from {raw.source}")
             except Exception:
                 self.log("[GUI] ACK: (unparsed bytes)")
 
@@ -139,8 +140,8 @@ class CMBDemoGUI:
             if raw is None:
                 break
             try:
-                msg = CognitiveMessage.from_bytes(raw)
-                self.log(f"[GUI] IN: {msg.msg_type} from {msg.source} -> {msg.targets}")
+               #msg = CognitiveMessage.from_bytes(raw)
+                self.log(f"[GUI] IN: {raw.msg_type} from {raw.source} -> {raw.targets}")
             except Exception:
                 self.log("[GUI] IN: (unparsed bytes)")
 

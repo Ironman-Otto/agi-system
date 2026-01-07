@@ -8,9 +8,12 @@ from typing import Optional, Callable, Any
 from typing import Dict
 import zmq
 
+from src.core.cmb.utils import extract_message_id
 from src.core.cmb.endpoint_config import MultiChannelEndpointConfig
 from src.core.cmb.channel_registry import InboundDelivery
-
+from src.core.cmb.transaction_registry import TransactionRegistry
+from src.core.messages.ack_message import AckMessage
+from src.core.messages.cognitive_message import CognitiveMessage
 
 class ModuleEndpoint:
     """
@@ -34,6 +37,7 @@ class ModuleEndpoint:
         logger: Optional[Callable[[str], None]] = None,
         serializer: Optional[Callable[[Any], bytes]] = None,
         deserializer: Optional[Callable[[bytes], Any]] = None,
+        
     ):
         self.cfg = config
         self._log = logger or (lambda s: None)
@@ -58,6 +62,8 @@ class ModuleEndpoint:
 
         self._sock_to_channel: dict[zmq.Socket, str] = {}
         self._sock_is_ack: dict[zmq.Socket, bool] = {}
+
+        self._tx_registry = TransactionRegistry()
 
 
     # --------------------------
@@ -230,6 +236,8 @@ class ModuleEndpoint:
         across all configured channels.
         """
         while not self._stop_evt.is_set():
+            self._tx_registry.tick()
+            self._tx_registry.cleanup_completed()
 
             # 1) Flush outbound messages (fair, bounded)
             self._flush_outbound(max_per_tick=50)
@@ -266,6 +274,7 @@ class ModuleEndpoint:
             except queue.Empty:
                 return
 
+            
             out_sock = self._out_socks.get(ch_name)
             if out_sock is None:
                 self._log(
@@ -274,6 +283,15 @@ class ModuleEndpoint:
                 continue
 
             try:
+                message_id = extract_message_id(payload)
+                tx = self._tx_registry.create(
+                    message_id=message_id,
+                    channel=ch_name,
+                    source=self.cfg.module_id,
+                    target=dest.decode("utf-8"),
+                    payload=payload,
+                )
+
                 # ROUTER addressing pattern:
                 # [dest_identity][empty][payload]
                 out_sock.send_multipart(
@@ -295,14 +313,18 @@ class ModuleEndpoint:
         We keep this tolerant because your framing is still evolving.
         """
         frames = sock.recv_multipart()
-        print(f"[Endpoint.{self.cfg.module_id} DEBUG] Received frames: {frames}")
+        self._log(f"[Endpoint.{self.cfg.module_id} DEBUG] Received frames: {frames}")
 
         # Most common cases:
         # - ROUTER->DEALER: [sender_id, b"", payload] or [sender_id, payload]
         payload = frames[-1]
-        msg_obj = self._from_bytes(payload)
+        #msg_obj = self._from_bytes(payload)
 
         if is_ack:
-            self._ack_q.put(msg_obj)
+            ack = AckMessage.from_bytes(payload)
+            self._tx_registry.apply_ack(ack)
+            self._ack_q.put(ack)
         else:
+            msg_obj = CognitiveMessage.from_bytes(payload)
             self._in_q.put(msg_obj)
+
