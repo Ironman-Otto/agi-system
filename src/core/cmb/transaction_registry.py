@@ -3,8 +3,9 @@ import time
 from typing import Dict, Optional, Iterable
 
 from src.core.cmb.transaction_record import TransactionRecord
-from src.core.cmb.ack_state_machine import AckTransitionEvent
+from src.core.cmb.transport_state_machine import AckTransitionEvent
 from src.core.messages.ack_message import AckMessage
+from src.core.messages.cognitive_message import CognitiveMessage
 
 
 class TransactionRegistry:
@@ -43,12 +44,14 @@ class TransactionRegistry:
 
             tx = TransactionRecord(
                 message_id=message_id,
+                event_id=message_id,  # For now, event_id == message_id
                 channel=channel,
                 source=source,
                 target=target,
                 payload=payload,
             )
 
+            # Register a transaction for this message_id
             self._transactions[message_id] = tx
 
             # Initial SEND transition
@@ -72,27 +75,40 @@ class TransactionRegistry:
         """
         with self._lock:
             tx = self._transactions.get(ack.correlation_id)
+            print(f"\n ack type = {ack.ack_type} apply tx = {tx} \n")
             if tx is None:
                 # Unknown or already cleaned-up transaction
-                return None
+                event = "ERROR 1"
+                return event
 
             if ack.ack_type == "ROUTER_ACK":
-                event = tx.ack_sm.on_router_ack(
-                    #success=(ack.status == "SUCCESS")
-                )
+                event = tx.ack_sm.on_router_ack()
 
-            elif ack.ack_type == "EXEC_ACK":
-                event = tx.ack_sm.on_exec_ack(
-                    #success=(ack.status == "SUCCESS")
-                )
-
+            elif ack.ack_type == "MESSAGE_DELIVERED_ACK":
+                event = tx.ack_sm.on_msg_delivered_ack()               
             else:
                 # Unknown ACK type → ignore safely
-                return None
+                event = "ERROR 2"
+                return event
 
             tx.record_transition(event)
             return event
 
+    def apply_msg_received(self, msg: CognitiveMessage) -> Optional[AckTransitionEvent]:
+        """
+        Apply a MSG_RECEIVED event to the corresponding transaction.
+
+        Returns the resulting AckTransitionEvent (if any).
+        """
+        with self._lock:
+            tx = self._transactions.get(msg.message_id)
+            if tx is None:
+                # Unknown or already cleaned-up transaction
+                return None
+
+            event = tx.ack_sm.on_msg_received()
+            tx.record_transition(event)
+            return event
     # -------------------------------------------------
     # Time-based processing
     # -------------------------------------------------

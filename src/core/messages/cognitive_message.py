@@ -47,8 +47,10 @@ class CognitiveMessage:
        ttl: float = 10.0,
        signature: str = ""
     ) -> "CognitiveMessage":
+        message_id = str(uuid.uuid4())
+        correlation_id = message_id if correlation_id is None else correlation_id
         return CognitiveMessage(
-            message_id=str(uuid.uuid4()),
+            message_id=message_id,
             schema_version = CognitiveMessage.get_schema_version(),
             msg_type = msg_type,
             msg_version = msg_version,

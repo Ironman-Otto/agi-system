@@ -87,6 +87,7 @@ class ChannelRouter:
                 frames = router_sock.recv_multipart()
                 sender_id = frames[0]
                 payload = frames[-1]
+                print(f"[Router.{self.channel_name} DEBUG] Received from sender_id={sender_id!r}")
 
                 # ---- Parse message ----
                 try:
@@ -97,34 +98,64 @@ class ChannelRouter:
 
                 # ---- Determine message type ----
                 msg_type = obj.get("msg_type")
-                print(f"[Router.{self.channel_name} DEBUG] Received msg_type={msg_type!r} from sender_id={sender_id!r}")
+                print(f"[Router.{self.channel_name} DEBUG] msg_type={msg_type!r}")
+                
+                #---- Handle ACK messages ----
+                if msg_type == "ACK":
+                    ack = AckMessage.from_dict(obj)
+                    print(
+                        f"[Router.{self.channel_name}] {self.channel_name} "
+                        f"forwarded ACK {ack.message_id} "
+                        f"to {ack.targets[0]}"
+                    )
+                    # ---- Forward ACK to destination ----
+                    dest = ack.targets[0].encode("utf-8")
+                    ack_sock.send_multipart([dest, b"", payload])
 
-                # ---- Process COMMAND messages ----
-                if msg_type != "ACK":
+                    # ---- If MESSAGE_DELIVERED_ACK, acknowledge to sender ----
+                    if ack.ack_type == "MESSAGE_DELIVERED_ACK":            
+                        router_ack = AckMessage.create(
+                            msg_type="ACK",
+                            ack_type="ROUTER_ACK",
+                            status="SUCCESS",
+                            source="CMB_ROUTER",
+                            targets=[ack.source],
+                            correlation_id=ack.correlation_id,
+                            payload={"channel": self.channel_name,
+                                    "status": "published",
+                                    "message_id": msg.message_id,},
+                        )
+                        ack_dest = ack.source.encode("utf-8")
+                        ack_sock.send_multipart([ack_dest, b"", AckMessage.to_bytes(router_ack)])
+
+
+                    continue
+                else:
+                    print(f"[Router.{self.channel_name} DEBUG] Processing COMMAND message")
                     try:
                         msg = CognitiveMessage.from_dict(obj)
                     except Exception as e:
                         print(f"[Router.{self.channel_name} ERROR] Invalid COMMAND message: {e}")
                         continue
 
-                    # ---- Forward to targets ----
-                    for target in msg.targets:
-                        print(f"[Router.{self.channel_name} DEBUG] Sending {msg.msg_type} to identity={target!r}")
+                print(
+                    f"[Router.{self.channel_name}] {self.channel_name} "
+                    f"received {msg.msg_type} from {msg.source}"
+                )
 
-                        module_egress_sock.send_multipart([
-                            target.encode("utf-8"),
-                            b"",
-                            payload,
-                        ])
-                else:
-                    # ---- Process ACK messages ----
-                    # This handles the ACK forwarding for MESSAGE_DELIVERED_ACK
-                    ack = AckMessage.from_dict(obj)
-                    print(f"[Router.{self.channel_name} DEBUG] Forwarding {ack.ack_type} id: {ack.message_id} to {ack.targets[0]!r}")
+                # ---- Forward to targets ----
+                for target in msg.targets:
+                    print(f"[Router.{self.channel_name} DEBUG] Sending to identity={target!r}")
 
-                    # ---- Forward ACK to destination ----
-                    dest = ack.targets[0].encode("utf-8")
-                    ack_sock.send_multipart([dest, b"", payload])        
+                    module_egress_sock.send_multipart([
+                        target.encode("utf-8"),
+                        b"",
+                        payload,
+                    ])
+                    print(
+                        f"[Router.{self.channel_name}] Forwarded {msg.message_id} "
+                        f"to {target}"
+                    )
 
                 # ---- Immediate ROUTER_ACK ----
                 ack = AckMessage.create(
@@ -147,8 +178,10 @@ class ChannelRouter:
                     AckMessage.to_bytes(ack),
                 ])
 
-                print(f"[Router.{self.channel_name}] sent ROUTER_ACK to {sender_id.decode('utf-8')} for {msg.message_id}")
-
+                print(
+                    f"[Router.{self.channel_name}] ACK sent to {msg.source} "
+                    f"for {msg.message_id}"
+                )
         finally:
             router_sock.close()
             ack_sock.close()

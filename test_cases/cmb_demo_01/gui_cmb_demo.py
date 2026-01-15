@@ -125,12 +125,11 @@ class CMBDemoGUI:
         #Drain a few ACKs per tick
         for _ in range(10):
             raw = self.endpoint.recv_ack(timeout=0)
-            print(f"Type of raw = {type(raw)}")
             if raw is None:
                 break
             try:
                 #ack = AckMessage.from_bytes(raw)
-                self.log(f"[GUI] ACK: {raw.ack_type} status={raw.status} from {raw.source}")
+                self.log(f"[GUI] ACK: {raw.ack_type} status={raw.status} corr id = {raw.correlation_id} from {raw.source}")
             except Exception:
                 self.log("[GUI] ACK: (unparsed bytes)")
 
@@ -164,7 +163,7 @@ class CMBDemoGUI:
             source = self.source_entry.get()
             target = self.target_entry.get().strip()
             context_tag ="demo"
-            correlation_id = "demo 01"
+            correlation_id = None
             payload_text = self.payload_text.get("1.0", tk.END)
             payload = json.loads(payload_text)
             priority = 1

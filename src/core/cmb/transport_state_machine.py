@@ -3,14 +3,15 @@ from dataclasses import dataclass
 from typing import Optional, Any
 import time
 
+from core.messages.ack_message import AckMessage
+
 class AckState(Enum):
     SEND_PENDING = auto()
     AWAIT_ROUTER_ACK = auto()
-    AWAIT_EXEC_ACK = auto()
-    EXECUTING = auto()
-    COMPLETED_SUCCESS = auto()
-    COMPLETED_FAILURE = auto()
+    AWAIT_MESSAGE_DELIVERED_ACK = auto()
+    COMPLETED = auto()
     TIMEOUT = auto()
+    ERROR = auto()
     CANCELLED = auto()
 
 class AckDecision(Enum):
@@ -106,16 +107,17 @@ class AckStateMachine:
         if self.require_exec_ack:
             self.exec_deadline = time.monotonic() + self.exec_timeout_s
             return self._transition(
-                AckState.AWAIT_EXEC_ACK,
+                AckState.AWAIT_MESSAGE_DELIVERED_ACK,
                 reason="ROUTER_ACK",
             )
 
         return self._transition(
-            AckState.COMPLETED_SUCCESS,
-            reason="ROUTER_ACK_NO_EXEC",
+            AckState.COMPLETED,
+            reason="NO_MSG_DELIVERED_ACK_REQUIRED",
         )
 
-    def on_exec_ack(self, success: bool) -> AckTransitionEvent:
+
+    def on_msg_delivered_ack(self) -> AckTransitionEvent:
         """
         Handle EXEC ACK from the destination module.
 
@@ -123,27 +125,22 @@ class AckStateMachine:
         """
 
         # --- Illegal state guard ---
-        if self.state != AckState.AWAIT_EXEC_ACK:
+        if self.state != AckState.AWAIT_MESSAGE_DELIVERED_ACK:
             return self._transition(
                 self.state,
-                reason="ILLEGAL_EXEC_ACK",
+                reason="ILLEGAL_MSG_DELIVERED_ACK",
             )
 
         # --- Normal success / failure handling ---
-        if success:
+        else: 
             return self._transition(
-                AckState.COMPLETED,
-                reason="EXEC_ACK_SUCCESS",
-            )
-        else:
-            return self._transition(
-                AckState.FAILED,
-                reason="EXEC_ACK_FAILURE",
-            )
-
+            AckState.COMPLETED,
+            reason="MSG_DELIVERED_ACK_SUCCESS",
+        )
+        
 
     
-    def on_progress_ack(self, details: Optional[Any] = None) -> AckTransitionEvent:
+    def on_msg_data(self, details: Optional[Any] = None) -> AckTransitionEvent:
         if not self.allow_progress_ack:
             return self._transition(
                 self.state,
@@ -197,8 +194,8 @@ class AckStateMachine:
         )
     def is_terminal(self) -> bool:
         return self.state in (
-            AckState.COMPLETED_SUCCESS,
-            AckState.COMPLETED_FAILURE,
+            AckState.COMPLETED,
+            AckState.ERROR,
             AckState.TIMEOUT,
             AckState.CANCELLED,
         )

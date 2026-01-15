@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from typing import List, Optional, Dict, Any
 import time
 
-from .ack_state_machine import AckStateMachine, AckTransitionEvent
+from .transport_state_machine import AckStateMachine, AckTransitionEvent
 
 
 @dataclass
@@ -20,6 +20,7 @@ class TransactionRecord:
     # Identity
     # -------------------------------------------------
     message_id: str
+    event_id: str
     channel: str
     source: str
     target: str

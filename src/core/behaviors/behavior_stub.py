@@ -57,7 +57,6 @@ def main():
             raw_msg = endpoint.recv(timeout=5.0)
 
             if raw_msg is None:
-                logger("[BehaviorStub] No message received (timeout)")
                 continue
 
             msg = raw_msg
@@ -65,11 +64,12 @@ def main():
             logger(f"[BehaviorStub] Received {msg.msg_type} from {msg.source}")
             logger(f"[BehaviorStub] Payload: {msg.payload}")
 
+            
             # send ACK back
             try:
                 ack = AckMessage.create(
                     msg_type="ACK",
-                    ack_type="EXECUTION_ACK",
+                    ack_type="MESSAGE_DELIVERED_ACK",
                     status="SUCCESS",
                     source="behavior",
                     targets=[msg.source],
@@ -80,14 +80,18 @@ def main():
                     }
                 )
 
-                endpoint.send("CC", msg.source, AckMessage.to_bytes(ack))
+                #endpoint.send("CC", msg.source, AckMessage.to_bytes(ack))
 
                 print(
-                  f"[BEHAVIOR] ACK sent to {msg.source} "
+                  f"[BEHAVIOR] Sent ACK to {msg.source} "
                   f"for {msg.message_id}"
                 )
             except Exception as e:
                 logger(f"[BehaviorStub] ERROR sending ACK: {e}")
+
+            ack_msg = endpoint.recv_ack(timeout=2.0)
+            if ack_msg:
+                logger(f"[BehaviorStub] Received ACK: {ack_msg.ack_type} for {ack_msg.correlation_id}")
 
     except KeyboardInterrupt:
         print("[BehaviorStub] Interrupted by user.")

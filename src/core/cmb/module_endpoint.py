@@ -7,6 +7,7 @@ import queue
 from typing import Optional, Callable, Any
 from typing import Dict
 import zmq
+import json
 
 from src.core.cmb.utils import extract_message_id
 from src.core.cmb.endpoint_config import MultiChannelEndpointConfig
@@ -236,8 +237,10 @@ class ModuleEndpoint:
         across all configured channels.
         """
         while not self._stop_evt.is_set():
+            """
             self._tx_registry.tick()
             self._tx_registry.cleanup_completed()
+            """
 
             # 1) Flush outbound messages (fair, bounded)
             self._flush_outbound(max_per_tick=50)
@@ -249,7 +252,7 @@ class ModuleEndpoint:
 
             try:
                 events = dict(self._poller.poll(self.cfg.poll_timeout_ms))
-            except zmq.ZMQError as e:
+            except zmq.ZMQError as e: 
                 # Context terminated or shutting down
                 self._log(f"[Endpoint.{self.cfg.module_id}] Poller error: {e!r}")
                 return
@@ -274,7 +277,7 @@ class ModuleEndpoint:
             except queue.Empty:
                 return
 
-            
+            # Get outbound socket for channel
             out_sock = self._out_socks.get(ch_name)
             if out_sock is None:
                 self._log(
@@ -282,7 +285,8 @@ class ModuleEndpoint:
                 )
                 continue
 
-            try:
+            # Send message
+            try:                
                 message_id = extract_message_id(payload)
                 tx = self._tx_registry.create(
                     message_id=message_id,
@@ -292,12 +296,15 @@ class ModuleEndpoint:
                     payload=payload,
                 )
 
+                print(f"[Endpoint.{self.cfg.module_id} DEBUG] Created transaction for outgoing message_id={message_id}\n")
+
                 # ROUTER addressing pattern:
                 # [dest_identity][empty][payload]
                 out_sock.send_multipart(
                     [payload],
                     flags=zmq.NOBLOCK
                 )
+
                 sent += 1
                 self._log(f"[Endpoint.{self.cfg.module_id}] SEND ch={ch_name} dest={dest!r}")
 
@@ -313,18 +320,58 @@ class ModuleEndpoint:
         We keep this tolerant because your framing is still evolving.
         """
         frames = sock.recv_multipart()
-        self._log(f"[Endpoint.{self.cfg.module_id} DEBUG] Received frames: {frames}")
+        payload = frames[-1]
+        msg_obj = json.loads(payload.decode("utf-8"))
+        self._log(f"[Endpoint.{self.cfg.module_id} DEBUG] Received msg type={msg_obj.get('msg_type')!r} from {msg_obj.get('source')!r}")
 
         # Most common cases:
         # - ROUTER->DEALER: [sender_id, b"", payload] or [sender_id, payload]
         payload = frames[-1]
-        #msg_obj = self._from_bytes(payload)
 
         if is_ack:
             ack = AckMessage.from_bytes(payload)
-            self._tx_registry.apply_ack(ack)
-            self._ack_q.put(ack)
+            event = self._tx_registry.apply_ack(ack)
+            print(f"[Endpoint.{self.cfg.module_id} DEBUG] Applied ACK for correlation_id={ack.correlation_id}, event={event} ack type = {ack.ack_type}\n")
+            if event != "ERROR 1" and event != "ERROR 2":
+                self._ack_q.put(ack)
+            else:
+                self._log(f"[Endpoint.{self.cfg.module_id} ERROR] Received invalid ACK: {ack!r}")
+
         else:
             msg_obj = CognitiveMessage.from_bytes(payload)
             self._in_q.put(msg_obj)
+            message_id = msg_obj.message_id
+            tx = self._tx_registry.create(
+                    message_id=message_id,
+                    channel = None,
+                    source=msg_obj.source,
+                    target=msg_obj.targets,
+                    payload=payload,
+                )
+            print(f"[Endpoint.{self.cfg.module_id} DEBUG] Created transaction for incoming message_id={message_id}\n")
+             # send ACK back
+            try:
+                ack = AckMessage.create(
+                    msg_type="ACK",
+                    ack_type="MESSAGE_DELIVERED_ACK",
+                    status="SUCCESS",
+                    source=self.cfg.module_id,
+                    targets=[msg_obj.source],
+                    correlation_id=msg_obj.message_id,
+                    payload={ 
+                        "status": "published",
+                        "message_id": msg_obj.message_id
+                    }
+                )
+
+                self.send("CC", msg_obj.source, AckMessage.to_bytes(ack))
+
+                print(
+                  f"[BEHAVIOR] Sent ACK to {msg_obj.source} "
+                  f"for {msg_obj.message_id}"
+                )
+            except Exception as e:
+                self._log(f"[BehaviorStub] ERROR sending ACK: {e}")
+
+            
 
