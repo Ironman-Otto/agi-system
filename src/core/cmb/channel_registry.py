@@ -117,6 +117,13 @@ SUBSCRIPTION_OFFSET = 1000
 # Channel Registry
 # ----------------------------
 
+class InboundDelivery(Enum):
+    """How inbound messages are delivered to modules."""
+
+    DIRECTED = "directed"      # ROUTER/DEALER identity-addressed
+    BROADCAST = "broadcast"    # PUB/SUB fanout (not used in this demo)
+
+
 class ChannelRegistry:
     """
     Central registry of all CMB channels.

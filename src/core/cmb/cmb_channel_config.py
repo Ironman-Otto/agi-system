@@ -65,13 +65,6 @@ CMB_ACK_EGRESS_PORTS = {
 def get_subscription_offset():
     return 1000
 
-# Utility function to fetch publish port by channel
-def get_channel_publish_port(channel_name: str) -> int:
-    base_port = CMB_CHANNEL_PORTS.get(channel_name)
-    if base_port is None:
-        raise ValueError(f"Unknown CMB channel: {channel_name}")
-    return base_port + get_subscription_offset()
-
 # Utility function to fetch port by channel
 def get_channel_port(channel_name: str) -> int:
     if channel_name not in CMB_CHANNEL_INGRESS_PORTS:

@@ -2,6 +2,7 @@ import threading
 import time
 from typing import Dict, Optional, Iterable
 
+from src.core.cmb.cmb_exceptions import TransportError
 from src.core.cmb.transaction_record import TransactionRecord
 from src.core.cmb.transport_state_machine import AckTransitionEvent
 from src.core.messages.ack_message import AckMessage
@@ -75,11 +76,9 @@ class TransactionRegistry:
         """
         with self._lock:
             tx = self._transactions.get(ack.correlation_id)
-            print(f"\n ack type = {ack.ack_type} apply tx = {tx} \n")
             if tx is None:
                 # Unknown or already cleaned-up transaction
-                event = "ERROR 1"
-                return event
+                raise TransportError("ERROR 1")
 
             if ack.ack_type == "ROUTER_ACK":
                 event = tx.ack_sm.on_router_ack()

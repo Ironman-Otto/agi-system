@@ -12,7 +12,6 @@ Depends on: module_endpoint >= 0.1.0, cognitive_message >= 0.1.0, cmb_channel_co
 import zmq
 import time
 from src.core.cmb.module_endpoint import ModuleEndpoint
-from src.core.cmb.cmb_channel_config import get_channel_publish_port
 from src.core.messages.cognitive_message import CognitiveMessage
 from src.core.cmb.channel_registry import ChannelRegistry
 from src.core.cmb.endpoint_config import MultiChannelEndpointConfig
@@ -26,7 +25,7 @@ def main():
     logger = print  # Simple logger function
 
     # Build ChannelRegistry once
-    ChannelRegistry.initialize()
+    #ChannelRegistry.initialize()
 
     # Decide which channels the GUI participates in.
     # Start minimal for the demo: choose the channel(s) you use in the dropdown.

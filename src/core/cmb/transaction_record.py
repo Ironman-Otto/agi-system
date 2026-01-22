@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from typing import List, Optional, Dict, Any
 import time
 
-from .transport_state_machine import AckStateMachine, AckTransitionEvent
+from src.core.cmb.transport_state_machine import AckStateMachine, AckTransitionEvent
 
 
 @dataclass

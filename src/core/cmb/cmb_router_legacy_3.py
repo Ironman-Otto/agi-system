@@ -1,33 +1,27 @@
-"""cmb_router.py
+"""
+Module: cmb_router.py
+Location: src/core/cmb/
+Version: 0.2.0
 
-Version: demo-fork
-
-ROUTER-based channel router for the Cognitive Message Bus (CMB).
+Minimal ROUTER-based channel router for the Cognitive Message Bus.
 
 - One router per channel
-- Ingress ROUTER: receives from module outbound DEALER sockets
-- Module egress ROUTER: forwards to module inbound DEALER sockets
-- ACK egress ROUTER: forwards ACKs to module ACK DEALER sockets
-- Sends immediate ROUTER_ACK **only for non-ACK messages**
-
-This is a lightly corrected version of your current router to avoid emitting
-ROUTER_ACK for ACK messages (which can create ack-of-ack loops) and to avoid
-referencing an undefined `msg` when processing ACKs.
+- ROUTER → ROUTER forwarding
+- Immediate ROUTER_ACK
+- No state machine
 """
 
-from __future__ import annotations
-
 import json
-import threading
-from core.cmb.channel_registry import ChannelRegistry
+from core.messages.message_module import MessageType
 import zmq
-
+import threading
+import time
 from src.core.messages.cognitive_message import CognitiveMessage
 from src.core.messages.ack_message import AckMessage
 from src.core.cmb.cmb_channel_config import (
     get_channel_ingress_port,
     get_ack_egress_port,
-    get_channel_egress_port,
+    get_channel_egress_port
 )
 
 
@@ -42,11 +36,7 @@ class ChannelRouter:
 
         self._stop_evt = threading.Event()
         self._thread = None
-    
-        print(
-            f"[ROUTER.{self.channel_name}] router_port={self.router_port}, "
-            f"ack_port={self.ack_port}, module_egress_port={self.module_egress_port}"
-        )
+        print(f"[ROUTER.{self.channel_name}] router_port = {self.router_port}, ack_port = {self.ack_port}, module_egress_port = {self.module_egress_port}")
 
     def start(self) -> None:
         if self._thread and self._thread.is_alive():
@@ -66,8 +56,10 @@ class ChannelRouter:
             self._thread.join(timeout=2.0)
         print(f"[Router.{self.channel_name}] Channel '{self.channel_name}' stopped")
 
+
     def _run(self) -> None:
         ctx = zmq.Context.instance()
+        print(f"[Router.{self.channel_name}] starting on {self.router_port}")
         router_sock = ctx.socket(zmq.ROUTER)
         router_sock.bind(f"tcp://{self.host}:{self.router_port}")
 
@@ -79,61 +71,63 @@ class ChannelRouter:
 
         poller = zmq.Poller()
         poller.register(router_sock, zmq.POLLIN)
+        poller.register(module_egress_sock, zmq.POLLIN)
 
-        print(f"[Router.{self.channel_name}] ROUTER ingress on {self.router_port}")
-        print(f"[Router.{self.channel_name}] ROUTER egress  on {self.module_egress_port}")
-        print(f"[Router.{self.channel_name}] ROUTER ACK    on {self.ack_port}")
+        print(f"[Router.{self.channel_name}] {self.channel_name} ROUTER on {self.router_port}, ")
+        print(f"[Router.{self.channel_name}] {self.channel_name} ACK on {self.ack_port}")
 
         try:
             while not self._stop_evt.is_set():
                 events = dict(poller.poll(100))
+
                 if router_sock not in events:
                     continue
-
+                
+                # Receive message
                 frames = router_sock.recv_multipart()
                 sender_id = frames[0]
                 payload = frames[-1]
 
+                # ---- Parse message ----
                 try:
                     obj = json.loads(payload.decode("utf-8"))
-                except Exception as e:
+                except Exception as e:    
                     print(f"[Router.{self.channel_name} ERROR] Invalid JSON message: {e}")
                     continue
 
+                # ---- Determine message type ----
                 msg_type = obj.get("msg_type")
+                print(f"[Router.{self.channel_name} DEBUG] Received msg_type={msg_type!r} from sender_id={sender_id!r}")
 
-                # --- ACK messages: forward only ---
-                if msg_type == "ACK":
+                # ---- Process COMMAND messages ----
+                if msg_type != "ACK":
                     try:
-                        ack = AckMessage.from_dict(obj)
+                        msg = CognitiveMessage.from_dict(obj)
                     except Exception as e:
-                        print(f"[Router.{self.channel_name} ERROR] Invalid ACK message: {e}")
+                        print(f"[Router.{self.channel_name} ERROR] Invalid COMMAND message: {e}")
                         continue
 
-                    if not ack.targets:
-                        print(f"[Router.{self.channel_name} ERROR] ACK has no targets")
-                        continue
+                    # ---- Forward to targets ----
+                    for target in msg.targets:
+                        print(f"[Router.{self.channel_name} DEBUG] Sending {msg.msg_type} to identity={target!r}")
 
+                        module_egress_sock.send_multipart([
+                            target.encode("utf-8"),
+                            b"",
+                            payload,
+                        ])
+                else:
+                    # ---- Process ACK messages ----
+                    # This handles the ACK forwarding for MESSAGE_DELIVERED_ACK
+                    ack = AckMessage.from_dict(obj)
+                    print(f"[Router.{self.channel_name} DEBUG] Forwarding {ack.ack_type} id: {ack.message_id} to {ack.targets[0]!r}")
+
+                    # ---- Forward ACK to destination ----
                     dest = ack.targets[0].encode("utf-8")
-                    ack_sock.send_multipart([dest, b"", payload])
-                    continue
+                    ack_sock.send_multipart([dest, b"", payload])        
 
-                # --- Non-ACK messages: forward to targets + emit ROUTER_ACK ---
-                try:
-                    msg = CognitiveMessage.from_dict(obj)
-                except Exception as e:
-                    print(f"[Router.{self.channel_name} ERROR] Invalid message: {e}")
-                    continue
-
-                for target in msg.targets:
-                    module_egress_sock.send_multipart([
-                        target.encode("utf-8"),
-                        b"",
-                        payload,
-                    ])
-
-                # Immediate ROUTER_ACK to the sender (logical sender = msg.source)
-                router_ack = AckMessage.create(
+                # ---- Immediate ROUTER_ACK ----
+                ack = AckMessage.create(
                     msg_type="ACK",
                     ack_type="ROUTER_ACK",
                     status="SUCCESS",
@@ -150,12 +144,13 @@ class ChannelRouter:
                 ack_sock.send_multipart([
                     sender_id,
                     b"",
-                    router_ack.to_bytes(),
+                    AckMessage.to_bytes(ack),
                 ])
+
+                print(f"[Router.{self.channel_name}] sent ROUTER_ACK to {sender_id.decode('utf-8')} for {msg.message_id}")
 
         finally:
             router_sock.close()
-            module_egress_sock.close()
             ack_sock.close()
-            # Do not ctx.term() when using Context.instance() in multi-thread/process environments
-            print(f"[Router.{self.channel_name}] shutdown complete")
+            ctx.term()
+            print(f"[Router.{self.channel_name}] {self.channel_name} shutdown complete")

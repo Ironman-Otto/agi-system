@@ -1,7 +1,25 @@
 from dataclasses import dataclass
-from typing import Dict, Iterable
+from typing import Dict, Iterable, Optional
 
-from src.core.cmb.channel_registry import ChannelRegistry, ChannelConfig
+import zmq
+from src.core.cmb.channel_registry import ChannelRegistry, ChannelConfig, InboundDelivery
+
+@dataclass(frozen=True)
+class ChannelEndpointConfig:
+    """Per-channel socket and port configuration for a module endpoint."""
+
+    name: str
+    router_port: int
+    inbound_port: Optional[int]
+    ack_port: Optional[int]
+
+    # Socket types (defaults reflect your current ROUTER/DEALER design)
+    outbound_socket_type: int = zmq.DEALER
+    inbound_socket_type: int = zmq.DEALER
+    ack_socket_type: int = zmq.DEALER
+
+    # Delivery mode
+    inbound_delivery: InboundDelivery = InboundDelivery.DIRECTED
 
 
 @dataclass(frozen=True)
@@ -34,7 +52,7 @@ class MultiChannelEndpointConfig:
         """
 
         channels: Dict[str, ChannelConfig] = {}
-
+        ChannelRegistry.initialize()
         for name in channel_names:
             channels[name] = ChannelRegistry.get(name)
             print(f"[EndpointConfig] Module '{module_id}' joining channel '{name}'")
@@ -54,3 +72,12 @@ class MultiChannelEndpointConfig:
                 f"Channel '{name}' not configured for module '{self.module_id}'"
             )
         return self.channels[name]
+
+#@dataclass(frozen=True)
+#class MultiChannelEndpointConfig2:
+    """All-channel configuration for a module endpoint."""
+
+ #   module_id: str
+  #  host: str = "localhost"
+   # poll_timeout_ms: int = 100
+    #channels: Dict[str, ChannelEndpointConfig] = field(default_factory=dict)
