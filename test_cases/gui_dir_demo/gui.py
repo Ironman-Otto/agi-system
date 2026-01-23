@@ -14,10 +14,13 @@ from __future__ import annotations
 import json
 import os
 import threading
+import queue
 import time
 import tkinter as tk
 from tkinter import scrolledtext
 
+from src.core.cmb.endpoint_config import MultiChannelEndpointConfig
+from src.core.cmb.module_endpoint import ModuleEndpoint
 from src.core.messages.cognitive_message import CognitiveMessage
 
 class DirectiveGUI:
@@ -30,7 +33,36 @@ class DirectiveGUI:
         self.root.geometry("1000x700")
 
         self.create_widgets()
+        # Decide which channels the GUI participates in.
+        # Start minimal for the demo: choose the channel(s) you use in the dropdown.
+        _channels = ["CC", "SMC", "VB", "BFC", "DAC", "EIG", "PC", "MC", "IC", "TC"]
 
+        cfg = MultiChannelEndpointConfig.from_channel_names(
+            module_id=self.module_id,  # Identity of this module on the bus
+            channel_names=_channels,
+            host="localhost",
+            poll_timeout_ms=50,
+        )
+
+        self.ep = ModuleEndpoint(
+            config=cfg,
+            logger=lambda s: None,
+            serializer=lambda msg: msg.to_bytes(),
+            deserializer=lambda b: b,
+        )
+
+        self.ep.start()
+
+        self.gui_inbox = queue.Queue()
+
+        threading.Thread(
+            target=self._endpoint_listener,
+            daemon=True
+        ).start()
+
+        # Poll loops
+        self.root.after(100, self.poll_incoming)
+        self.root.after(1500, self.poll_log)
 
     def create_widgets(self):
         # Directive input
@@ -74,12 +106,64 @@ class DirectiveGUI:
         self.output_text.delete("1.0", "end")
         
     def on_close(self):
-        self.root.destroy()
+        try:
+            self.ep.stop()
+        finally:
+            self.root.destroy()
             
             
     def run(self):
         self.root.mainloop()
 
+    def _endpoint_listener(self):
+        cnt = 0
+        while True:
+            if cnt % 100 == 0:
+                self._append_output("[GUI listener] Waiting for messages...\n")
+                cnt = 0
+            cnt += 1 
+            try:
+                msg = self.ep.recv(timeout=0.1)
+                if msg is not None and isinstance(msg, CognitiveMessage):
+                    self._append_output(f"[GUI listener] Received message: {msg.msg_type}\n")
+                    self.gui_inbox.put(msg)
+            except Exception as e:
+                print("[GUI listener]", e)
+        
+    def poll_incoming(self):
+        try:
+            while True:
+                msg = self.gui_inbox.get_nowait()
+                self._append_output(f"[INCOMING] {msg.msg_type}\n")
+        except queue.Empty:
+            pass
+
+        self.root.after(100, self.poll_incoming)
+
+    def poll_log(self):
+            if not self.root.winfo_exists():
+                return
+
+            try:
+                if not os.path.exists(self.logfile):
+                    return
+
+                size = os.path.getsize(self.logfile)
+                if size == self._last_log_size:
+                    return
+
+                # Read new content (simple approach for demo)
+                with open(self.logfile, "r", encoding="utf-8") as f:
+                    lines = f.readlines()[-50:]  # tail 50
+
+                self.log_text.delete("1.0", "end")
+                self.log_text.insert("end", "".join(lines))
+                self.log_text.see("end")
+                self._last_log_size = size
+
+            finally:
+                self.root.after(1500, self.poll_log)
+    
     def on_send(self):
         directive = self.directive_text.get("1.0", "end").strip()
         preferred = self.format_entry.get().strip()
@@ -108,7 +192,7 @@ class DirectiveGUI:
             signature="",
         )
 
-        #self.ep.send("CC", "NLP", msg.to_bytes())
+        self.ep.send("CC", "NLP", msg.to_bytes())
         self._append_output(f"[GUI] Sent DIRECTIVE_SUBMIT to NLP (message_id={msg.message_id})\n")
 
 def main():
