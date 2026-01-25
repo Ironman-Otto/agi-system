@@ -3,6 +3,10 @@ from typing import Dict, Iterable, Optional
 
 import zmq
 from src.core.cmb.channel_registry import ChannelRegistry, ChannelConfig, InboundDelivery
+from src.core.logging.log_manager import LogManager, Logger
+from src.core.logging.log_entry import LogEntry
+from src.core.logging.log_severity import LogSeverity
+from src.core.logging.file_log_sink import FileLogSink
 
 @dataclass(frozen=True)
 class ChannelEndpointConfig:
@@ -37,6 +41,22 @@ class MultiChannelEndpointConfig:
     host: str = "localhost"
     poll_timeout_ms: int = 50
 
+    # Logging
+    log_manager = LogManager(min_severity=LogSeverity.INFO)
+    log_manager.register_sink(
+    FileLogSink("logs/system.jsonl")
+    )
+
+    logger = Logger("endpoint_config", log_manager)
+
+    logger.info(
+    event_type="ENDPOINT_CONFIG_INIT",
+    message=f"Endpoint configuration ",
+    payload={
+        "note": "no payload"
+    }
+)
+
     @classmethod
     def from_channel_names(
         cls,
@@ -55,7 +75,7 @@ class MultiChannelEndpointConfig:
         ChannelRegistry.initialize()
         for name in channel_names:
             channels[name] = ChannelRegistry.get(name)
-            print(f"[EndpointConfig] Module '{module_id}' joining channel '{name}'")
+            
         return cls(
             module_id=module_id,
             channels=channels,

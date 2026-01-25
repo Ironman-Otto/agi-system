@@ -15,6 +15,11 @@ from src.core.cmb.channel_registry import InboundDelivery
 from src.core.cmb.transaction_registry import TransactionRegistry
 from src.core.messages.ack_message import AckMessage
 from src.core.messages.cognitive_message import CognitiveMessage
+from src.core.logging.log_manager import LogManager, Logger
+from src.core.logging.log_entry import LogEntry
+from src.core.logging.log_severity import LogSeverity
+from src.core.logging.file_log_sink import FileLogSink
+
 
 class ModuleEndpoint:
     """
@@ -41,7 +46,16 @@ class ModuleEndpoint:
         
     ):
         self.cfg = config
-        self._log = logger or (lambda s: None)
+
+        # Logging
+        self.log_manager = LogManager(min_severity=LogSeverity.INFO)
+        self.log_manager.register_sink(
+        FileLogSink("logs/system.jsonl")
+        )
+        self.logger = Logger(self.cfg.module_id, self.log_manager)
+
+        # Old logger function fallback
+        self._log = None
 
         # Default serializer assumes caller already provides bytes.
         self._to_bytes = serializer or (lambda x: x if isinstance(x, (bytes, bytearray)) else str(x).encode("utf-8"))
@@ -66,7 +80,6 @@ class ModuleEndpoint:
 
         self._tx_registry = TransactionRegistry()
 
-
     # --------------------------
     # Public API (module side)
     # --------------------------
@@ -77,13 +90,27 @@ class ModuleEndpoint:
         self._stop_evt.clear()
         self._thread = threading.Thread(target=self._run, name=f"Endpoint[{self.cfg.module_id}]", daemon=False)
         self._thread.start()
-        self._log(f"[Endpoint.{self.cfg.module_id}] Started for {self.cfg.module_id}")
+        
+        self.logger.info(
+            event_type="ENDPOINT_START",
+            message=f"ModuleEndpoint started {self.cfg.module_id}",
+            payload={
+                "channels": list(self.cfg.channels.keys())
+            }
+        )
 
     def stop(self, join_timeout: float = 2.0) -> None:
         self._stop_evt.set()
         if self._thread:
             self._thread.join(timeout=join_timeout)
-        self._log(f"[Endpoint] Stopped for {self.cfg.module_id}")
+        
+        self.logger.info(
+            event_type="ENDPOINT_STOP",
+            message=f"ModuleEndpoint stopped {self.cfg.module_id}",
+            payload={
+                "channels": list(self.cfg.channels.keys())
+            }
+        )
 
     
     def send(self, channel: str, target_id: str, message: Any) -> None:
@@ -136,9 +163,23 @@ class ModuleEndpoint:
             self._setup_zmq()
             self._loop()
         except Exception as e:
-            self._log(f"[Endpoint.{self.cfg.module_id} ERROR] {self.cfg.module_id}: {e!r}")
+            self.logger.info(
+                event_type="ENDPOINT_EXCEPTION",
+                message=f"ModuleEndpoint exception in {self.cfg.module_id}: {e!r}",
+                payload={
+                    "channels": list(self.cfg.channels.keys())
+                }
+            )
+     
         finally:
             self._teardown_zmq()
+            self.logger.info(
+                    event_type="ENDPOINT_TEARDOWN",
+                    message=f"ModuleEndpoint {self.cfg.module_id}  teardown complete ",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
 
     def _setup_zmq(self) -> None:
         """
@@ -159,9 +200,13 @@ class ModuleEndpoint:
             out_sock.connect(f"tcp://{self.cfg.host}:{ch_cfg.router_port}")
 
             self._out_socks[ch_name] = out_sock
-            self._log(
-                f"[Endpoint.{self.cfg.module_id}] outbound[{ch_name}] "
-                f"connected to {ch_cfg.router_port}"
+
+            self.logger.info(
+                event_type="ENDPOINT_OUTBOUND_SETUP",
+                message=f"ModuleEndpoint {self.cfg.module_id} setup outbound {ch_name} ",
+                payload={
+                    "channels": list(self.cfg.channels.keys())
+                }
             )
 
             # ---------------------------
@@ -189,11 +234,15 @@ class ModuleEndpoint:
                 self._sock_to_channel[in_sock] = ch_name
                 self._sock_is_ack[in_sock] = False
                 self._poller.register(in_sock, zmq.POLLIN)
-                self._log(
-                    f"[Endpoint.{self.cfg.module_id}] inbound[{ch_name}] "
-                    f"connected to {ch_cfg.inbound_port} "
-                    f"({ch_cfg.inbound_delivery.value})"
+
+                self.logger.info(
+                    event_type="ENDPOINT_INBOUND_SETUP",
+                    message=f"ModuleEndpoint {self.cfg.module_id} setup inbound {ch_name} ",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
                 )
+
 
             # ---------------------------
             # ACK socket (optional, DIRECTED only)
@@ -208,10 +257,14 @@ class ModuleEndpoint:
                 self._sock_is_ack[ack_sock] = True
                 self._poller.register(ack_sock, zmq.POLLIN)
 
-                self._log(
-                    f"[Endpoint.{self.cfg.module_id}] ACK[{ch_name}] "
-                    f"connected to {ch_cfg.ack_port}"
+                self.logger.info(
+                    event_type="ENDPOINT_ACK_SETUP",
+                    message=f"ModuleEndpoint {self.cfg.module_id} setup ACK {ch_name} ",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
                 )
+
 
     def _teardown_zmq(self) -> None:
         # Close sockets created in thread
@@ -254,7 +307,15 @@ class ModuleEndpoint:
                 events = dict(self._poller.poll(self.cfg.poll_timeout_ms))
             except zmq.ZMQError as e: 
                 # Context terminated or shutting down
-                self._log(f"[Endpoint.{self.cfg.module_id}] Poller error: {e!r}")
+
+                self.logger.info(
+                    event_type="ENDPOINT_ZMQ_ERROR",
+                    message=f"ModuleEndpoint {self.cfg.module_id} poller error : {e!r}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
+
                 return
 
             # 3) Dispatch ready sockets
@@ -280,9 +341,15 @@ class ModuleEndpoint:
             # Get outbound socket for channel
             out_sock = self._out_socks.get(ch_name)
             if out_sock is None:
-                self._log(
-                    f"[Endpoint.{self.cfg.module_id} ERROR] No outbound socket for channel '{ch_name}'"
+
+                self.logger.info(
+                    event_type="ENDPOINT_NO_OUTBOUND_SOCKET",
+                    message=f"ModuleEndpoint {self.cfg.module_id} out_sock None {ch_name} ",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
                 )
+
                 continue
 
             # Send message
@@ -296,7 +363,14 @@ class ModuleEndpoint:
                     payload=payload,
                 )
 
-                print(f"[Endpoint.{self.cfg.module_id} DEBUG] Created transaction for outgoing message_id={message_id}\n")
+                
+                self.logger.info(
+                    event_type="ENDPOINT_TRANSACTION_CREATED",
+                    message=f"ModuleEndpoint {self.cfg.module_id} channel: {ch_name} outgoing message_id={message_id}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
 
                 # ROUTER addressing pattern:
                 # [dest_identity][empty][payload]
@@ -306,7 +380,17 @@ class ModuleEndpoint:
                 )
 
                 sent += 1
+
                 self._log(f"[Endpoint.{self.cfg.module_id}] SEND ch={ch_name} dest={dest!r}")
+
+                self.logger.info(
+                    event_type="ENDPOINT_SENT_MESSAGE",
+                    message=f"ModuleEndpoint {self.cfg.module_id} sent message on channel {ch_name} to {dest!r}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
+                
 
             except zmq.Again:
                 # Backpressure: requeue and retry next loop
@@ -322,8 +406,14 @@ class ModuleEndpoint:
         frames = sock.recv_multipart()
         payload = frames[-1]
         msg_obj = json.loads(payload.decode("utf-8"))
-        self._log(f"[Endpoint.{self.cfg.module_id} DEBUG] Received msg type={msg_obj.get('msg_type')!r} from {msg_obj.get('source')!r}")
-
+        
+        self.logger.info(
+                    event_type="ENDPOINT_RECEIVED_MESSAGE",
+                    message=f"ModuleEndpoint {self.cfg.module_id} received message from {msg_obj.get('source')!r}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
         # Most common cases:
         # - ROUTER->DEALER: [sender_id, b"", payload] or [sender_id, payload]
         payload = frames[-1]
@@ -331,11 +421,26 @@ class ModuleEndpoint:
         if is_ack:
             ack = AckMessage.from_bytes(payload)
             event = self._tx_registry.apply_ack(ack)
-            print(f"[Endpoint.{self.cfg.module_id} DEBUG] Applied ACK for correlation_id={ack.correlation_id}, event={event} ack type = {ack.ack_type}\n")
+            
+            self.logger.info(
+                    event_type="ENDPOINT_RECEIVED_ACK",
+                    message=f"ModuleEndpoint {self.cfg.module_id} received ACK for correlation_id={ack.correlation_id}, event={event} ack type = {ack.ack_type}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
+            
             if event != "ERROR 1" and event != "ERROR 2":
                 self._ack_q.put(ack)
             else:
-                self._log(f"[Endpoint.{self.cfg.module_id} ERROR] Received invalid ACK: {ack!r}")
+                                
+                self.logger.info(
+                    event_type="ENDPOINT_ERROR_INVALID_ACK",
+                    message=f"ModuleEndpoint {self.cfg.module_id} Received invalid ACK: {ack!r}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
 
         else:
             msg_obj = CognitiveMessage.from_bytes(payload)
@@ -366,12 +471,22 @@ class ModuleEndpoint:
 
                 self.send("CC", msg_obj.source, AckMessage.to_bytes(ack))
 
-                print(
-                  f"[BEHAVIOR] Sent ACK to {msg_obj.source} "
-                  f"for {msg_obj.message_id}"
+                self.logger.info(
+                    event_type="ENDPOINT_SENT_ACK",
+                    message=f"ModuleEndpoint {self.cfg.module_id} sent ACK to {msg_obj.source}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
                 )
+
             except Exception as e:
-                self._log(f"[BehaviorStub] ERROR sending ACK: {e}")
+                self.logger.info(
+                    event_type="ENDPOINT_ACK_SEND_ERROR",
+                    message=f"ModuleEndpoint {self.cfg.module_id} outbound ACK send error: {e!r}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
 
             
 

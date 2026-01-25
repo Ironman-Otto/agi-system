@@ -3,8 +3,8 @@ from typing import Any, Dict, Optional
 import time
 import uuid
 
-from .log_severity import LogSeverity
-from .execution_context import ExecutionContext
+from src.core.logging.log_severity import LogSeverity
+from src.core.logging.execution_context import ExecutionContext
 
 
 @dataclass

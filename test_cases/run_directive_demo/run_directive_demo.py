@@ -20,18 +20,6 @@ import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 
-"""
-BASE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
-PYTHON = sys.executable  # Path to Python interpreter (uses .venv)
-
-MODULES = {
-    "router":      ["python", f"{BASE_PATH}/src/core/cmb/cmb_router.py"],
-    "behavior":    ["python", f"{BASE_PATH}/src/core/behaviors/behavior_stub.py"],
-    "executive":   ["python", f"{BASE_PATH}/src/core/executive/executive_stub.py"],
-    "tk_gui":      ["python", f"{BASE_PATH}/test_cases/cmb_demo_01/gui_cmb_demo.py"],
-    "streamlit_gui": ["streamlit", "run", f"{BASE_PATH}/test_cases/cmb_demo_01/streamlit_gui.py"]
-}
-"""
 PYTHON = sys.executable
 
 MODULES = {
@@ -40,7 +28,7 @@ MODULES = {
     "executive":  [PYTHON, "-m", "src.core.modules.executive_module"],
     "nlp":        [PYTHON, "-m", "src.core.modules.nlp_module"],
     "planner":    [PYTHON, "-m", "src.core.modules.planner_module"],
-    "tk_gui":     [PYTHON, "-m", "test_cases.run_directive_demo.gui.directive_gui"],
+    "tk_gui":     [PYTHON, "-m", "test_cases.run_directive_demo.gui.directive_gui_2"],
 }
 
 # Dictionary mapping each channel acronym to a TCP port base
@@ -96,7 +84,7 @@ def main():
     except KeyboardInterrupt:
         print("[Launcher] Shutting down...")
         for p in procs:
-            p.send_signal(subprocess.signal.SIGINT)
+            p.terminate()
 
         # Give children time to exit cleanly
         for p in procs:

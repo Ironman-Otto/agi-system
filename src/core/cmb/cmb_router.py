@@ -30,6 +30,10 @@ from src.core.cmb.cmb_channel_config import (
     get_channel_egress_port,
 )
 
+from src.core.logging.log_manager import LogManager, Logger
+from src.core.logging.log_entry import LogEntry
+from src.core.logging.log_severity import LogSeverity
+from src.core.logging.file_log_sink import FileLogSink
 
 class ChannelRouter:
     def __init__(self, channel_name: str, host: str = "localhost"):
@@ -42,12 +46,23 @@ class ChannelRouter:
 
         self._stop_evt = threading.Event()
         self._thread = None
-    
-        print(
-            f"[ROUTER.{self.channel_name}] router_port={self.router_port}, "
-            f"ack_port={self.ack_port}, module_egress_port={self.module_egress_port}"
+
+        # Logging
+        self.log_manager = LogManager(min_severity=LogSeverity.INFO)
+        self.log_manager.register_sink(
+        FileLogSink("logs/system.jsonl")
         )
 
+        self.logger = Logger(self.channel_name, self.log_manager)
+
+        self.logger.info(
+            event_type="ROUTER_INIT",
+            message=f"Router {self.channel_name} port: {self.router_port} ack: {self.ack_port} module_egress: {self.module_egress_port}",
+            payload={
+                "note": "no payload"
+            }
+        )
+        
     def start(self) -> None:
         if self._thread and self._thread.is_alive():
             return
@@ -58,13 +73,27 @@ class ChannelRouter:
             daemon=False,
         )
         self._thread.start()
-        print(f"[Router.{self.channel_name}] Channel '{self.channel_name}' started")
+        
+        self.logger.info(
+                    event_type="ROUTER_START",
+                    message=f"Router {self.channel_name} started",
+                    payload={
+                        "note": "no payload"
+                    }
+                )
 
     def stop(self) -> None:
         self._stop_evt.set()
         if self._thread:
             self._thread.join(timeout=2.0)
-        print(f"[Router.{self.channel_name}] Channel '{self.channel_name}' stopped")
+        
+        self.logger.info(
+                event_type="ROUTER_STOP",
+                message=f"Router {self.channel_name} stopped",
+                payload={
+                    "note": "no payload"
+                }
+            )
 
     def _run(self) -> None:
         ctx = zmq.Context.instance()
@@ -80,9 +109,13 @@ class ChannelRouter:
         poller = zmq.Poller()
         poller.register(router_sock, zmq.POLLIN)
 
-        print(f"[Router.{self.channel_name}] ROUTER ingress on {self.router_port}")
-        print(f"[Router.{self.channel_name}] ROUTER egress  on {self.module_egress_port}")
-        print(f"[Router.{self.channel_name}] ROUTER ACK    on {self.ack_port}")
+        self.logger.info(
+                event_type="ROUTER_START_RUN",
+                message=f"[Router.{self.channel_name}] ROUTER ingress on {self.router_port}, egress on {self.module_egress_port}, ACK on {self.ack_port}",
+                payload={
+                    "note": "no payload"
+                }
+            )
 
         try:
             while not self._stop_evt.is_set():
@@ -97,7 +130,15 @@ class ChannelRouter:
                 try:
                     obj = json.loads(payload.decode("utf-8"))
                 except Exception as e:
-                    print(f"[Router.{self.channel_name} ERROR] Invalid JSON message: {e}")
+                
+                    self.logger.info(
+                        event_type="ROUTER_EXCEPTIOM_ERROR",
+                        message=f"Invalid JSON message: {e}",
+                        payload={
+                            "note": "no payload"
+                        }
+                    )
+
                     continue
 
                 msg_type = obj.get("msg_type")
@@ -107,11 +148,27 @@ class ChannelRouter:
                     try:
                         ack = AckMessage.from_dict(obj)
                     except Exception as e:
-                        print(f"[Router.{self.channel_name} ERROR] Invalid ACK message: {e}")
+                        
+                        self.logger.info(
+                            event_type="ROUTER_EXCEPTIOM_ERROR",
+                            message=f"[Router.{self.channel_name} ERROR] Invalid ACK message: {e}",
+                            payload={
+                                "note": "no payload"
+                            }
+                        )
+
                         continue
 
                     if not ack.targets:
-                        print(f"[Router.{self.channel_name} ERROR] ACK has no targets")
+                       
+                        self.logger.info(
+                            event_type="ROUTER_NO_ACK_TARGETS_ERROR",
+                            message=f"[Router.{self.channel_name} ERROR] ACK has no targets",
+                            payload={
+                                "note": "no payload"
+                            }
+                        )
+
                         continue
 
                     dest = ack.targets[0].encode("utf-8")
@@ -122,7 +179,15 @@ class ChannelRouter:
                 try:
                     msg = CognitiveMessage.from_dict(obj)
                 except Exception as e:
-                    print(f"[Router.{self.channel_name} ERROR] Invalid message: {e}")
+                    
+                    self.logger.info(
+                            event_type="ROUTER_INVALID_MESSAGE_ERROR",
+                            message=f"[Router.{self.channel_name} invalid message not Cognitive Message {e}",
+                            payload={
+                                "note": "no payload"
+                            }
+                        )
+                    
                     continue
 
                 for target in msg.targets:
@@ -158,4 +223,11 @@ class ChannelRouter:
             module_egress_sock.close()
             ack_sock.close()
             # Do not ctx.term() when using Context.instance() in multi-thread/process environments
-            print(f"[Router.{self.channel_name}] shutdown complete")
+            
+            self.logger.info(
+                            event_type="ROUTER_SHUTDOWN_COMPLETE",
+                            message=f"[Router.{self.channel_name}] shutdown complete",
+                            payload={
+                                "note": "no payload"
+                            }
+                        )

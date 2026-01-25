@@ -13,6 +13,10 @@ from typing import Dict
 
 import zmq
 
+from src.core.logging.log_manager import LogManager, Logger
+from src.core.logging.log_entry import LogEntry
+from src.core.logging.log_severity import LogSeverity
+from src.core.logging.file_log_sink import FileLogSink
 
 # ----------------------------
 # Inbound delivery semantics
@@ -50,7 +54,6 @@ class ChannelConfig:
     # ACK path (only meaningful for DIRECTED channels)
     ack_port: int | None = None
     ack_socket_type: int = zmq.DEALER
-
 
 # ----------------------------
 # Legacy port assignments
@@ -224,7 +227,7 @@ class ChannelRegistry:
 
     @classmethod
     def get(cls, channel_name: str) -> ChannelConfig:
-        print(f"ChannelRegistry: get('{channel_name}')")
+        
         if channel_name not in cls._channels:
             raise KeyError(f"Unknown CMB channel: {channel_name}")
         return cls._channels[channel_name]

@@ -63,7 +63,6 @@ class DirectiveGUI:
         # Poll loops
         self.root.after(100, self.poll_incoming)
 
-
     def create_widgets(self):
         # Directive input
         tk.Label(self.root, text="Directive").pack(anchor="w")
@@ -137,6 +136,9 @@ class DirectiveGUI:
                 self._append_output(f"[INCOMING] {msg.msg_type}\n")
         except queue.Empty:
             pass
+
+        self.root.after(100, self.poll_incoming)
+
     
     def on_send(self):
         directive = self.directive_text.get("1.0", "end").strip()

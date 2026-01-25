@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 from typing import Optional
+import threading
 
 from src.core.logging.log_entry import LogEntry
 
@@ -15,6 +16,7 @@ class FileLogSink:
 
     def __init__(self, logfile_path: str):
         self._path = Path(logfile_path)
+        self._lock = threading.Lock()
 
         # Ensure parent directory exists
         self._path.parent.mkdir(parents=True, exist_ok=True)
@@ -43,9 +45,9 @@ class FileLogSink:
                     else None
                 ),
             }
-
-            self._file.write(json.dumps(record) + "\n")
-            self._file.flush()
+            with self._lock:
+                self._file.write(json.dumps(record) + "\n")
+                self._file.flush()
 
         except Exception:
             # Never allow logging to break the system
@@ -56,6 +58,7 @@ class FileLogSink:
         Close the underlying file handle.
         """
         try:
-            self._file.close()
+            with self._lock:
+                self._file.close()
         except Exception:
             pass
