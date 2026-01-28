@@ -60,10 +60,19 @@ class AckMessage:
     def to_dict(self) -> dict:
         return asdict(self)
 
-    @staticmethod
-    def from_bytes(data: bytes) -> "AckMessage":
-        obj = json.loads(data.decode("utf-8"))
-        return AckMessage(**obj)
+    @classmethod
+    def from_bytes(cls, data: bytes) -> "AckMessage":
+        if not isinstance(data, (bytes, bytearray)):
+            raise TypeError(
+                f"AckMessage.from_bytes expects bytes, got {type(data)}"
+            )
+        try:
+            obj = json.loads(data.decode("utf-8"))
+        except Exception as e:
+            raise ValueError(f"Invalid ACK payload JSON: {e}") from e
+
+        return cls.from_dict(obj)
+
 
     @staticmethod
     def from_json(json_str: str) -> "AckMessage":

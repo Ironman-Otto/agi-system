@@ -113,14 +113,14 @@ class ModuleEndpoint:
         )
 
     
-    def send(self, channel: str, target_id: str, message: Any) -> None:
-        """
-        Enqueue an outbound message. Non-blocking (queue put).
-        ROUTER-style addressing: first frame is destination identity.
-        """
+    def send(self, channel: str, target_id: str, payload: bytes) -> None:
+        if not isinstance(payload, (bytes, bytearray)):
+            raise TypeError(
+                f"ModuleEndpoint.send expects bytes, got {type(payload)}"
+            )
         dest = target_id.encode("utf-8")
-        payload = self._to_bytes(message)
         self._send_q.put((channel, dest, payload))
+
 
     def recv(self, timeout: Optional[float] = None) -> Optional[Any]:
         """Receive a normal inbound message (not ACK)."""
@@ -268,12 +268,15 @@ class ModuleEndpoint:
 
     def _teardown_zmq(self) -> None:
         # Close sockets created in thread
-        for s in (self._out_socks, self._in_socks, self._ack_socks):
-            try:
-                if s is not None:
-                    s.close(linger=0)
-            except Exception:
-                pass
+        for sock_dict in (self._out_socks, self._in_socks, self._ack_socks):
+            if not sock_dict:
+                continue
+            for sock in sock_dict.values():
+                try:
+                    sock.close(linger=0)
+                except Exception:
+                    pass
+
 
         self._out_socks = None
         self._in_socks = None
@@ -381,8 +384,6 @@ class ModuleEndpoint:
 
                 sent += 1
 
-                self._log(f"[Endpoint.{self.cfg.module_id}] SEND ch={ch_name} dest={dest!r}")
-
                 self.logger.info(
                     event_type="ENDPOINT_SENT_MESSAGE",
                     message=f"ModuleEndpoint {self.cfg.module_id} sent message on channel {ch_name} to {dest!r}",
@@ -405,18 +406,7 @@ class ModuleEndpoint:
         """
         frames = sock.recv_multipart()
         payload = frames[-1]
-        msg_obj = json.loads(payload.decode("utf-8"))
-        
-        self.logger.info(
-                    event_type="ENDPOINT_RECEIVED_MESSAGE",
-                    message=f"ModuleEndpoint {self.cfg.module_id} received message from {msg_obj.get('source')!r}",
-                    payload={
-                        "channels": list(self.cfg.channels.keys())
-                    }
-                )
-        # Most common cases:
-        # - ROUTER->DEALER: [sender_id, b"", payload] or [sender_id, payload]
-        payload = frames[-1]
+
 
         if is_ack:
             ack = AckMessage.from_bytes(payload)
@@ -453,8 +443,16 @@ class ModuleEndpoint:
                     target=msg_obj.targets,
                     payload=payload,
                 )
-            print(f"[Endpoint.{self.cfg.module_id} DEBUG] Created transaction for incoming message_id={message_id}\n")
-             # send ACK back
+            
+            self.logger.info(
+                    event_type="ENDPOINT_CREATED_TRANSACTION",
+                    message=f"ModuleEndpoint {self.cfg.module_id}  Created transaction for incoming message_id={message_id}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+            )
+            
+            # send ACK back
             try:
                 ack = AckMessage.create(
                     msg_type="ACK",
@@ -469,7 +467,7 @@ class ModuleEndpoint:
                     }
                 )
 
-                self.send("CC", msg_obj.source, AckMessage.to_bytes(ack))
+                self.send("CC", msg_obj.source, ack.to_bytes())
 
                 self.logger.info(
                     event_type="ENDPOINT_SENT_ACK",

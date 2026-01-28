@@ -22,11 +22,26 @@ from tkinter import scrolledtext
 from src.core.cmb.endpoint_config import MultiChannelEndpointConfig
 from src.core.cmb.module_endpoint import ModuleEndpoint
 from src.core.messages.cognitive_message import CognitiveMessage
+from src.core.logging.log_manager import LogManager, Logger
+from src.core.logging.log_severity import LogSeverity
+from src.core.logging.file_log_sink import FileLogSink
 
 class DirectiveGUI:
     def __init__(self, *, logfile: str = "logs/system.jsonl"):
         self.module_id = "GUI"
         self.logfile = logfile
+         # -----------------------------
+        # Logging setup
+        # -----------------------------
+        log_manager = LogManager(min_severity=LogSeverity.INFO)
+        log_manager.register_sink(FileLogSink("logs/system.jsonl"))
+        logger = Logger("DIRGUI", log_manager)
+
+        logger.info(
+            event_type="DIRECTIVE_GUI_INIT",
+            message="GUI module initializing",
+        )
+
         
         self.root = tk.Tk()
         self.root.title("AGI-System Demo – Directive → Plan")
@@ -46,8 +61,8 @@ class DirectiveGUI:
 
         self.ep = ModuleEndpoint(
             config=cfg,
-            logger=lambda s: None,
-            serializer=lambda msg: msg.to_bytes(),
+            logger=logger.info,
+            serializer=lambda b: b,
             deserializer=lambda b: b,
         )
 

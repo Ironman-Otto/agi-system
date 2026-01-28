@@ -1,8 +1,8 @@
 """
-NLP Module
+Behavior Stub Module
 
-Receives directives from the GUI, normalizes them,
-and forwards structured directives to the Planner.
+Receives messages from the Cognitive Message Bus and logs them.
+Refactored to use the CommonModuleLoop.
 """
 
 from __future__ import annotations
@@ -15,10 +15,9 @@ from src.core.logging.log_manager import LogManager, Logger
 from src.core.logging.log_severity import LogSeverity
 from src.core.logging.file_log_sink import FileLogSink
 from src.core.modules.common_module_loop import CommonModuleLoop
-from src.core.messages.cognitive_message import CognitiveMessage
 
 
-MODULE_ID = "NLP"
+MODULE_ID = "behavior"
 
 
 def main():
@@ -30,8 +29,8 @@ def main():
     logger = Logger(MODULE_ID, log_manager)
 
     logger.info(
-        event_type="NLP_INIT",
-        message="NLP module initializing",
+        event_type="BEHAVIOR_INIT",
+        message="Behavior module initializing",
     )
 
     # -----------------------------
@@ -51,71 +50,43 @@ def main():
 
     endpoint = ModuleEndpoint(
         config=cfg,
-        logger=logger.info,
+        logger=None,  # logging handled separately
         serializer=lambda msg: msg.to_bytes(),
         deserializer=lambda b: b,
     )
+
+    endpoint.start()
 
     # -----------------------------
     # Message handler
     # -----------------------------
     def handle_message(msg):
-        if msg.msg_type != "DIRECTIVE_SUBMIT":
-            return
-
         logger.info(
-            event_type="NLP_DIRECTIVE_RECEIVED",
-            message="Directive received",
+            event_type="BEHAVIOR_MESSAGE_RECEIVED",
+            message="Behavior received message",
             payload={
+                "msg_type": msg.msg_type,
                 "source": msg.source,
                 "message_id": msg.message_id,
             },
         )
 
-        directive_text = msg.payload.get("directive_text")
-
-        normalized_payload = {
-            "original_text": directive_text,
-            "received_at": time.time(),
-            "source": msg.source,
-        }
-
-        out_msg = CognitiveMessage.create(
-            schema_version=str(CognitiveMessage.get_schema_version()),
-            msg_type="DIRECTIVE_NORMALIZED",
-            msg_version="0.1.0",
-            source=MODULE_ID,
-            targets=["PLANNER"],
-            context_tag=None,
-            correlation_id=msg.message_id,
-            payload=normalized_payload,
-        )
-
-        endpoint.send("CC", "PLANNER", out_msg.to_bytes())
-
-        logger.info(
-            event_type="NLP_DIRECTIVE_EMITTED",
-            message="Normalized directive sent to planner",
-            payload={
-                "target": "PLANNER",
-                "correlation_id": msg.message_id,
-            },
-        )
+        # For now: no response logic
+        # Future: behavior selection, sequencing, execution
 
     # -----------------------------
-    # Lifecycle hooks
+    # Optional lifecycle hooks
     # -----------------------------
     def on_start():
-        endpoint.start()
         logger.info(
-            event_type="NLP_START",
-            message="NLP module started",
+            event_type="BEHAVIOR_START",
+            message="Behavior module started",
         )
 
     def on_shutdown():
         logger.info(
-            event_type="NLP_SHUTDOWN",
-            message="NLP module shutting down",
+            event_type="BEHAVIOR_SHUTDOWN",
+            message="Behavior module shutting down",
         )
 
     # -----------------------------
@@ -134,8 +105,8 @@ def main():
         loop.start()
     except KeyboardInterrupt:
         logger.info(
-            event_type="NLP_INTERRUPT",
-            message="NLP interrupted by user",
+            event_type="BEHAVIOR_INTERRUPT",
+            message="Behavior interrupted by user",
         )
         loop.stop()
 

@@ -24,7 +24,7 @@ PYTHON = sys.executable  # Path to Python interpreter (uses .venv)
 
 MODULES = {
     "router":      ["python", f"{BASE_PATH}/src/core/cmb/cmb_router.py"],
-    "behavior":    ["python", f"{BASE_PATH}/src/core/behaviors/behavior_stub.py"],
+    "behavior":    ["python", f"{BASE_PATH}/src/core/modulesbehaviors/behavior_stub.py"],
     "executive":   ["python", f"{BASE_PATH}/src/core/executive/executive_stub.py"],
     "tk_gui":      ["python", f"{BASE_PATH}/test_cases/cmb_demo_01/gui_cmb_demo.py"],
     "streamlit_gui": ["streamlit", "run", f"{BASE_PATH}/test_cases/cmb_demo_01/streamlit_gui.py"]
@@ -34,7 +34,7 @@ PYTHON = sys.executable
 
 MODULES = {
     "router":     [PYTHON, "-m", "src.core.cmb.cmb_router_entry"],
-    "behavior":   [PYTHON, "-m", "src.core.behaviors.behavior_stub"],
+    "behavior":   [PYTHON, "-m", "src.core.modules.behavior_module"],
     "executive":  [PYTHON, "-m", "src.core.executive.executive_stub"],
     "tk_gui":     [PYTHON, "-m", "test_cases.cmb_demo_01.gui_cmb_demo"],
 }
