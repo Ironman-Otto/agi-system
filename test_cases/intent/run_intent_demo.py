@@ -17,6 +17,13 @@ def main() -> None:
         "Compare PCIe and optical backplanes for a blade server.",
         "Design a test plan for the CMB router ACK flow.",
         "Monitor temperature and alert if it exceeds threshold.",
+        "What do you think of what happened",
+        "Hello what",
+        "Design the system.",
+        "Fix it",
+        "Explain and implement the architecture.",
+        "monitor performance",
+        'Deploy the solution'
     ]
 
     for d in directives:

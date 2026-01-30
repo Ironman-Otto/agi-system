@@ -10,7 +10,7 @@ from src.core.intent.models import IntentObject
 @dataclass
 class IntentExtractor(IntentExtractionInterface):
     llm_adapter: LLMAdapter
-    min_confidence: float = 0.60
+    min_confidence: float = 0.85
 
     def extract_intent(self, directive_text: str) -> IntentObject:
         raw = self.llm_adapter.classify_directive(directive_text)
