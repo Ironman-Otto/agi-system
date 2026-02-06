@@ -7,3 +7,5 @@ pandas
 pydantic
 pytest
 python-docx
+openai>=1.0.0
+python-dotenv

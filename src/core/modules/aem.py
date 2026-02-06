@@ -28,6 +28,9 @@ from src.core.logging.log_manager import LogManager, Logger
 from src.core.logging.log_severity import LogSeverity
 from src.core.logging.file_log_sink import FileLogSink
 
+from src.core.intent.llm_adapter_openai_intent import OpenAIIntentAdapter
+from src.core.policy.model_selection.policy import ModelSelectionPolicy
+
 
 MODULE_ID = "EXEC"  # keep stable for launcher + GUI compatibility
 
@@ -60,11 +63,18 @@ class AEM:
         # -----------------------------
         # Intent infrastructure (Phase 1)
         # -----------------------------
-        adapter = MockLLMAdapter()  # swapped later for OpenAI adapter
+        policy = ModelSelectionPolicy(
+            max_tokens_per_cycle=20_000,
+            max_cost_per_cycle=0.05,
+        )
+
+        adapter = OpenAIIntentAdapter(policy)
+
         self.intent_extractor = IntentExtractor(
             llm_adapter=adapter,
             min_confidence=0.60,
         )
+
         self.intent_router = DirectiveRouter()
 
         # -----------------------------
