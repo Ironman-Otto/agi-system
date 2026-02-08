@@ -116,27 +116,77 @@ class OpenAIIntentAdapter:
         """
 
         prompt = f"""
-You are an intent classification engine.
+You are an intent classification engine for a strict, type-safe system.
 
 Given the directive below, classify it into a structured intent.
 
 Directive:
 "{directive_text}"
 
-Return JSON with exactly these fields:
-- directive_type
-- planning_required (true/false)
-- clarification_required (true/false)
-- urgency_level
-- risk_level
-- expected_response_type
-- confidence_score (0.0–1.0)
+You MUST follow these rules exactly.
 
-Rules:
-- Return JSON only.
-- Do not include explanations.
+--------------------------------
+VALID ENUM VALUES (DO NOT INVENT NEW VALUES)
+--------------------------------
+
+DirectiveType (choose ONE):
+- cognitive
+- analytical
+- goal_oriented
+- behavioral
+- supervisory
+
+UrgencyLevel (choose ONE):
+- low
+- normal
+- high
+- critical
+
+RiskLevel (choose ONE):
+- none
+- low
+- medium
+- high
+
+ExpectedResponseType (choose ONE):
+- textual_response
+- structured_data
+- plan
+- analysis
+- clarification
+
+--------------------------------
+OUTPUT FORMAT (STRICT)
+--------------------------------
+
+Return a single JSON object with EXACTLY these fields:
+
+{{
+  "intent_label": "<brief intent description limited to 8 words>",
+  "directive_type": "<one of DirectiveType values above>",
+  "planning_required": <true|false>,
+  "clarification_required": <true|false>,
+  "urgency_level": "<one of UrgencyLevel values above>",
+  "risk_level": "<one of RiskLevel values above>",
+  "expected_response_type": "<one of ExpectedResponseType values above>",
+  "confidence_score": <float between 0.0 and 1.0>,
+  "intent_rationale": "<brief explanation>",
+  "suggested_extension": "<optional string or null>"
+}}
+
+--------------------------------
+CRITICAL RULES
+--------------------------------
+
+- You MUST use ONLY the exact enum values listed.
+- If unsure, choose the CLOSEST valid enum value.
+- DO NOT invent new values.
+- DO NOT use synonyms.
+- DO NOT explain enum choices outside of "intent_rationale".
+- If the directive is ambiguous, set clarification_required = true.
+
+If you violate any rule, your output will be rejected.
 """
-
         response = self.client.responses.create(
             model=model_name,
             input=prompt,
@@ -163,7 +213,7 @@ Rules:
         Minimal validation before accepting result.
         """
         required_fields = {
-            "directive_type",
+            "intent_label",
             "planning_required",
             "clarification_required",
             "urgency_level",

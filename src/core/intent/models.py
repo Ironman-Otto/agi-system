@@ -49,6 +49,7 @@ class IntentObject:
     Downstream control logic should depend on these fields, not on raw text.
     """
     intent_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    intent_label: str = "unknown"
     directive_source: DirectiveSource = DirectiveSource.HUMAN
     directive_type: DirectiveType = DirectiveType.COGNITIVE
     planning_required: bool = False

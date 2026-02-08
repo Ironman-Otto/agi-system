@@ -27,10 +27,9 @@ def from_dict(data: dict[str, Any]) -> IntentObject:
     Convert a dict (typically LLM JSON output) into an IntentObject,
     enforcing enum validity and basic constraints.
     """
+    print(f"Debug: Raw LLM output for intent classification: {data}")
     required = [
-        "intent_id",
-        "directive_source",
-        "directive_type",
+        "intent_label",
         "planning_required",
         "urgency_level",
         "risk_level",
@@ -45,9 +44,9 @@ def from_dict(data: dict[str, Any]) -> IntentObject:
 
     try:
         intent = IntentObject(
-            intent_id=str(data["intent_id"]),
             directive_source=DirectiveSource(str(data["directive_source"])),
             directive_type=DirectiveType(str(data["directive_type"])),
+            intent_label=str(data["intent_label"]),
             planning_required=bool(data["planning_required"]),
             urgency_level=UrgencyLevel(str(data["urgency_level"])),
             risk_level=RiskLevel(str(data["risk_level"])),
