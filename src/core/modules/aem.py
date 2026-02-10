@@ -32,7 +32,7 @@ from src.core.intent.llm_adapter_openai_intent import OpenAIIntentAdapter
 from src.core.policy.model_selection.policy import ModelSelectionPolicy
 
 
-MODULE_ID = "EXEC"  # keep stable for launcher + GUI compatibility
+MODULE_ID = "AEM"  # keep stable for launcher + GUI compatibility
 
 
 class AEM:

@@ -9,6 +9,10 @@ from __future__ import annotations
 
 import time
 
+from src.core.intent.intent_extractor import IntentExtractor
+from src.core.intent.llm_adapter_openai_intent import OpenAIIntentAdapter
+from src.core.policy.model_selection.policy import ModelSelectionPolicy
+
 from src.core.cmb.endpoint_config import MultiChannelEndpointConfig
 from src.core.cmb.module_endpoint import ModuleEndpoint
 from src.core.logging.log_manager import LogManager, Logger
@@ -63,41 +67,53 @@ def main():
         if msg.msg_type != "DIRECTIVE_SUBMIT":
             return
 
+        directive_text = msg.payload.get("directive_text")
+        directive_source = msg.payload.get("directive_source", "UNKNOWN")
+        
         logger.info(
             event_type="NLP_DIRECTIVE_RECEIVED",
-            message="Directive received",
+            message="Directive received (NLP MARKER V2)",
             payload={
                 "source": msg.source,
                 "message_id": msg.message_id,
+                "directive_source": directive_source,
+                "directive_text": directive_text,  
             },
         )
 
-        directive_text = msg.payload.get("directive_text")
+        policy = ModelSelectionPolicy(20_000, 0.05)
+        adapter = OpenAIIntentAdapter(policy)
+        extractor = IntentExtractor(adapter, min_confidence=0.60)
 
-        normalized_payload = {
-            "original_text": directive_text,
-            "received_at": time.time(),
-            "source": msg.source,
+        intent = extractor.extract_intent(directive_text, directive_source)
+
+        intent_payload = {
+            "intent_id": intent.intent_id,
+            "directive_text": directive_text,
+            "directive_source": directive_source,
+            "intent": intent.to_dict(),
+            "nlp_received_at": time.time(),
         }
 
         out_msg = CognitiveMessage.create(
             schema_version=str(CognitiveMessage.get_schema_version()),
-            msg_type="DIRECTIVE_NORMALIZED",
+            msg_type="INTENT_RESULT",
             msg_version="0.1.0",
             source=MODULE_ID,
-            targets=["PLANNER"],
+            targets=["AEM"],
             context_tag=None,
             correlation_id=msg.message_id,
-            payload=normalized_payload,
+            payload=intent_payload,
         )
-
-        endpoint.send("CC", "PLANNER", out_msg.to_bytes())
+        print(f"out_msg: {out_msg.to_dict()}")
+        
+        endpoint.send("CC", "AEM", out_msg.to_bytes())
 
         logger.info(
             event_type="NLP_DIRECTIVE_EMITTED",
-            message="Normalized directive sent to planner",
+            message="Normalized directive sent to AEM",
             payload={
-                "target": "PLANNER",
+                "target": "AEM",
                 "correlation_id": msg.message_id,
             },
         )

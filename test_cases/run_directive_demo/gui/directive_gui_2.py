@@ -25,6 +25,7 @@ from src.core.messages.cognitive_message import CognitiveMessage
 from src.core.logging.log_manager import LogManager, Logger
 from src.core.logging.log_severity import LogSeverity
 from src.core.logging.file_log_sink import FileLogSink
+from src.core.intent.schema import DirectiveSource
 
 class DirectiveGUI:
     def __init__(self, *, logfile: str = "logs/system.jsonl"):
@@ -171,6 +172,7 @@ class DirectiveGUI:
             context_tag=None,
             correlation_id=None,
             payload={
+                "directive_source":DirectiveSource.HUMAN.value,
                 "directive_text": directive,
                 "context": {
                     "preferred_output_format": preferred or None,
