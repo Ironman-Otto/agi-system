@@ -9,3 +9,5 @@ pytest
 python-docx
 openai>=1.0.0
 python-dotenv
+pdfplumber
+python-pptx
