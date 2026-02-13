@@ -1,0 +1,118 @@
+Morning Otto — you’re thinking about this exactly the right way. Now that the “happy path” works, the next step is turning CMB into a reliable transport + protocol platform: ACK state machine, durable logging, correlation/transaction registry, and a clean API surface so other teams can build on it.
+Below is a concrete, step-by-step build plan that keeps your “small working intervals” discipline.
+
+1) Reliability core: ACK state machine in ModuleEndpoint
+Goal
+Make message exchange reliable without forcing module logic to manage retries, timeouts, dedupe, or correlation tracking.
+Recommended ACK taxonomy
+ROUTER_ACK (Delivery ACK): router says “accepted + forwarded”
+EXEC_ACK (Execution ACK): target module says “processed”
+NACK / ERROR_ACK: explicit failure (validation, no route, expired TTL)
+TIMEOUT: locally inferred when ACK doesn’t arrive
+This aligns with proven “reliable request-reply” user-space patterns in ZeroMQ architectures. zguide.zeromq.org
+State machine (per outbound message)
+Keep it simple and deterministic:
+NEW → sent to router → AWAIT_ROUTER_ACK
+on ROUTER_ACK → AWAIT_EXEC_ACK (optional, based on message flags)
+on EXEC_ACK → DONE
+on timeout in either state → retry until max_retries, then FAILED_TIMEOUT
+on NACK → FAILED_NACK
+Key behaviors
+Correlation table keyed by message_id (and/or correlation_id)
+Retry uses exponential backoff with jitter
+Dedupe: receiver can ignore duplicate message_id and still re-send EXEC_ACK
+
+2) Transaction registry (in-memory first, DB later)
+Goal
+Provide observability + correctness:
+“What messages are in-flight?”
+“Which ones failed? why?”
+“How long did each phase take?”
+Data structure
+tx_table[message_id] = TransactionRecord(...)
+Fields: channel, source, target, timestamps, state, retry_count, last_error, ack_status.
+This is straight out of “reliability patterns” thinking: track what you’ve sent until you know the outcome. zguide.zeromq.org
+
+3) Logging: file logger now, DB logger later
+Goal
+A reproducible “flight recorder” of CMB activity.
+What to log (minimum viable)
+Send event: message_id, channel, target, size
+Router ACK received: message_id, status, latency
+Exec ACK received: message_id, status, latency
+Timeout + retry: attempt number, backoff duration
+NACK / errors: error code + payload
+Implementation (now)
+Use Python logging with RotatingFileHandler so logs don’t grow unbounded. Python documentation+1
+Implementation (later)
+Swap handler with DB writer / batch shipper. Keep the log “event schema” stable so you don’t break tooling.
+
+4) Router responsibilities: keep them centralized
+You’re already moving in the right direction by having the router own protocol coordination. In ZeroMQ, identity/addressing is local to ROUTER and acts like an address book key. Keeping routing and protocol enforcement centralized prevents “everyone re-implementing reliability.” zguide.zeromq.org+1
+Router should do
+Validate message header quickly (schema_version, msg_type, ttl not expired)
+Route to destination
+Emit ROUTER_ACK
+Forward EXEC_ACK back to original sender
+Optionally: keep a small “recent message id cache” to reduce duplicate forwarding
+
+5) Step-by-step roadmap with small working checkpoints
+Milestone A — ACK state machine v0 (single channel)
+Endpoint sends → waits ROUTER_ACK with timeout/retry
+Log events to file
+Transaction table updated
+Pass condition
+You can see retry behavior in logs when router is stopped.
+Milestone B — Add EXEC_ACK (behavior → router → executive)
+Behavior sends EXEC_ACK to router
+Router forwards to executive
+Endpoint resolves transaction to DONE
+Pass condition
+GUI displays both ACKs and tx_table shows DONE.
+Milestone C — Multi-channel + policy flags
+Add per-message flags:
+require_exec_ack: bool
+timeout_ms
+max_retries
+Pass condition
+Some messages require exec ACK, others don’t.
+Milestone D — Persistence hooks
+Provide an interface: EventSink (file now, DB later)
+Provide an interface: TxStore (dict now, sqlite later)
+
+6) API surface for “CMB as a product”
+A clean, “people can build on it” API usually ends up with:
+ModuleEndpoint.send(channel, target, message, *, require_exec_ack=True) -> message_id
+ModuleEndpoint.recv(...)
+ModuleEndpoint.poll_events() (or callbacks)
+ModuleEndpoint.get_transaction(message_id)
+And a “tools” layer:
+cmb_tail (live log viewer)
+cmb_trace(message_id) (show lifecycle)
+cmb_health (router alive, queue depth, drop rate)
+
+7) One more future-facing addition: tracing context
+When you’re ready to correlate message exchanges across modules and processes, you’ll want trace context propagation (even if you don’t go full OpenTelemetry immediately). OpenTelemetry context propagation is designed precisely for “causal linking across process boundaries.” OpenTelemetry+1
+
+What I recommend we do next (pick one)
+Implement ACK state machine v0 inside ModuleEndpoint (single-channel, minimal fields)
+Add RotatingFileHandler logger + event schema
+Add TransactionRecord + tx_table and a get_transaction() API
+If you choose (1), I’ll propose the exact TransactionRecord fields and the minimal state machine transitions so you can wire it into your existing endpoint loop without destabilizing what already works.
+
+Sources (APA)
+Hintjens, P. (n.d.). Chapter 4: Reliable request-reply patterns. ØMQ – The Guide. zguide.zeromq.org
+Hintjens, P. (n.d.). Chapter 2: Sockets and patterns. ØMQ – The Guide. zguide.zeromq.org
+Hintjens, P. (n.d.). Chapter 3: Advanced request-reply patterns. ØMQ – The Guide. zguide.zeromq.org
+Python Software Foundation. (n.d.). logging.handlers — Logging handlers. Python 3 documentation. Python documentation
+Python Software Foundation. (n.d.). logging — Logging facility for Python. Python 3 documentation. Python documentation
+OpenTelemetry. (2025). Propagation (Python). OpenTelemetry Documentation. OpenTelemetry
+OpenTelemetry. (2025). Context propagation. OpenTelemetry Documentation. OpenTelemetry
+Further research (APA)
+Hintjens, P. (n.d.). Chapter 7: Advanced architecture using ZeroMQ. ØMQ – The Guide. zguide.zeromq.org
+PyZMQ Project. (n.d.). zmq.Socket — PyZMQ API reference. PyZMQ Documentation. pyzmq.readthedocs.io
+ZeroMQ Project. (n.d.). Socket API. zeromq.org. zeromq.org
+Top of Form
+er
+Bottom of Form
+ChatGPT can make mistakes. Check important info.

@@ -1,0 +1,137 @@
+ASP AGI Architecture – High-Level Outline
+1. Introduction and Architectural Intent
+Purpose of the ASP AGI architecture
+Design goals: modularity, scalability, safety, cognitive realism
+Layered architecture philosophy
+Role of the Cognitive Message Bus (CMB) as the unifying substrate
+2. Executive Control Layer
+Role: global orchestration, priority management, mode control
+Functional regions:
+Orchestration Core (goal integration, attention allocation)
+Adaptive Router / Mode Manager (conscious vs. subconscious operation)
+Threat Monitor and Emergency Handling
+Key interactions:
+Receives diagnostics, perception summaries
+Issues global directives and interrupts
+Diagram candidates:
+High-level cognitive loop with executive overrides
+3. Cognitive Layer
+Role: reasoning, planning, simulation, decision-making
+Functional regions:
+Concept Processor and Concept Space / Knowledge Graph
+Simulation Engine (mental models, what-if analysis)
+Reflection Module (post-action reasoning)
+Language Engine / LLM integration
+Metacognitive Question Generation (internal inquiry)
+Key interactions:
+Consumes perception outputs
+Queries and updates memory
+Produces plans and decisions for behavior
+Diagram candidates:
+Cognitive reasoning flow
+Concept space traversal
+4. Perception Layer
+Role: sensory intake and interpretation
+Functional regions:
+Sensory input modules (vision, audio, text, system signals)
+Multi-modal integration
+Salience filtering and attention biasing
+Novelty and anomaly detection
+Preliminary affective tagging
+Key interactions:
+Publishes structured percepts to CMB
+Receives top-down attention directives
+Diagram candidates:
+Perception pipeline (raw input to concepts)
+5. Memory Layer
+Role: knowledge persistence and recall
+Functional regions:
+Episodic memory (events and experiences)
+Semantic memory (concepts and facts)
+Procedural memory (skills and behaviors)
+Adaptive recall mechanisms
+Consolidation and replay processes
+Key interactions:
+Serves queries from cognitive and awareness layers
+Receives updates from cognition and behavior
+Diagram candidates:
+Memory subsystem breakdown
+Replay and consolidation loop
+6. Behavioral Layer
+Role: action selection and execution management
+Functional regions:
+Action Selection Matrix
+Behavior sequencing and execution planning
+Cost-benefit and ethical filtering
+Execution monitoring
+Behavior library management
+Key interactions:
+Receives plans from cognitive layer
+Dispatches commands to output layer
+Reports outcomes and failures
+Diagram candidates:
+Plan-to-action pipeline
+Feedback loop from execution
+7. Self-Awareness Layer
+Role: introspection, self-monitoring, meta-cognition
+Functional regions:
+Self-model representation
+Capability and health assessment
+Self-talk and internal dialogue
+Error and anomaly introspection
+Affect and confidence interpretation
+Key interactions:
+Consumes diagnostic and status messages
+Triggers reflection and executive adjustments
+Diagram candidates:
+Awareness feedback loops
+Self-model integration with executive control
+8. Output / Actuation Layer
+Role: safe execution of actions in external world
+Functional regions:
+Actuator interface modules
+Safety and ethical safeguards
+Execution manager
+Feedback reporting
+Key interactions:
+Receives commands from behavioral layer
+Sends execution results and faults
+Diagram candidates:
+Action execution and safety gate
+9. Cognitive Message Bus (CMB)
+Role: asynchronous communication backbone
+Logical channels:
+Control Channel (CC)
+Symbolic Message Channel (SMC)
+Vector Bus (VB)
+Behavioral Flow Channel (BFC)
+Diagnostic & Awareness Channel (DAC)
+External Interface Gateway (EIG)
+Introspection / Self-Talk Channel
+Design features:
+Publish/subscribe model
+Priority and QoS handling
+Loose coupling and extensibility
+Diagram candidates:
+Bus-centric system diagram with channels
+10. Supporting and Cross-Cutting Systems
+Learning and adaptation mechanisms
+Goal, belief, and value systems
+Resource and tool interfaces
+Subconscious/background processing
+11. Open Architectural Questions
+Value alignment and ethics enforcement
+Learning boundaries and self-modification
+Subconscious vs. conscious processing split
+Social and relational awareness
+Memory scaling and long-term persistence
+12. Hardware Integration Appendix (Reference)
+Optical backplane for CMB
+Common Logic Modules (CLM)
+Hardware Awareness Technology (HAT)
+FPGA and neuromorphic acceleration
+Sensor and actuator hardware alignment
+13. Conclusion and Next Steps
+Rationale for documenting architecture before coding
+Use of this outline for phased implementation
+Transition plan from architecture to stub-based coding

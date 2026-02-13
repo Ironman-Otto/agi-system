@@ -1,0 +1,97 @@
+Section 4 – Event Model
+4.1 Why Events Are Central to the Architecture
+In many systems, events are treated as incidental—mere triggers or log entries. In this architecture, events are foundational. They are the primary means by which the system observes itself and its environment over time. Every meaningful change, decision, execution step, or outcome is represented as an event. Together, events form the execution narrative of the system.
+The Event Model exists to answer questions that are critical for both architects and end users: - What happened? - Why did it happen? - In what order did things occur? - What decisions led to which actions? - Where did errors or inefficiencies arise?
+By elevating events to first-class architectural elements, the system becomes explainable, replayable, and improvable by design rather than by after-the-fact instrumentation.
+
+4.2 What Is an Event in This System
+An Event is a recorded observation of something relevant that occurred at a specific point in the lifecycle of work. An event does not imply action by itself; it implies awareness. Some events lead to action, others provide context, and many simply contribute to understanding what unfolded.
+Key characteristics of an event:
+Temporal – An event occurs at a specific moment and is ordered relative to other events.
+Observable – An event represents something the system can observe, detect, or infer.
+Immutable – Once recorded, an event is never altered.
+Contextual – Events exist within the context of a Work Instance.
+Typed – Every event has a category that explains its role in execution.
+Events are not free-form log messages. They are structured records that participate in a larger execution model.
+
+4.3 Events Occur Throughout the Entire Work Lifecycle
+A critical design decision in this architecture is that events are continuous, not just initiating triggers. Events may occur: - before work begins (background context), - during planning and decision-making, - throughout execution and coordination, - at completion and evaluation, - during reflection and learning.
+This continuous view avoids the common mistake of attributing outcomes solely to the initiating event. Instead, it recognizes that execution is shaped by many intervening events, including context changes, decisions, errors, and retries.
+
+4.4 Event Taxonomy: Types of Events
+To make event streams meaningful and analyzable, events are categorized by type. The taxonomy below is intentionally general so it applies across domains.
+4.4.1 Initiating Events
+Initiating events are events that cause the system to evaluate whether work should begin.
+Examples: - arrival of a human directive - detection of an environmental threshold - activation of an internal goal
+An initiating event does not guarantee that work will begin. It merely creates the conditions for evaluation.
+
+4.4.2 Contextual Events
+Contextual events modify how the system interprets other events or plans work. They do not initiate work by themselves.
+Examples: - resource availability change - priority updates - policy or configuration changes - environmental condition shifts
+Contextual events are often overlooked, yet they are essential for explaining why decisions changed mid-execution.
+
+4.4.3 Decision Events
+Decision events record explicit internal choices made by the system.
+Examples: - act versus ignore - strategy selection - behavior selection - escalation or deferral decisions
+Decision events are critical for explainability. Without them, the system’s behavior appears opaque even if execution is recorded perfectly.
+
+4.4.4 Execution Events
+Execution events mark progress during task execution.
+Examples: - task started - task completed - task failed - retry initiated
+Execution events provide the raw material for performance analysis, reliability metrics, and debugging.
+
+4.4.5 Interaction Events
+Interaction events capture communication and coordination between modules or external systems.
+Examples: - message sent - message received - acknowledgment received - timeout occurred
+These events bridge semantic execution and transport reliability, enabling end-to-end tracing across distributed components.
+
+4.4.6 State Transition Events
+State transition events record changes in the internal state of work or modules.
+Examples: - idle → active - active → suspended - executing → aborted
+State transitions are essential for reconstructing execution flow and validating state machines.
+
+4.4.7 Error Events
+Error events record abnormal conditions or failures.
+Examples: - validation failure - timeout exceeded - invariant violation - execution exception
+Errors are treated as events rather than side-effects. This allows the system to analyze failures systematically and learn from them.
+
+4.4.8 Outcome Events
+Outcome events summarize the evaluation of completed or terminated work.
+Examples: - success - partial success - failure - aborted - expired
+Outcome events close the execution loop and provide the basis for learning and optimization.
+
+4.4.9 Reflection (Meta) Events
+Reflection events capture observations about the execution itself.
+Examples: - execution inefficient - behavior candidate identified - anomaly detected in execution pattern
+These events are future-facing and support continuous improvement.
+
+4.5 Event Ordering and Sequencing
+Events are ordered using explicit sequencing, not inferred timing. While timestamps capture when something occurred, they are insufficient to guarantee deterministic ordering in concurrent systems.
+Each event is therefore assigned a sequence number scoped to its Work Instance. This ensures: - deterministic replay - consistent analysis - unambiguous causality reconstruction
+Sequencing is authoritative for replay; timestamps are supplementary for performance analysis.
+
+4.6 Event Causality
+Understanding execution requires more than order; it requires causality. The Event Model supports causality by allowing events to explicitly reference other events that influenced them.
+Examples: - a decision event references the initiating event - an execution event references the decision that authorized it - an error event references the execution step that failed
+Explicit causality enables root-cause analysis and supports future behavior extraction.
+
+4.7 Event Streams as the System’s Memory of Execution
+For each Work Instance, events form an append-only event stream. This stream is the authoritative record of what occurred during execution.
+From an architectural perspective, the event stream: - replaces ad hoc logging - supports offline analysis and replay - provides the foundation for learning systems
+From an end-user perspective, it enables: - transparency - trust - explainability
+
+4.8 Practical Implications for Architecture and Implementation
+The Event Model imposes several concrete design commitments:
+Events must be structured, typed, and persisted.
+Event creation is intentional; not every signal becomes an event.
+Events are immutable once recorded.
+Event sequencing is explicit and enforced.
+Event storage is append-only.
+For implementation stubs, this implies: - a common event record structure - centralized or coordinated sequence assignment - persistence before or immediately after emission
+
+4.9 Relationship to Other Architectural Sections
+The Event Model connects directly to: - Section 3 – Conceptual Model of Work (events describe work execution) - Section 5 – Decision and Behavior Model (decisions are events) - Section 7 – Identity and Traceability Model (events carry IDs and sequences) - Section 9 – Persistence and Replay Architecture (event streams are replayed)
+This centrality is intentional: events are the thread that ties the architecture together.
+
+4.10 Summary
+The Event Model defines how the system observes and records its own operation. By treating events as structured, continuous, and causally linked records, the architecture ensures that execution can be understood, reproduced, and improved. Events are not merely triggers or logs—they are the system’s narrative of action over time, and they form the basis for reliability, explainability, and learning.

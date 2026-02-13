@@ -1,0 +1,91 @@
+Section 8 – Communication Architecture (CMB)
+8.1 Role of Communication in the System Architecture
+In this architecture, communication is not the center of intelligence—it is the circulatory system that allows intelligence to function across distributed components. The Cognitive Message Bus (CMB) exists to enable coordination between modules while preserving the architectural principles established in earlier sections: explicit work, observable events, explainable decisions, and traceable execution.
+The CMB is therefore a subsystem, not the architecture itself. Its purpose is to move information reliably and efficiently without redefining meaning or decision logic. By keeping communication infrastructure distinct from semantic reasoning, the system avoids tight coupling and remains adaptable across domains, scales, and deployment models.
+For software architects, this separation ensures clean module boundaries and replaceable transport technologies. For end users, it ensures that system behavior remains understandable and consistent regardless of internal distribution.
+
+8.2 Design Philosophy of the CMB
+The CMB is designed around a small number of guiding principles:
+Semantic Agnosticism – The bus does not interpret meaning; it transports context.
+Explicit Context Propagation – Messages carry identifiers and metadata needed for traceability.
+Reliability Without Coupling – Delivery guarantees do not leak into decision logic.
+Scalability by Decomposition – Communication patterns support modular growth.
+Observability by Design – Transport activity is itself observable and traceable.
+These principles ensure that communication supports the system without constraining how intelligence is implemented.
+
+8.3 What the CMB Is (and Is Not)
+What the CMB Is
+A logical messaging fabric connecting system modules
+A mechanism for routing events, commands, and execution signals
+A carrier of identity and traceability metadata
+A foundation for reliability, retries, and acknowledgments
+What the CMB Is Not
+A decision engine
+A workflow engine
+A global state manager
+A substitute for shared semantic models
+This distinction is critical. Meaning lives in the architecture; movement lives in the bus.
+
+8.4 Communication as a First-Class Architectural Concern
+Distributed systems fail most often at their boundaries. The CMB exists to make those boundaries explicit and manageable. Every interaction between modules—whether internal software components or external hardware elements—occurs through the CMB.
+By standardizing communication, the architecture ensures that: - modules remain loosely coupled - failures are isolated and diagnosable - system behavior can be reconstructed end-to-end
+The CMB therefore enables the system to scale from a single-process prototype to a distributed, multi-node deployment without architectural redesign.
+
+8.5 Message as the Unit of Communication
+The fundamental unit of communication on the CMB is the message. A message represents the transfer of information or intent from one module to another.
+Messages may represent: - events (observations, state changes) - commands (requests for action) - execution progress - acknowledgments - error notifications
+Messages are structured, typed, and self-describing. They are designed to be persisted, replayed, and analyzed independently of live execution.
+
+8.6 Separation of Transport and Semantics
+A central architectural decision is the strict separation between transport concerns and semantic concerns within messages.
+Transport concerns address how a message is delivered.
+Semantic concerns address what the message means.
+This separation allows the CMB to handle delivery, retries, and acknowledgments without influencing decisions, behaviors, or work structure.
+For example: - a transport failure may trigger a retry - a semantic failure may trigger a decision
+Conflating these leads to brittle systems; separating them enables clarity and robustness.
+
+8.7 Message Envelope Concept
+Each message transported by the CMB is wrapped in a message envelope that contains two conceptual layers:
+Transport Envelope – Used by routers and infrastructure components
+Semantic Header and Payload – Used by system modules
+The transport envelope carries identifiers and metadata needed for delivery and reliability. The semantic portion carries work, event, decision, and task context as defined in earlier sections.
+This envelope structure ensures that routers can remain simple and efficient while modules retain full semantic richness.
+
+8.8 Routing and Channels
+The CMB supports the concept of channels to organize communication patterns. Channels allow different classes of messages to be handled independently, improving clarity and scalability.
+Examples of channel purposes include: - event propagation - command dispatch - execution coordination - monitoring and diagnostics
+Channels are logical constructs. They do not imply specific transport technologies or physical networks. This abstraction allows the architecture to map cleanly onto different implementations, from in-process messaging to distributed fabrics.
+
+8.9 Routers as Infrastructure Components
+Routers are responsible for: - receiving messages on a channel - forwarding messages to intended recipients - managing transport-level reliability - generating acknowledgments when required
+Routers do not interpret semantic content. They operate solely on transport metadata. This keeps routing logic deterministic, auditable, and easy to reason about.
+By design, routers can be scaled, replicated, or replaced without affecting the semantic behavior of the system.
+
+8.10 Reliability and Accountability
+The CMB provides mechanisms for reliable delivery where required. Reliability is expressed through: - transaction identifiers - acknowledgments - timeouts - retry policies
+These mechanisms ensure that failures in communication can be detected and handled without corrupting the semantic execution of work.
+Importantly, reliability is selective: not all messages require the same level of delivery guarantee. The architecture allows message classes to define their reliability needs explicitly.
+
+8.11 Observability of Communication
+Communication itself is observable. Transport-level events—such as message sent, delivered, retried, or failed—can be recorded and correlated with semantic execution.
+This observability allows architects to answer questions such as: - Did a failure occur due to logic or transport? - Where are bottlenecks forming? - How does communication latency affect work outcomes?
+Such insights are essential for operating the system in real-world conditions.
+
+8.12 Relationship to Identity and Traceability
+The CMB is the primary vehicle by which identity and traceability information flows between modules. Identifiers such as Work IDs, Event IDs, and Transaction IDs are propagated unchanged through messages.
+This propagation ensures that distributed execution can be reconstructed as a single coherent narrative, even when actions span multiple processes or machines.
+
+8.13 Relationship to Persistence and Replay
+Because messages are structured and self-describing, they can be persisted for later analysis or replay. The CMB therefore plays a key role in enabling offline diagnostics, simulation, and learning.
+Replay tools can inject historical messages back into the system or analyze them independently to study behavior under controlled conditions.
+
+8.14 Practical Implications for Implementation
+From an implementation standpoint, the Communication Architecture implies:
+A well-defined message envelope enforced by validation.
+Router components that operate strictly on transport metadata.
+Channel definitions aligned with architectural concerns.
+Configurable reliability policies per message class.
+Early implementation stubs can validate the architecture by: - sending event messages between modules - tracking acknowledgments - persisting message envelopes - replaying communication flows
+
+8.15 Summary
+The Communication Architecture, embodied by the Cognitive Message Bus, provides the infrastructure that allows the system to function as a coherent whole. By remaining semantically agnostic, enforcing explicit context propagation, and supporting observability and reliability, the CMB enables distributed intelligence without undermining architectural clarity. It is the means by which work, events, decisions, and execution are coordinated—never the place where meaning is defined.

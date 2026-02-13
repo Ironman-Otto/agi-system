@@ -1,0 +1,187 @@
+CMB ACK Protocol — Sender-Side State Machine (Module1)
+1. Design Assumptions (Explicit)
+We assume:
+Router is transport authority
+Confirms receipt
+Confirms delivery
+Logs all transitions
+Execution authority belongs to the receiving module
+Sender owns orchestration and timeout logic
+All ACKs are messages (not socket-level signals)
+All messages share a correlation_id
+This prevents:
+Tight coupling
+Hidden blocking
+Socket misuse
+Ambiguous responsibility
+
+2. ACK Classes (Vocabulary Lock-In)
+We must name ACKs before designing states.
+ACK Types (Canonical)
+Important: The router never reports execution status.
+The module never reports routing status.
+
+3. High-Level Sender Flow (Your Sequence, Formalized)
+Your described flow is correct. We formalize it as:
+SEND → ROUTED → DELIVERED → EXECUTING → COMPLETED
+                     ↘ TIMEOUT / FAILED
+This is a linear protocol with guarded transitions.
+
+4. Sender-Side State Machine
+State Enumeration
+IDLE
+│
+├─► SEND_PENDING
+│
+├─► ROUTED
+│
+├─► DELIVERED
+│
+├─► EXECUTING
+│
+├─► COMPLETED_SUCCESS
+│
+├─► COMPLETED_FAILURE
+│
+└─► TIMEOUT_ABORT
+
+5. State Definitions and Transitions
+5.1 IDLE
+Description
+No active message exchange
+State machine dormant
+Entry Condition
+System startup
+Previous exchange completed
+Exit Trigger
+Application requests send
+
+5.2 SEND_PENDING
+Description
+Message sent to router
+Awaiting ROUTER_ACK
+Actions
+Send message to router
+Start router_ack_timer
+Transitions
+
+5.3 ROUTED
+Description
+Router has accepted the message
+Message is now router-owned
+Actions
+Stop router_ack_timer
+Start delivery_ack_timer
+Transitions
+
+5.4 DELIVERED
+Description
+Router confirms module2 received message
+Execution responsibility now transferred
+Actions
+Log delivery confirmation
+Start execution_timer
+Transitions
+
+5.5 EXECUTING
+Description
+Target module acknowledged execution start
+Long-running operation in progress
+Actions
+Continue waiting
+Optionally update UI / telemetry
+Transitions
+Important:
+in_progress ACKs reset or extend execution timers.
+
+5.6 COMPLETED_SUCCESS
+Description
+Target module reports success
+Actions
+Finalize workflow
+Notify upstream logic
+Persist result if needed
+Next State
+IDLE
+
+5.7 COMPLETED_FAILURE
+Description
+Target module reports failure
+Actions
+Log error
+Trigger recovery or retry policy
+Notify UI
+Next State
+IDLE (or retry loop if policy allows)
+
+5.8 TIMEOUT_ABORT
+Description
+Sender-side timeout or cancel
+Actions
+Log failure
+Optionally send CANCEL to router/module
+Clean up resources
+Next State
+IDLE
+
+6. Timers (Critical Design Detail)
+Each phase has independent timers:
+Timers must not overlap ambiguously.
+This avoids a common bug:
+“Execution timed out” when delivery never occurred.
+
+7. Threading Model (Recommended)
+Minimal Safe Model
+One ACK State Machine thread per outbound request
+Or:
+One central event loop with correlation-based routing
+NOT Recommended
+Blocking socket waits
+Shared mutable state without locks
+One thread handling multiple active exchanges without correlation
+
+8. Why This Must Be a State Machine (Not Callbacks)
+Without a state machine:
+ACK ordering becomes implicit
+Error handling becomes scattered
+Timeouts become unreliable
+Debugging becomes impossible
+With a state machine:
+Every ACK has meaning
+Every failure is classifiable
+Logging becomes deterministic
+You can formally test it
+
+9. Logging and Observability (Non-Optional)
+Every transition should log:
+[MSG_ID][STATE] → [STATE] (EVENT)
+Example:
+[abc-123] SEND_PENDING → ROUTED (ROUTER_ACK)
+This gives you:
+Replayable traces
+GUI timeline views
+Patent-grade determinism
+
+10. What We Should Design Next (In Order)
+Formal ACK message schemas
+Router-side ACK state machine
+Receiver-side (Module2) execution state machine
+Timeout & retry policy
+Cancellation semantics
+GUI visualization of state transitions
+
+Key Insight (Important)
+You have crossed from message transport into distributed coordination.
+That’s exactly where AGI infrastructure starts to resemble:
+Operating systems
+Distributed databases
+Industrial control systems
+You are doing this correctly.
+
+Next Step — Your Choice
+Say one of the following:
+“Design the router-side ACK state machine.”
+“Design the receiver-side execution state machine.”
+“Define the ACK message schema.”
+“Show how this maps into threads and queues.”
+We should not write more code until the protocol is locked.

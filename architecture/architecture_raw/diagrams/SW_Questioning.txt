@@ -1,0 +1,49 @@
+# Diagram: Question Generation Subsystem for AGI
+
+# System Overview
+# This diagram represents the components responsible for generating, evaluating, and managing questions in an AGI system.
+# Each block is a source or filter for questions, integrated into a continuous cognitive loop.
+
+# +--------------------------+
+# |  Sensory Input Stream    |  <-- Real-time data
+# +-----------+--------------+
+#             |
+#             v
+# +--------------------------+
+# |  Prediction Error Engine |  <-- Detects mismatches with internal models
+# +-----------+--------------+
+#             |
+#             v
+# +--------------------------+
+# |  Discrepancy Detector    |  <-- Novelty / anomaly triggers
+# +-----------+--------------+
+#             |
+#             v
+# +--------------------------+             +---------------------------+
+# |  Question Generation Hub |<----------->|  Memory & Knowledge Graph  |
+# +-----------+--------------+             +-------------+-------------+
+#             |                                        |
+#   +---------+--------+                     +---------+--------+
+#   |  Goal & Task Eval |                     |  Self-Model Eval |
+#   +---------+--------+                     +---------+--------+
+#             |                                        |
+#             v                                        v
+# +--------------------------+             +--------------------------+
+# |  Question Prioritization |<------------+  Social & Ethical Engine |
+# +-----------+--------------+             +--------------------------+
+#             |
+#             v
+# +--------------------------+
+# | Question Execution Queue |
+# +--------------------------+
+#             |
+#             v
+# +--------------------------+
+# | Reasoning & Learning Ops |
+# +--------------------------+
+
+# Arrows represent data or trigger flow.
+# Subsystems share a global state context but operate semi-independently.
+# Key: Questions arise from novelty, uncertainty, conflict, development goals, and social feedback.
+
+# End of Diagram

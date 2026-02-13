@@ -1,0 +1,180 @@
+# Directive and Intent Specification
+
+## 1. Purpose and Scope
+This section defines the concept of a **Directive** and the associated process of **Intent Extraction and Classification** within the architecture. It establishes a clear boundary between *understanding what is being requested* and *deciding how or whether to act*. This specification is designed to stand alone, while also integrating cleanly into the broader architecture document.
+
+The goal of this layer is to ensure that the system does **not assume planning or execution is always required**, and instead makes an informed decision based on the semantic nature of the directive.
+
+---
+
+## 2. Definition of a Directive
+A **Directive** is any signal—external or internal—that expresses an intent requiring interpretation by the system. A directive does not imply planning, task decomposition, or execution by default. It is simply a request or condition that demands cognitive evaluation.
+
+Formally:
+
+> A directive is an intent-bearing input that requires semantic interpretation to determine the appropriate cognitive or behavioral response.
+
+Directives may originate from multiple sources and may vary widely in complexity, urgency, and required system involvement.
+
+---
+
+## 3. Directive Origins
+Directives are classified by their source, not by their required response.
+
+### 3.1 Human-Originated Directives
+These directives originate from a human user through natural language or structured input.
+
+Examples:
+- Requests for explanation or analysis
+- Design or research prompts
+- Instructions to perform work
+
+Human-originated directives are often cognitive in nature and may be resolved without planning or execution.
+
+---
+
+### 3.2 Perception-Originated Directives
+These directives originate from perception systems such as sensors, vision pipelines, audio processing, or telemetry monitors.
+
+Examples:
+- Anomaly detection
+- Threshold violations
+- Environmental changes
+
+Perception-originated directives frequently require coordinated responses and may trigger planning or immediate behavioral control.
+
+---
+
+### 3.3 Internal-System Directives
+These directives are generated internally by the system itself.
+
+Examples:
+- Reflective analysis
+- Self-diagnostics
+- Goal reevaluation
+- Policy updates
+
+Internal directives enable self-regulation, learning, and adaptation within the architecture.
+
+---
+
+## 4. Directive Classes
+Directive classification is based on the *semantic intent* of the directive, not its origin.
+
+### 4.1 Cognitive Directives
+Directives that require understanding, explanation, recall, or reasoning.
+
+Examples:
+- Explain a concept
+- Summarize information
+- Compare alternatives
+
+These directives are typically resolved via a single cognitive completion and do not require planning.
+
+---
+
+### 4.2 Analytical Directives
+Directives that require evaluation, hypothesis formation, or deeper reasoning.
+
+Examples:
+- Evaluate trade-offs
+- Analyze outcomes
+- Provide recommendations
+
+These may involve extended reasoning but generally do not require task orchestration.
+
+---
+
+### 4.3 Goal-Oriented Directives
+Directives that specify a desired outcome without prescribing the method.
+
+Examples:
+- Build a system
+- Design a process
+- Achieve a measurable objective
+
+Goal-oriented directives typically require planning, task decomposition, and execution oversight.
+
+---
+
+### 4.4 Behavioral Directives
+Directives that require execution of skills, behaviors, or actuator control.
+
+Examples:
+- Control a robot
+- Adjust system parameters
+- Execute a predefined skill
+
+These directives often involve time, feedback, and coordination.
+
+---
+
+### 4.5 Supervisory and Monitoring Directives
+Directives that instruct the system to observe, monitor, or intervene under certain conditions.
+
+Examples:
+- Watch for faults
+- Monitor performance
+- Trigger alerts
+
+These directives frequently involve long-running processes and state tracking.
+
+---
+
+## 5. Intent Extraction
+**Intent Extraction** is the process of converting a directive into a structured representation that the system can reason about deterministically.
+
+Intent extraction answers the question:
+
+> What is being asked, and what kind of response does it require?
+
+This process is responsible for:
+- Identifying directive class
+- Determining whether planning is required
+- Estimating urgency and risk
+- Defining expected response type
+
+Intent extraction does not perform execution decisions.
+
+---
+
+## 6. Planner Invocation Criteria
+Planning is **not mandatory** for all directives. The planner is invoked only when one or more of the following conditions are true:
+
+- The directive implies achieving a goal rather than providing information
+- Multiple steps or dependencies are required
+- System state must be modified
+- External systems or actuators are involved
+- Execution spans time or requires feedback
+- Error handling and recovery are necessary
+
+If none of these conditions apply, the directive may be resolved without invoking the planner.
+
+---
+
+## 7. Architectural Role
+The Directive and Intent layer serves as the **semantic gatekeeper** of the architecture. It prevents unnecessary planning, reduces execution overhead, and enables flexible handling of both cognitive and behavioral requests.
+
+This layer decouples:
+- Understanding from execution
+- Semantics from control logic
+- Human intent from machine behavior
+
+By doing so, it enables the architecture to scale across domains including conversational systems, autonomous agents, industrial control, and embodied robotics.
+
+---
+
+## 8. Design Principles
+- Directives are interpreted before action is selected
+- Planning is conditional, not default
+- Intent extraction must produce structured, auditable outputs
+- The system must be able to short-circuit planning when unnecessary
+- The architecture must support evolution from LLM-based interpretation to optimized classifiers
+
+---
+
+## 9. Summary
+This specification establishes directives as semantic inputs that require classification before execution decisions are made. By explicitly separating intent understanding from planning and execution, the architecture achieves flexibility, efficiency, and cognitive correctness.
+
+This layer is foundational to building systems that know **when to think**, **when to act**, and **when to simply respond**.
+

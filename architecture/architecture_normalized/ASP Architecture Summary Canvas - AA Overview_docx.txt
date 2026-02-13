@@ -1,0 +1,97 @@
+Title: AGI Software Products (ASP) Architecture: A Comprehensive Summary
+Introduction The AGI Software Products (ASP) architecture is a modular, evolvable framework for building adaptive general intelligence. Inspired by the human mind but implemented as a software-based cognitive system, ASP is designed to support iterative development, module substitution, and independent evolution of its components. Its foundation lies in modularity, concept traversal, behavior mapping, and real-time learning capabilities. This document provides a comprehensive summary of ASP's current design, including its core modules, structural relationships, definitions, and guiding principles.
+
+Core Design Principles
+Modularity: Each major function (e.g., perception, planning, memory) is implemented as a replaceable, upgradeable module.
+Interoperability: All modules communicate through a unified message-based protocol.
+Concept-Centric Design: Internal knowledge and reasoning are based on concepts and their relationships.
+Iterative Evolution: Components can be updated or swapped without disrupting the entire system.
+Embodiment: The architecture supports sensory-motor loops and introspective monitoring.
+
+Top-Level Modules and Descriptions
+Sensory Input Module
+Interfaces with external sensors or simulators.
+Converts raw input into structured representations.
+Communicates with the Concept Processor.
+Concept Processor
+Translates sensory input into conceptual forms.
+Interacts with the Concept Space.
+Routes data for thought processing or memory updates.
+Concept Space
+Core knowledge graph of interconnected concepts.
+Supports inheritance, similarity, association, and function relationships.
+Designed as a traversable, vectorizable data structure.
+Thought Engine
+Performs reasoning, problem solving, and narrative generation.
+Traverses Concept Space using mental models.
+Uses a loop of perception → evaluation → behavior planning.
+Mental Model Graph
+Collection of abstract behavioral schemas or internal simulators.
+Supports simulation of consequences and action plans.
+Evolves over time via learning.
+Behavior Matrix
+Maps available behaviors to stimuli, goals, or internal triggers.
+Behaviors are composed of skills (atomic actions).
+Categorized by type: reactive, goal-driven, self-initiated.
+Planner Module
+Constructs action plans by sequencing behaviors.
+Simulates alternatives before execution.
+Monitors for goal completion or replanning.
+Execution Engine
+Responsible for initiating and monitoring behavior.
+Sends commands to actuators or simulated outputs.
+Reports results for evaluation and reflection.
+Reflection and Self-Talk Module
+Performs introspection and post-action review.
+Supports internal dialogue and self-questioning.
+Records reasoning chains and meta-cognitive markers.
+Memory System
+Stores short-term and long-term memories.
+Includes episodic, semantic, and procedural layers.
+Indexed by concept IDs and contextual metadata.
+Learning Engine
+Integrates new concepts, updates weights, and refines skills.
+Supports reinforcement, imitation, and unsupervised learning.
+May invoke external training algorithms or feedback loops.
+Awareness and Diagnostic Monitor
+Tracks internal system health and cognitive integrity.
+Includes an awareness bus for self-checks and meta-awareness.
+Ties into cognitive feedback and conscious prioritization.
+Message Bus and Interface Protocol
+Standardized messaging framework for module communication.
+Supports asynchronous, reactive, and broadcast messaging.
+Enables external APIs and human interaction hooks.
+Goal Management and Intent Engine
+Handles goal formation, prioritization, and evaluation.
+Interfaces with planner and memory to adjust strategy.
+Monitors outcomes and aligns with core values or constraints.
+World Graph (Environment Model)
+Graph-based model of external world structures.
+Intersects with Concept Space and Mental Models.
+Continuously updated through perception and behavior.
+
+Key Relationships and Data Flows
+Environment → Sensory Input → Concept Processor → Thought Engine → Behavior Planner → Execution Engine → Environment
+Reflection and Self-Talk intercept the behavior cycle to log, revise, or question outcomes.
+Learning Engine operates in parallel, updating Concept Space, Mental Models, and the Behavior Matrix.
+Awareness System monitors all modules, looking for anomalies or emerging conflicts.
+Message Bus binds the system into a single communicative architecture.
+
+Glossary of Key Definitions
+Concept: A data structure representing an idea, object, action, or property, with links to other concepts.
+Behavior: A sequence of executable skills that produce an observable outcome.
+Skill: An atomic, actionable function the system can perform.
+Mental Model: An internal simulation tool for reasoning about actions and their effects.
+Reflection: Post-action introspection to evaluate performance, revise plans, and reinforce learning.
+Self-Talk: Internal language used to organize thought, trigger behaviors, or simulate dialogue.
+World Graph: An evolving structural representation of the perceived external environment.
+Planner: A module that selects and sequences behaviors to achieve a desired goal.
+Goal: A desired system state, either internal or external, prioritized by context.
+
+Conclusion ASP represents a comprehensive, modular software architecture for general intelligence research and development. It is intentionally designed for adaptability, making it ideal for iterative evolution and component experimentation. The architecture is still in active development, with ongoing expansions in self-awareness, simulation planning, hardware integration, and memory dynamics. Future versions will implement proof-of-concept code for individual modules and integrate with experimental FPGA and neuromorphic hardware platforms.
+
+Next Steps
+Begin defining inter-module message formats.
+Finalize initial Concept and Behavior schemas.
+Develop module-specific documentation for replacement and plug-and-play.
+Continue parallel work on theoretical papers and simulation code.
