@@ -17,6 +17,7 @@ from src.core.logging.log_manager import LogManager, Logger
 from src.core.logging.log_entry import LogEntry
 from src.core.logging.log_severity import LogSeverity
 from src.core.logging.file_log_sink import FileLogSink
+from src.core.cmb.cmb_channel_config import CMB_CHANNEL_INGRESS_PORTS, CMB_CHANNEL_EGRESS_PORTS, CMB_ACK_INGRESS_PORTS, CMB_ACK_EGRESS_PORTS, get_subscription_offset
 
 # ----------------------------
 # Inbound delivery semantics
@@ -55,7 +56,7 @@ class ChannelConfig:
     ack_port: int | None = None
     ack_socket_type: int = zmq.DEALER
 
-# ----------------------------
+""" # ----------------------------
 # Legacy port assignments
 # ----------------------------
 
@@ -114,18 +115,11 @@ CMB_ACK_EGRESS_PORTS = {
 
 CMB_ACK_PORT = 6102        # Shared ACK ingress/egress (current policy)
 SUBSCRIPTION_OFFSET = 1000
-
+ """
 
 # ----------------------------
 # Channel Registry
 # ----------------------------
-
-class InboundDelivery(Enum):
-    """How inbound messages are delivered to modules."""
-
-    DIRECTED = "directed"      # ROUTER/DEALER identity-addressed
-    BROADCAST = "broadcast"    # PUB/SUB fanout (not used in this demo)
-
 
 class ChannelRegistry:
     """
@@ -204,7 +198,7 @@ class ChannelRegistry:
                 name="PC",
                 router_port=CMB_CHANNEL_INGRESS_PORTS["PC"],
                 inbound_delivery=InboundDelivery.BROADCAST,
-                inbound_port=CMB_CHANNEL_EGRESS_PORTS["PC"] + SUBSCRIPTION_OFFSET,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["PC"] + get_subscription_offset(),
                 ack_port=None,
             ),
 
@@ -212,7 +206,7 @@ class ChannelRegistry:
                 name="MC",
                 router_port=CMB_CHANNEL_INGRESS_PORTS["MC"],
                 inbound_delivery=InboundDelivery.BROADCAST,
-                inbound_port=CMB_CHANNEL_EGRESS_PORTS["MC"] + SUBSCRIPTION_OFFSET,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["MC"] + get_subscription_offset(),
                 ack_port=None,
             ),
 
@@ -220,7 +214,7 @@ class ChannelRegistry:
                 name="EIG",
                 router_port=CMB_CHANNEL_INGRESS_PORTS["EIG"],
                 inbound_delivery=InboundDelivery.BROADCAST,
-                inbound_port=CMB_CHANNEL_EGRESS_PORTS["EIG"] + SUBSCRIPTION_OFFSET,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["EIG"] + get_subscription_offset(),
                 ack_port=None,
             ),
         }

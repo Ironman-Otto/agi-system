@@ -1,0 +1,2634 @@
+﻿# =========================================
+# CMB TRANSPORT CODE BUNDLE
+# Version: v1
+# Generated: 2026-02-13 13:31:58
+# =========================================
+
+# -------- FILE MANIFEST --------
+# C:\dev\agi-system\src\core\cmb\__init__.py
+# C:\dev\agi-system\src\core\cmb\channel_registry.py
+# C:\dev\agi-system\src\core\cmb\cmb_channel_config.py
+# C:\dev\agi-system\src\core\cmb\cmb_channel_router_port.py
+# C:\dev\agi-system\src\core\cmb\cmb_exceptions.py
+# C:\dev\agi-system\src\core\cmb\cmb_router.py
+# C:\dev\agi-system\src\core\cmb\cmb_router_entry.py
+# C:\dev\agi-system\src\core\cmb\cmb_router_legacy_3.py
+# C:\dev\agi-system\src\core\cmb\cmb_router_legacy_pubsub.py
+# C:\dev\agi-system\src\core\cmb\cmb_router_legecy_router_ack.py
+# C:\dev\agi-system\src\core\cmb\endpoint_config.py
+# C:\dev\agi-system\src\core\cmb\module_endpoint.py
+# C:\dev\agi-system\src\core\cmb\transaction_record.py
+# C:\dev\agi-system\src\core\cmb\transaction_registry.py
+# C:\dev\agi-system\src\core\cmb\transport_state_machine.py
+# C:\dev\agi-system\src\core\cmb\utils.py
+# C:\dev\agi-system\src\core\messages\__init__.py
+# C:\dev\agi-system\src\core\messages\ack_message.py
+# C:\dev\agi-system\src\core\messages\cognitive_message.py
+# C:\dev\agi-system\src\core\messages\message_module.py
+# --------------------------------
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\__init__.py
+# ====================================
+
+
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\channel_registry.py
+# ====================================
+
+"""
+Module: channel_registry.py
+Location: src/core/cmb/
+Version: 0.2.0
+
+Defines the authoritative registry of Cognitive Message Bus (CMB) channels.
+Each channel is described declaratively via ChannelConfig objects.
+"""
+
+from dataclasses import dataclass
+from enum import Enum
+from typing import Dict
+
+import zmq
+
+from src.core.logging.log_manager import LogManager, Logger
+from src.core.logging.log_entry import LogEntry
+from src.core.logging.log_severity import LogSeverity
+from src.core.logging.file_log_sink import FileLogSink
+
+# ----------------------------
+# Inbound delivery semantics
+# ----------------------------
+
+class InboundDelivery(Enum):
+    """
+    Defines how messages are delivered to modules on this channel.
+    """
+    DIRECTED = "DIRECTED"    # ROUTER -> DEALER (addressed, ACK-capable)
+    BROADCAST = "BROADCAST"  # PUB -> SUB (fan-out, no ACKs)
+    NONE = "NONE"            # Send-only channel
+
+
+# ----------------------------
+# Channel configuration
+# ----------------------------
+
+@dataclass(frozen=True)
+class ChannelConfig:
+    """
+    Declarative configuration for a single CMB channel.
+    """
+
+    name: str
+
+    # Outbound path (module -> router)
+    router_port: int
+    outbound_socket_type: int = zmq.DEALER
+
+    # Inbound semantics
+    inbound_delivery: InboundDelivery = InboundDelivery.DIRECTED
+    inbound_port: int | None = None
+
+    # ACK path (only meaningful for DIRECTED channels)
+    ack_port: int | None = None
+    ack_socket_type: int = zmq.DEALER
+
+# ----------------------------
+# Legacy port assignments
+# ----------------------------
+
+# Dictionary mapping each channel acronym to a TCP port base
+# These ports must match bindings in the CMB routers and the endpoints
+CMB_CHANNEL_INGRESS_PORTS = {
+    "CC":   6001,   # Control Channel
+    "SMC":  6002,   # Symbolic Message Channel
+    "VB":   6003,   # Vector Bus
+    "BFC":  6004,   # Behavioral Flow Channel
+    "DAC":  6005,   # Diagnostic and Awareness Channel
+    "EIG":  6006,   # External Interface Gateway
+    "PC":   6007,   # Perception Channel
+    "MC":   6008,   # Memory Channel
+    "IC":   6009,   # Introspection Channel
+    "TC":   6010    # Threat Channel
+}
+CMB_CHANNEL_EGRESS_PORTS = {
+    "CC":   7001,   # Control Channel
+    "SMC":  7002,   # Symbolic Message Channel
+    "VB":   7003,   # Vector Bus
+    "BFC":  7004,   # Behavioral Flow Channel
+    "DAC":  7005,   # Diagnostic and Awareness Channel
+    "EIG":  7006,   # External Interface Gateway
+    "PC":   7007,   # Perception Channel
+    "MC":   7008,   # Memory Channel
+    "IC":   7009,   # Introspection Channel
+    "TC":   7010    # Threat Channel
+}
+
+CMB_ACK_INGRESS_PORTS = {
+    "CC":  6101,   # Control Channel
+    "SMC": 6101,   # Symbolic Message Channel
+    "VB":  6101,   # Vector Bus
+    "BFC": 6101,   # Behavioral Flow Channel
+    "DAC": 6101,   # Diagnostic and Awareness Channel
+    "EIG": 6101,   # External Interface Gateway
+    "PC":  6101,   # Perception Channel
+    "MC":  6101,   # Memory Channel
+    "IC":  6101,   # Introspection Channel
+    "TC":  6101    # Threat Channel
+}
+
+CMB_ACK_EGRESS_PORTS = {
+    "CC":  6102,   # Control Channel
+    "SMC": 6102,   # Symbolic Message Channel
+    "VB":  6102,   # Vector Bus
+    "BFC": 6102,   # Behavioral Flow Channel
+    "DAC": 6102,   # Diagnostic and Awareness Channel
+    "EIG": 6102,   # External Interface Gateway
+    "PC":  6102,   # Perception Channel
+    "MC":  6102,   # Memory Channel
+    "IC":  6102,   # Introspection Channel
+    "TC":  6102    # Threat Channel
+}
+
+CMB_ACK_PORT = 6102        # Shared ACK ingress/egress (current policy)
+SUBSCRIPTION_OFFSET = 1000
+
+
+# ----------------------------
+# Channel Registry
+# ----------------------------
+
+class InboundDelivery(Enum):
+    """How inbound messages are delivered to modules."""
+
+    DIRECTED = "directed"      # ROUTER/DEALER identity-addressed
+    BROADCAST = "broadcast"    # PUB/SUB fanout (not used in this demo)
+
+
+class ChannelRegistry:
+    """
+    Central registry of all CMB channels.
+    """
+
+    _channels: Dict[str, ChannelConfig] = {}
+
+    @classmethod
+    def initialize(cls) -> None:
+        """
+        Build the registry.
+        Call once at system startup.
+        """
+
+        cls._channels = {
+            # Control-plane channels (DIRECTED)
+            "CC": ChannelConfig(
+                name="CC",
+                router_port=CMB_CHANNEL_INGRESS_PORTS["CC"],
+                inbound_delivery=InboundDelivery.DIRECTED,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["CC"],
+                ack_port=CMB_ACK_EGRESS_PORTS["CC"],
+            ),
+
+            "SMC": ChannelConfig(
+                name="SMC",
+                router_port=CMB_CHANNEL_INGRESS_PORTS["SMC"],
+                inbound_delivery=InboundDelivery.DIRECTED,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["SMC"],
+                ack_port=CMB_ACK_EGRESS_PORTS["SMC"],
+            ),
+
+            "VB": ChannelConfig(
+                name="VB",
+                router_port=CMB_CHANNEL_INGRESS_PORTS["VB"],
+                inbound_delivery=InboundDelivery.DIRECTED,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["VB"],
+                ack_port=CMB_ACK_PORT,
+            ),
+
+            "BFC": ChannelConfig(
+                name="BFC",
+                router_port=CMB_CHANNEL_INGRESS_PORTS["BFC"],
+                inbound_delivery=InboundDelivery.DIRECTED,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["BFC"],
+                ack_port=CMB_ACK_PORT,
+            ),
+
+            "DAC": ChannelConfig(
+                name="DAC",
+                router_port=CMB_CHANNEL_INGRESS_PORTS["DAC"],
+                inbound_delivery=InboundDelivery.DIRECTED,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["DAC"],
+                ack_port=CMB_ACK_PORT,
+            ),
+
+            "IC": ChannelConfig(
+                name="IC",
+                router_port=CMB_CHANNEL_INGRESS_PORTS["IC"],
+                inbound_delivery=InboundDelivery.DIRECTED,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["IC"],
+                ack_port=CMB_ACK_PORT,
+            ),
+
+            "TC": ChannelConfig(
+                name="TC",
+                router_port=CMB_CHANNEL_INGRESS_PORTS["TC"],
+                inbound_delivery=InboundDelivery.DIRECTED,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["TC"],
+                ack_port=CMB_ACK_PORT,
+            ),
+
+            # Broadcast-style channels
+            "PC": ChannelConfig(
+                name="PC",
+                router_port=CMB_CHANNEL_INGRESS_PORTS["PC"],
+                inbound_delivery=InboundDelivery.BROADCAST,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["PC"] + SUBSCRIPTION_OFFSET,
+                ack_port=None,
+            ),
+
+            "MC": ChannelConfig(
+                name="MC",
+                router_port=CMB_CHANNEL_INGRESS_PORTS["MC"],
+                inbound_delivery=InboundDelivery.BROADCAST,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["MC"] + SUBSCRIPTION_OFFSET,
+                ack_port=None,
+            ),
+
+            "EIG": ChannelConfig(
+                name="EIG",
+                router_port=CMB_CHANNEL_INGRESS_PORTS["EIG"],
+                inbound_delivery=InboundDelivery.BROADCAST,
+                inbound_port=CMB_CHANNEL_EGRESS_PORTS["EIG"] + SUBSCRIPTION_OFFSET,
+                ack_port=None,
+            ),
+        }
+
+    @classmethod
+    def get(cls, channel_name: str) -> ChannelConfig:
+        
+        if channel_name not in cls._channels:
+            raise KeyError(f"Unknown CMB channel: {channel_name}")
+        return cls._channels[channel_name]
+
+    @classmethod
+    def all(cls) -> Dict[str, ChannelConfig]:
+        return dict(cls._channels)
+
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\cmb_channel_config.py
+# ====================================
+
+"""
+Module: cmb_channel_config.py
+Location: src/core/cmb/
+Version: 0.1.0
+
+Defines a consistent mapping of Cognitive Message Bus (CMB) channels to their associated TCP ports.
+This file should be treated as a central reference for routing and interface connections.
+"""
+
+# Dictionary mapping each channel acronym to a TCP port base
+# These ports must match bindings in the CMB routers and the endpoints
+CMB_CHANNEL_INGRESS_PORTS = {
+    "CC":   6001,   # Control Channel
+    "SMC":  6002,   # Symbolic Message Channel
+    "VB":   6003,   # Vector Bus
+    "BFC":  6004,   # Behavioral Flow Channel
+    "DAC":  6005,   # Diagnostic and Awareness Channel
+    "EIG":  6006,   # External Interface Gateway
+    "PC":   6007,   # Perception Channel
+    "MC":   6008,   # Memory Channel
+    "IC":   6009,   # Introspection Channel
+    "TC":   6010    # Threat Channel
+}
+CMB_CHANNEL_EGRESS_PORTS = {
+    "CC":   7001,   # Control Channel
+    "SMC":  7002,   # Symbolic Message Channel
+    "VB":   7003,   # Vector Bus
+    "BFC":  7004,   # Behavioral Flow Channel
+    "DAC":  7005,   # Diagnostic and Awareness Channel
+    "EIG":  7006,   # External Interface Gateway
+    "PC":   7007,   # Perception Channel
+    "MC":   7008,   # Memory Channel
+    "IC":   7009,   # Introspection Channel
+    "TC":   7010    # Threat Channel
+}
+
+CMB_ACK_INGRESS_PORTS = {
+    "CC":  6101,   # Control Channel
+    "SMC": 6101,   # Symbolic Message Channel
+    "VB":  6101,   # Vector Bus
+    "BFC": 6101,   # Behavioral Flow Channel
+    "DAC": 6101,   # Diagnostic and Awareness Channel
+    "EIG": 6101,   # External Interface Gateway
+    "PC":  6101,   # Perception Channel
+    "MC":  6101,   # Memory Channel
+    "IC":  6101,   # Introspection Channel
+    "TC":  6101    # Threat Channel
+}
+
+CMB_ACK_EGRESS_PORTS = {
+    "CC":  6102,   # Control Channel
+    "SMC": 6102,   # Symbolic Message Channel
+    "VB":  6102,   # Vector Bus
+    "BFC": 6102,   # Behavioral Flow Channel
+    "DAC": 6102,   # Diagnostic and Awareness Channel
+    "EIG": 6102,   # External Interface Gateway
+    "PC":  6102,   # Perception Channel
+    "MC":  6102,   # Memory Channel
+    "IC":  6102,   # Introspection Channel
+    "TC":  6102    # Threat Channel
+}
+
+
+# Ports offset by 1000 for Subscription channels
+def get_subscription_offset():
+    return 1000
+
+# Utility function to fetch port by channel
+def get_channel_port(channel_name: str) -> int:
+    if channel_name not in CMB_CHANNEL_INGRESS_PORTS:
+        raise ValueError(f"Unknown CMB channel: {channel_name}")
+    return CMB_CHANNEL_INGRESS_PORTS[channel_name]
+
+def get_channel_ingress_port(channel_name: str) -> int:
+    if channel_name not in CMB_CHANNEL_INGRESS_PORTS:
+        raise ValueError(f"Unknown CMB channel: {channel_name}")
+    return CMB_CHANNEL_INGRESS_PORTS[channel_name]
+
+def get_channel_egress_port(channel_name: str) -> int:
+    if channel_name not in CMB_CHANNEL_EGRESS_PORTS:
+        raise ValueError(f"Unknown CMB channel: {channel_name}")
+    return CMB_CHANNEL_EGRESS_PORTS[channel_name]
+
+def get_ack_ingress_port(channel_name: str) -> int:
+    if channel_name not in CMB_ACK_INGRESS_PORTS:
+        raise ValueError(f"Unknown CMB channel: {channel_name}")
+    return CMB_ACK_INGRESS_PORTS[channel_name] 
+
+def get_ack_port(channel_name: str) -> int:
+    if channel_name not in CMB_ACK_EGRESS_PORTS:
+        raise ValueError(f"Unknown CMB channel: {channel_name}")
+    return CMB_ACK_EGRESS_PORTS[channel_name] 
+
+def get_ack_egress_port(channel_name: str) -> int:
+    if channel_name not in CMB_ACK_EGRESS_PORTS:
+        raise ValueError(f"Unknown CMB channel: {channel_name}")
+    return CMB_ACK_EGRESS_PORTS[channel_name] 
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\cmb_channel_router_port.py
+# ====================================
+
+"""
+Location: src/core/cmb/
+Version: 0.1.0
+
+Defines the ChannelRouterPort class, which abstracts the interface between a module and the router for a specific CMB channel.
+Handles sending messages via PUSH sockets and receiving via SUB sockets for specified topics.
+Depends on: cognitive_message >= 0.1.0
+"""
+
+from multiprocessing import context
+import zmq
+from src.core.messages.cognitive_message import CognitiveMessage
+from src.core.cmb.cmb_channel_config import get_channel_port
+class ChannelRouterPort:
+    def __init__(self, module_name: str, channel_name: str):
+
+        self.module_name = module_name
+        self.channel_name = channel_name
+        self.port_number = get_channel_port(channel_name)
+  
+
+        # Create Dealer socket for sending messages to router
+        self.context = zmq.Context()
+        self.router_socket = self.context.socket(zmq.DEALER)
+        self.router_socket.setsockopt_string(zmq.IDENTITY, module_name)
+        self.router_socket.connect(f"tcp://localhost:{self.port_number}")
+
+    def send(self, message: CognitiveMessage):
+        assert isinstance(message, CognitiveMessage)
+        self.router_socket.send_multipart([
+        message.source.encode(),
+        message.to_bytes()
+    ])
+        print(f"Sent message from {message.source} to {message.targets}")
+
+
+    def receive(self) -> CognitiveMessage:
+        topic, raw_msg = self.router_socket.recv_multipart()
+        return CognitiveMessage.from_bytes(raw_msg)
+
+    def close(self):
+        self.router_socket.close()
+        self.context.term()
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\cmb_exceptions.py
+# ====================================
+
+class TransportError(Exception):
+    def __init__(self, tx_id, reason, details=None):
+        self.tx_id = tx_id
+        self.reason = reason
+        self.details = details
+        super().__init__(reason)
+
+class AckTimeoutError(TransportError):
+    pass
+
+class InvalidAckError(TransportError):
+    pass
+
+class ProtocolViolationError(TransportError):
+    pass
+
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\cmb_router.py
+# ====================================
+
+"""cmb_router.py
+
+Version: demo-fork
+
+ROUTER-based channel router for the Cognitive Message Bus (CMB).
+
+- One router per channel
+- Ingress ROUTER: receives from module outbound DEALER sockets
+- Module egress ROUTER: forwards to module inbound DEALER sockets
+- ACK egress ROUTER: forwards ACKs to module ACK DEALER sockets
+- Sends immediate ROUTER_ACK **only for non-ACK messages**
+
+This is a lightly corrected version of your current router to avoid emitting
+ROUTER_ACK for ACK messages (which can create ack-of-ack loops) and to avoid
+referencing an undefined `msg` when processing ACKs.
+"""
+
+from __future__ import annotations
+
+import json
+import threading
+from core.cmb.channel_registry import ChannelRegistry
+import zmq
+
+from src.core.messages.cognitive_message import CognitiveMessage
+from src.core.messages.ack_message import AckMessage
+from src.core.cmb.cmb_channel_config import (
+    get_channel_ingress_port,
+    get_ack_egress_port,
+    get_channel_egress_port,
+)
+
+from src.core.logging.log_manager import LogManager, Logger
+from src.core.logging.log_entry import LogEntry
+from src.core.logging.log_severity import LogSeverity
+from src.core.logging.file_log_sink import FileLogSink
+
+class ChannelRouter:
+    def __init__(self, channel_name: str, host: str = "localhost"):
+        self.channel_name = channel_name
+        self.host = host
+
+        self.router_port = get_channel_ingress_port(channel_name)
+        self.module_egress_port = get_channel_egress_port(channel_name)
+        self.ack_port = get_ack_egress_port(channel_name)
+
+        self._stop_evt = threading.Event()
+        self._thread = None
+
+        # Logging
+        self.log_manager = LogManager(min_severity=LogSeverity.INFO)
+        self.log_manager.register_sink(
+        FileLogSink("logs/system.jsonl")
+        )
+
+        self.logger = Logger(self.channel_name, self.log_manager)
+
+        self.logger.info(
+            event_type="ROUTER_INIT",
+            message=f"Router {self.channel_name} port: {self.router_port} ack: {self.ack_port} module_egress: {self.module_egress_port}",
+            payload={
+                "note": "no payload"
+            }
+        )
+        
+    def start(self) -> None:
+        if self._thread and self._thread.is_alive():
+            return
+        self._stop_evt.clear()
+        self._thread = threading.Thread(
+            target=self._run,
+            name=f"ChannelRouter[{self.channel_name}]",
+            daemon=False,
+        )
+        self._thread.start()
+        
+        self.logger.info(
+                    event_type="ROUTER_START",
+                    message=f"Router {self.channel_name} started",
+                    payload={
+                        "note": "no payload"
+                    }
+                )
+
+    def stop(self) -> None:
+        self._stop_evt.set()
+        if self._thread:
+            self._thread.join(timeout=2.0)
+        
+        self.logger.info(
+                event_type="ROUTER_STOP",
+                message=f"Router {self.channel_name} stopped",
+                payload={
+                    "note": "no payload"
+                }
+            )
+
+    def _run(self) -> None:
+        ctx = zmq.Context.instance()
+        router_sock = ctx.socket(zmq.ROUTER)
+        router_sock.bind(f"tcp://{self.host}:{self.router_port}")
+
+        module_egress_sock = ctx.socket(zmq.ROUTER)
+        module_egress_sock.bind(f"tcp://{self.host}:{self.module_egress_port}")
+
+        ack_sock = ctx.socket(zmq.ROUTER)
+        ack_sock.bind(f"tcp://{self.host}:{self.ack_port}")
+
+        poller = zmq.Poller()
+        poller.register(router_sock, zmq.POLLIN)
+
+        self.logger.info(
+                event_type="ROUTER_START_RUN",
+                message=f"[Router.{self.channel_name}] ROUTER ingress on {self.router_port}, egress on {self.module_egress_port}, ACK on {self.ack_port}",
+                payload={
+                    "note": "no payload"
+                }
+            )
+
+        try:
+            while not self._stop_evt.is_set():
+                events = dict(poller.poll(100))
+                if router_sock not in events:
+                    continue
+
+                frames = router_sock.recv_multipart()
+                sender_id = frames[0]
+                payload = frames[-1]
+
+                try:
+                    obj = json.loads(payload.decode("utf-8"))
+                except Exception as e:
+                
+                    self.logger.info(
+                        event_type="ROUTER_EXCEPTIOM_ERROR",
+                        message=f"Invalid JSON message: {e}",
+                        payload={
+                            "note": "no payload"
+                        }
+                    )
+
+                    continue
+
+                msg_type = obj.get("msg_type")
+
+                # --- ACK messages: forward only ---
+                if msg_type == "ACK":
+                    try:
+                        ack = AckMessage.from_dict(obj)
+                    except Exception as e:
+                        
+                        self.logger.info(
+                            event_type="ROUTER_EXCEPTIOM_ERROR",
+                            message=f"[Router.{self.channel_name} ERROR] Invalid ACK message: {e}",
+                            payload={
+                                "note": "no payload"
+                            }
+                        )
+
+                        continue
+
+                    if not ack.targets:
+                       
+                        self.logger.info(
+                            event_type="ROUTER_NO_ACK_TARGETS_ERROR",
+                            message=f"[Router.{self.channel_name} ERROR] ACK has no targets",
+                            payload={
+                                "note": "no payload"
+                            }
+                        )
+
+                        continue
+
+                    dest = ack.targets[0].encode("utf-8")
+                    ack_sock.send_multipart([dest, b"", payload])
+                    continue
+
+                # --- Non-ACK messages: forward to targets + emit ROUTER_ACK ---
+                try:
+                    msg = CognitiveMessage.from_dict(obj)
+                except Exception as e:
+                    
+                    self.logger.info(
+                            event_type="ROUTER_INVALID_MESSAGE_ERROR",
+                            message=f"[Router.{self.channel_name} invalid message not Cognitive Message {e}",
+                            payload={
+                                "note": "no payload"
+                            }
+                        )
+                    
+                    continue
+
+                for target in msg.targets:
+                    module_egress_sock.send_multipart([
+                        target.encode("utf-8"),
+                        b"",
+                        payload,
+                    ])
+
+                # Immediate ROUTER_ACK to the sender (logical sender = msg.source)
+                router_ack = AckMessage.create(
+                    msg_type="ACK",
+                    ack_type="ROUTER_ACK",
+                    status="SUCCESS",
+                    source="CMB_ROUTER",
+                    targets=[msg.source],
+                    correlation_id=msg.message_id,
+                    payload={
+                        "channel": self.channel_name,
+                        "status": "published",
+                        "message_id": msg.message_id,
+                    },
+                )
+
+                ack_sock.send_multipart([
+                    sender_id,
+                    b"",
+                    router_ack.to_bytes(),
+                ])
+
+        finally:
+            router_sock.close()
+            module_egress_sock.close()
+            ack_sock.close()
+            # Do not ctx.term() when using Context.instance() in multi-thread/process environments
+            
+            self.logger.info(
+                            event_type="ROUTER_SHUTDOWN_COMPLETE",
+                            message=f"[Router.{self.channel_name}] shutdown complete",
+                            payload={
+                                "note": "no payload"
+                            }
+                        )
+
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\cmb_router_entry.py
+# ====================================
+
+# src/core/cmb/cmb_router_entry.py
+
+import argparse
+from src.core.cmb.cmb_router import ChannelRouter  # or whatever your class is named
+
+def main():
+    parser = argparse.ArgumentParser(description="CMB Channel Router")
+    parser.add_argument("--channel", required=True, help="Channel name (e.g. CC, VB)")
+    args = parser.parse_args()
+
+    router = ChannelRouter(channel_name=args.channel)
+    router.start()   # or start(), loop(), etc.
+    
+
+if __name__ == "__main__":
+    main()
+
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\cmb_router_legacy_3.py
+# ====================================
+
+"""
+Module: cmb_router.py
+Location: src/core/cmb/
+Version: 0.2.0
+
+Minimal ROUTER-based channel router for the Cognitive Message Bus.
+
+- One router per channel
+- ROUTER â†’ ROUTER forwarding
+- Immediate ROUTER_ACK
+- No state machine
+"""
+
+import json
+from core.messages.message_module import MessageType
+import zmq
+import threading
+import time
+from src.core.messages.cognitive_message import CognitiveMessage
+from src.core.messages.ack_message import AckMessage
+from src.core.cmb.cmb_channel_config import (
+    get_channel_ingress_port,
+    get_ack_egress_port,
+    get_channel_egress_port
+)
+
+
+class ChannelRouter:
+    def __init__(self, channel_name: str, host: str = "localhost"):
+        self.channel_name = channel_name
+        self.host = host
+
+        self.router_port = get_channel_ingress_port(channel_name)
+        self.module_egress_port = get_channel_egress_port(channel_name)
+        self.ack_port = get_ack_egress_port(channel_name)
+
+        self._stop_evt = threading.Event()
+        self._thread = None
+        print(f"[ROUTER.{self.channel_name}] router_port = {self.router_port}, ack_port = {self.ack_port}, module_egress_port = {self.module_egress_port}")
+
+    def start(self) -> None:
+        if self._thread and self._thread.is_alive():
+            return
+        self._stop_evt.clear()
+        self._thread = threading.Thread(
+            target=self._run,
+            name=f"ChannelRouter[{self.channel_name}]",
+            daemon=False,
+        )
+        self._thread.start()
+        print(f"[Router.{self.channel_name}] Channel '{self.channel_name}' started")
+
+    def stop(self) -> None:
+        self._stop_evt.set()
+        if self._thread:
+            self._thread.join(timeout=2.0)
+        print(f"[Router.{self.channel_name}] Channel '{self.channel_name}' stopped")
+
+
+    def _run(self) -> None:
+        ctx = zmq.Context.instance()
+        print(f"[Router.{self.channel_name}] starting on {self.router_port}")
+        router_sock = ctx.socket(zmq.ROUTER)
+        router_sock.bind(f"tcp://{self.host}:{self.router_port}")
+
+        module_egress_sock = ctx.socket(zmq.ROUTER)
+        module_egress_sock.bind(f"tcp://{self.host}:{self.module_egress_port}")
+
+        ack_sock = ctx.socket(zmq.ROUTER)
+        ack_sock.bind(f"tcp://{self.host}:{self.ack_port}")
+
+        poller = zmq.Poller()
+        poller.register(router_sock, zmq.POLLIN)
+        poller.register(module_egress_sock, zmq.POLLIN)
+
+        print(f"[Router.{self.channel_name}] {self.channel_name} ROUTER on {self.router_port}, ")
+        print(f"[Router.{self.channel_name}] {self.channel_name} ACK on {self.ack_port}")
+
+        try:
+            while not self._stop_evt.is_set():
+                events = dict(poller.poll(100))
+
+                if router_sock not in events:
+                    continue
+                
+                # Receive message
+                frames = router_sock.recv_multipart()
+                sender_id = frames[0]
+                payload = frames[-1]
+
+                # ---- Parse message ----
+                try:
+                    obj = json.loads(payload.decode("utf-8"))
+                except Exception as e:    
+                    print(f"[Router.{self.channel_name} ERROR] Invalid JSON message: {e}")
+                    continue
+
+                # ---- Determine message type ----
+                msg_type = obj.get("msg_type")
+                print(f"[Router.{self.channel_name} DEBUG] Received msg_type={msg_type!r} from sender_id={sender_id!r}")
+
+                # ---- Process COMMAND messages ----
+                if msg_type != "ACK":
+                    try:
+                        msg = CognitiveMessage.from_dict(obj)
+                    except Exception as e:
+                        print(f"[Router.{self.channel_name} ERROR] Invalid COMMAND message: {e}")
+                        continue
+
+                    # ---- Forward to targets ----
+                    for target in msg.targets:
+                        print(f"[Router.{self.channel_name} DEBUG] Sending {msg.msg_type} to identity={target!r}")
+
+                        module_egress_sock.send_multipart([
+                            target.encode("utf-8"),
+                            b"",
+                            payload,
+                        ])
+                else:
+                    # ---- Process ACK messages ----
+                    # This handles the ACK forwarding for MESSAGE_DELIVERED_ACK
+                    ack = AckMessage.from_dict(obj)
+                    print(f"[Router.{self.channel_name} DEBUG] Forwarding {ack.ack_type} id: {ack.message_id} to {ack.targets[0]!r}")
+
+                    # ---- Forward ACK to destination ----
+                    dest = ack.targets[0].encode("utf-8")
+                    ack_sock.send_multipart([dest, b"", payload])        
+
+                # ---- Immediate ROUTER_ACK ----
+                ack = AckMessage.create(
+                    msg_type="ACK",
+                    ack_type="ROUTER_ACK",
+                    status="SUCCESS",
+                    source="CMB_ROUTER",
+                    targets=[msg.source],
+                    correlation_id=msg.message_id,
+                    payload={
+                        "channel": self.channel_name,
+                        "status": "published",
+                        "message_id": msg.message_id,
+                    },
+                )
+
+                ack_sock.send_multipart([
+                    sender_id,
+                    b"",
+                    AckMessage.to_bytes(ack),
+                ])
+
+                print(f"[Router.{self.channel_name}] sent ROUTER_ACK to {sender_id.decode('utf-8')} for {msg.message_id}")
+
+        finally:
+            router_sock.close()
+            ack_sock.close()
+            ctx.term()
+            print(f"[Router.{self.channel_name}] {self.channel_name} shutdown complete")
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\cmb_router_legacy_pubsub.py
+# ====================================
+
+"""
+Module: cmb_router.py
+Location: src/core/cmb/
+Version: 0.1.0
+
+Implements a ZMQ-based message router for a single CMB channel.
+Receives messages via ROUTER or PULL socket and republishes to subscribers via PUB socket.
+This router is channel-agnostic and can be launched per CMB channel.
+
+Depends: cognitive_message >= 0.1.0, module_endpoint >= 0.1.0, cmb_channel_config >= 0.1.0
+"""
+
+import zmq
+import threading
+from src.core.messages.cognitive_message import CognitiveMessage
+from src.core.messages.ack_message import AckMessage
+from src.core.cmb.cmb_channel_config import get_channel_port, get_channel_publish_port
+from src.core.cmb.cmb_channel_config import get_ack_Ingress_port, get_ack_Egress_port
+import uuid 
+
+
+class CMBRouter:
+    def __init__(self, channel_name: str):
+        self.channel_name = channel_name
+        self.port_in  = get_channel_port(channel_name) # ROUTER/PULL input port
+        self.port_out = get_channel_publish_port(channel_name)
+        self.port_ack_ingress = get_ack_Ingress_port(channel_name)    # ROUTER  port for ACKs
+        self.port_ack_egress  = get_ack_Egress_port(channel_name) # PUB port for ACKs
+
+    
+    def validate_message(self, msg: CognitiveMessage) -> bool:
+          if not msg.source or not msg.targets:
+             return False
+          return True
+    @staticmethod
+    def system_ack(payload: dict) -> "CognitiveMessage":
+        return CognitiveMessage(
+            message_id=str(uuid.uuid4()),
+            source="CMB_ROUTER",
+            tartegs=[],
+            payload=payload,
+            priority=0
+        )
+    
+    def start(self):
+        print(f"[CMBRouter] Starting router for channel '{self.channel_name}' on port 6000")
+        thread = threading.Thread(target=self.route_loop_cmb, daemon=True)
+        thread.start()
+    
+    def route_loop_cmb(self):
+        # Initialize the router socket for receiving messages
+        context = zmq.Context()
+
+        # Router socket (inbound)
+        socket = context.socket(zmq.ROUTER)
+        socket.bind(f"tcp://localhost:{self.port_in}")
+        print(f"[ROUTER] Channel router running on port {self.port_in}")
+
+        # Initialize the router socket for publishing messages
+        pub_socket = context.socket(zmq.PUB)
+        pub_socket.bind(f"tcp://localhost:{self.port_out}")
+        print(f"[ROUTER]  Publish channel router running on port {self.port_out}")
+
+        # Initialize Ack router socket
+        ack_port_in = context.socket(zmq.ROUTER)
+        ack_port_in.bind(f"tcp://localhost:{self.port_ack_ingress}")
+        print(f"[ROUTER] Ack channel router running on port {self.port_ack_ingress}")
+
+        # Initialize Ack publisher socket
+        ack_port_out = context.socket(zmq.ROUTER)
+        ack_port_out.bind(f"tcp://localhost:{self.port_ack_egress}")
+        print(f"[ROUTER] Ack channel publisher running on port {self.port_ack_egress}")
+
+        while True:
+            try:
+                frames = socket.recv_multipart()
+                identity = frames[0]
+                raw_msg = frames[-1]
+                msg = CognitiveMessage.from_bytes(raw_msg)
+                print(f"[Router] {self.channel_name} received message from {msg.source}")
+
+                # ---- validation phase ---- (stub)
+                # Ack message format to be determined
+                if not self.validate_message(msg):
+                    ack = {
+                        "type": "ROUTER_ACK",
+                        "status": "rejected",
+                        "reason": "validation_failed",
+                        "message_id": msg.message_id
+                    }
+
+                # ----Publisher Phase ----    
+                for target in msg.targets:
+                    pub_socket.send_multipart([
+                    target.encode(),
+                    msg.to_bytes()
+                    ])
+                    
+                    print(f"[CMBRouter] Routed message from {msg.source} to {target} via {self.channel_name}")
+                
+                # Ack phase (after publish)
+                ack = AckMessage.create(
+                    msg_type="ACK",
+                    ack_type="ROUTER_ACK",
+                    status="SUCCESS",
+                    source="CMB_ROUTER",
+                    targets=[msg.source],
+                    correlation_id=msg.message_id,
+                    payload={
+                        "type": "ROUTER_ACK",
+                        "status": "published",
+                        "channel": self.channel_name,
+                        "message_id": msg.message_id   
+                    }
+                )
+
+                ack_port_out.send_multipart([
+                    identity,
+                    b"",
+                    AckMessage.to_bytes(ack)]
+                )
+
+                print(f"[CMBRouter] Sent ACK to {msg.source} for message {msg.message_id} identity {identity}")
+
+            except Exception as e:
+                print(f"[CMBRouter] Error routing message: {e}")
+    
+    def close(self):
+        self.router_socket.close()
+        self.context.term()
+        
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\cmb_router_legecy_router_ack.py
+# ====================================
+
+"""
+Module: cmb_router.py
+Location: src/core/cmb/
+Version: 0.2.0
+
+Minimal ROUTER-based channel router for the Cognitive Message Bus.
+
+- One router per channel
+- ROUTER â†’ ROUTER forwarding
+- Immediate ROUTER_ACK
+- No state machine
+"""
+
+import json
+from core.messages.message_module import MessageType
+import zmq
+import threading
+import time
+from src.core.messages.cognitive_message import CognitiveMessage
+from src.core.messages.ack_message import AckMessage
+from src.core.cmb.cmb_channel_config import (
+    get_channel_ingress_port,
+    get_ack_egress_port,
+    get_channel_egress_port
+)
+
+
+class ChannelRouter:
+    def __init__(self, channel_name: str, host: str = "localhost"):
+        self.channel_name = channel_name
+        self.host = host
+
+        self.router_port = get_channel_ingress_port(channel_name)
+        self.module_egress_port = get_channel_egress_port(channel_name)
+        self.ack_port = get_ack_egress_port(channel_name)
+
+        self._stop_evt = threading.Event()
+        self._thread = None
+        print(f"[ROUTER.{self.channel_name}] router_port = {self.router_port}, ack_port = {self.ack_port}, module_egress_port = {self.module_egress_port}")
+
+    def start(self) -> None:
+        if self._thread and self._thread.is_alive():
+            return
+        self._stop_evt.clear()
+        self._thread = threading.Thread(
+            target=self._run,
+            name=f"ChannelRouter[{self.channel_name}]",
+            daemon=False,
+        )
+        self._thread.start()
+        print(f"[Router.{self.channel_name}] Channel '{self.channel_name}' started")
+
+    def stop(self) -> None:
+        self._stop_evt.set()
+        if self._thread:
+            self._thread.join(timeout=2.0)
+        print(f"[Router.{self.channel_name}] Channel '{self.channel_name}' stopped")
+
+
+    def _run(self) -> None:
+        ctx = zmq.Context.instance()
+        print(f"[Router.{self.channel_name}] starting on {self.router_port}")
+        router_sock = ctx.socket(zmq.ROUTER)
+        router_sock.bind(f"tcp://{self.host}:{self.router_port}")
+
+        module_egress_sock = ctx.socket(zmq.ROUTER)
+        module_egress_sock.bind(f"tcp://{self.host}:{self.module_egress_port}")
+
+        ack_sock = ctx.socket(zmq.ROUTER)
+        ack_sock.bind(f"tcp://{self.host}:{self.ack_port}")
+
+        poller = zmq.Poller()
+        poller.register(router_sock, zmq.POLLIN)
+        poller.register(module_egress_sock, zmq.POLLIN)
+
+        print(f"[Router.{self.channel_name}] {self.channel_name} ROUTER on {self.router_port}, ")
+        print(f"[Router.{self.channel_name}] {self.channel_name} ACK on {self.ack_port}")
+
+        try:
+            while not self._stop_evt.is_set():
+                events = dict(poller.poll(100))
+
+                if router_sock not in events:
+                    continue
+                
+                # Receive message
+                frames = router_sock.recv_multipart()
+                sender_id = frames[0]
+                payload = frames[-1]
+                print(f"[Router.{self.channel_name} DEBUG] Received from sender_id={sender_id!r}")
+
+                # ---- Parse message ----
+                try:
+                    obj = json.loads(payload.decode("utf-8"))
+                except Exception as e:    
+                    print(f"[Router.{self.channel_name} ERROR] Invalid JSON message: {e}")
+                    continue
+
+                # ---- Determine message type ----
+                msg_type = obj.get("msg_type")
+                print(f"[Router.{self.channel_name} DEBUG] msg_type={msg_type!r}")
+                
+                #---- Handle ACK messages ----
+                if msg_type == "ACK":
+                    ack = AckMessage.from_dict(obj)
+                    print(
+                        f"[Router.{self.channel_name}] {self.channel_name} "
+                        f"forwarded ACK {ack.message_id} "
+                        f"to {ack.targets[0]}"
+                    )
+                    # ---- Forward ACK to destination ----
+                    dest = ack.targets[0].encode("utf-8")
+                    ack_sock.send_multipart([dest, b"", payload])
+
+                    # ---- If MESSAGE_DELIVERED_ACK, acknowledge to sender ----
+                    if ack.ack_type == "MESSAGE_DELIVERED_ACK":            
+                        router_ack = AckMessage.create(
+                            msg_type="ACK",
+                            ack_type="ROUTER_ACK",
+                            status="SUCCESS",
+                            source="CMB_ROUTER",
+                            targets=[ack.source],
+                            correlation_id=ack.correlation_id,
+                            payload={"channel": self.channel_name,
+                                    "status": "published",
+                                    "message_id": msg.message_id,},
+                        )
+                        ack_dest = ack.source.encode("utf-8")
+                        ack_sock.send_multipart([ack_dest, b"", AckMessage.to_bytes(router_ack)])
+
+
+                    continue
+                else:
+                    print(f"[Router.{self.channel_name} DEBUG] Processing COMMAND message")
+                    try:
+                        msg = CognitiveMessage.from_dict(obj)
+                    except Exception as e:
+                        print(f"[Router.{self.channel_name} ERROR] Invalid COMMAND message: {e}")
+                        continue
+
+                print(
+                    f"[Router.{self.channel_name}] {self.channel_name} "
+                    f"received {msg.msg_type} from {msg.source}"
+                )
+
+                # ---- Forward to targets ----
+                for target in msg.targets:
+                    print(f"[Router.{self.channel_name} DEBUG] Sending to identity={target!r}")
+
+                    module_egress_sock.send_multipart([
+                        target.encode("utf-8"),
+                        b"",
+                        payload,
+                    ])
+                    print(
+                        f"[Router.{self.channel_name}] Forwarded {msg.message_id} "
+                        f"to {target}"
+                    )
+
+                # ---- Immediate ROUTER_ACK ----
+                ack = AckMessage.create(
+                    msg_type="ACK",
+                    ack_type="ROUTER_ACK",
+                    status="SUCCESS",
+                    source="CMB_ROUTER",
+                    targets=[msg.source],
+                    correlation_id=msg.message_id,
+                    payload={
+                        "channel": self.channel_name,
+                        "status": "published",
+                        "message_id": msg.message_id,
+                    },
+                )
+
+                ack_sock.send_multipart([
+                    sender_id,
+                    b"",
+                    AckMessage.to_bytes(ack),
+                ])
+
+                print(
+                    f"[Router.{self.channel_name}] ACK sent to {msg.source} "
+                    f"for {msg.message_id}"
+                )
+        finally:
+            router_sock.close()
+            ack_sock.close()
+            ctx.term()
+            print(f"[Router.{self.channel_name}] {self.channel_name} shutdown complete")
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\endpoint_config.py
+# ====================================
+
+from dataclasses import dataclass
+from typing import Dict, Iterable, Optional
+
+import zmq
+from src.core.cmb.channel_registry import ChannelRegistry, ChannelConfig, InboundDelivery
+from src.core.logging.log_manager import LogManager, Logger
+from src.core.logging.log_entry import LogEntry
+from src.core.logging.log_severity import LogSeverity
+from src.core.logging.file_log_sink import FileLogSink
+
+@dataclass(frozen=True)
+class ChannelEndpointConfig:
+    """Per-channel socket and port configuration for a module endpoint."""
+
+    name: str
+    router_port: int
+    inbound_port: Optional[int]
+    ack_port: Optional[int]
+
+    # Socket types (defaults reflect your current ROUTER/DEALER design)
+    outbound_socket_type: int = zmq.DEALER
+    inbound_socket_type: int = zmq.DEALER
+    ack_socket_type: int = zmq.DEALER
+
+    # Delivery mode
+    inbound_delivery: InboundDelivery = InboundDelivery.DIRECTED
+
+
+@dataclass(frozen=True)
+class MultiChannelEndpointConfig:
+    """
+    Configuration for a module endpoint supporting multiple channels.
+
+    One ModuleEndpoint instance
+    One module identity
+    Multiple channel connections resolved from ChannelRegistry
+    """
+
+    module_id: str                        # e.g. "behavior.executor.1"
+    channels: Dict[str, ChannelConfig]    # resolved ChannelConfig objects
+    host: str = "localhost"
+    poll_timeout_ms: int = 50
+
+    # Logging
+    log_manager = LogManager(min_severity=LogSeverity.INFO)
+    log_manager.register_sink(
+    FileLogSink("logs/system.jsonl")
+    )
+
+    logger = Logger("endpoint_config", log_manager)
+
+    logger.info(
+    event_type="ENDPOINT_CONFIG_INIT",
+    message=f"Endpoint configuration ",
+    payload={
+        "note": "no payload"
+    }
+)
+
+    @classmethod
+    def from_channel_names(
+        cls,
+        *,
+        module_id: str,
+        channel_names: Iterable[str],
+        host: str = "localhost",
+        poll_timeout_ms: int = 50,
+    ) -> "MultiChannelEndpointConfig":
+        """
+        Factory method that builds endpoint configuration
+        from ChannelRegistry channel names.
+        """
+
+        channels: Dict[str, ChannelConfig] = {}
+        ChannelRegistry.initialize()
+        for name in channel_names:
+            channels[name] = ChannelRegistry.get(name)
+            
+        return cls(
+            module_id=module_id,
+            channels=channels,
+            host=host,
+            poll_timeout_ms=poll_timeout_ms,
+        )
+
+    def channel_names(self) -> list[str]:
+        return list(self.channels.keys())
+
+    def get_channel(self, name: str) -> ChannelConfig:
+        if name not in self.channels:
+            raise KeyError(
+                f"Channel '{name}' not configured for module '{self.module_id}'"
+            )
+        return self.channels[name]
+
+#@dataclass(frozen=True)
+#class MultiChannelEndpointConfig2:
+    """All-channel configuration for a module endpoint."""
+
+ #   module_id: str
+  #  host: str = "localhost"
+   # poll_timeout_ms: int = 100
+    #channels: Dict[str, ChannelEndpointConfig] = field(default_factory=dict)
+
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\module_endpoint.py
+# ====================================
+
+# module_endpoint.py
+from __future__ import annotations
+
+import threading
+import time
+import queue
+from typing import Optional, Callable, Any
+from typing import Dict
+import zmq
+import json
+
+from src.core.cmb.utils import extract_message_id
+from src.core.cmb.endpoint_config import MultiChannelEndpointConfig
+from src.core.cmb.channel_registry import InboundDelivery
+from src.core.cmb.transaction_registry import TransactionRegistry
+from src.core.messages.ack_message import AckMessage
+from src.core.messages.cognitive_message import CognitiveMessage
+from src.core.logging.log_manager import LogManager, Logger
+from src.core.logging.log_entry import LogEntry
+from src.core.logging.log_severity import LogSeverity
+from src.core.logging.file_log_sink import FileLogSink
+
+
+class ModuleEndpoint:
+    """
+    ModuleEndpoint: transport + queues boundary.
+
+    Thread ownership model:
+      - start() spins a thread
+      - thread creates Context + sockets and runs poll loop
+      - module logic never touches zmq sockets
+
+    Queues:
+      - _send_q: module logic -> endpoint (outbound messages)
+      - _in_q: endpoint -> module logic (inbound messages)
+      - _ack_q: endpoint -> module logic (ACK messages)
+    """
+
+    def __init__(
+        self,
+        config: MultiChannelEndpointConfig,
+        *,
+        logger: Optional[Callable[[str], None]] = None,
+        serializer: Optional[Callable[[Any], bytes]] = None,
+        deserializer: Optional[Callable[[bytes], Any]] = None,
+        
+    ):
+        self.cfg = config
+
+        # Logging
+        self.log_manager = LogManager(min_severity=LogSeverity.INFO)
+        self.log_manager.register_sink(
+        FileLogSink("logs/system.jsonl")
+        )
+        self.logger = Logger(self.cfg.module_id, self.log_manager)
+
+        # Old logger function fallback
+        self._log = None
+
+        # Default serializer assumes caller already provides bytes.
+        self._to_bytes = serializer or (lambda x: x if isinstance(x, (bytes, bytearray)) else str(x).encode("utf-8"))
+        self._from_bytes = deserializer or (lambda b: b)
+
+        self._send_q: "queue.Queue[tuple[str,bytes, bytes]]" = queue.Queue()
+        self._in_q: "queue.Queue[Any]" = queue.Queue()
+        self._ack_q: "queue.Queue[Any]" = queue.Queue()
+
+        self._stop_evt = threading.Event()
+        self._thread: Optional[threading.Thread] = None
+
+        # These exist only in endpoint thread
+        self._ctx = None
+        self._out_socks: dict[str, zmq.Socket] = {}
+        self._in_socks: dict[str, zmq.Socket] = {}
+        self._ack_socks: dict[str, zmq.Socket] = {}
+        self._poller = None
+
+        self._sock_to_channel: dict[zmq.Socket, str] = {}
+        self._sock_is_ack: dict[zmq.Socket, bool] = {}
+
+        self._tx_registry = TransactionRegistry()
+
+    # --------------------------
+    # Public API (module side)
+    # --------------------------
+
+    def start(self) -> None:
+        if self._thread and self._thread.is_alive():
+            return
+        self._stop_evt.clear()
+        self._thread = threading.Thread(target=self._run, name=f"Endpoint[{self.cfg.module_id}]", daemon=False)
+        self._thread.start()
+        
+        self.logger.info(
+            event_type="ENDPOINT_START",
+            message=f"ModuleEndpoint started {self.cfg.module_id}",
+            payload={
+                "channels": list(self.cfg.channels.keys())
+            }
+        )
+
+    def stop(self, join_timeout: float = 2.0) -> None:
+        self._stop_evt.set()
+        if self._thread:
+            self._thread.join(timeout=join_timeout)
+        
+        self.logger.info(
+            event_type="ENDPOINT_STOP",
+            message=f"ModuleEndpoint stopped {self.cfg.module_id}",
+            payload={
+                "channels": list(self.cfg.channels.keys())
+            }
+        )
+
+    
+    def send(self, channel: str, target_id: str, payload: bytes) -> None:
+        if not isinstance(payload, (bytes, bytearray)):
+            raise TypeError(
+                f"ModuleEndpoint.send expects bytes, got {type(payload)}"
+            )
+        dest = target_id.encode("utf-8")
+        self._send_q.put((channel, dest, payload))
+
+
+    def recv(self, timeout: Optional[float] = None) -> Optional[Any]:
+        """Receive a normal inbound message (not ACK)."""
+        try:
+            return self._in_q.get(timeout=timeout)
+        except queue.Empty:
+            return None
+
+    def recv_ack(self, timeout: Optional[float] = None) -> Optional[Any]:
+        """Receive an ACK message."""
+        try:
+            return self._ack_q.get(timeout=timeout)
+        except queue.Empty:
+            return None
+
+    def drain_incoming(self, max_items: int = 100) -> list[Any]:
+        items = []
+        for _ in range(max_items):
+            try:
+                items.append(self._in_q.get_nowait())
+            except queue.Empty:
+                break
+        return items
+
+    def drain_acks(self, max_items: int = 100) -> list[Any]:
+        items = []
+        for _ in range(max_items):
+            try:
+                items.append(self._ack_q.get_nowait())
+            except queue.Empty:
+                break
+        return items
+
+    # --------------------------
+    # Endpoint thread internals
+    # --------------------------
+
+    def _run(self) -> None:
+        try:
+            self._setup_zmq()
+            self._loop()
+        except Exception as e:
+            self.logger.info(
+                event_type="ENDPOINT_EXCEPTION",
+                message=f"ModuleEndpoint exception in {self.cfg.module_id}: {e!r}",
+                payload={
+                    "channels": list(self.cfg.channels.keys())
+                }
+            )
+     
+        finally:
+            self._teardown_zmq()
+            self.logger.info(
+                    event_type="ENDPOINT_TEARDOWN",
+                    message=f"ModuleEndpoint {self.cfg.module_id}  teardown complete ",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
+
+    def _setup_zmq(self) -> None:
+        """
+        Create and connect ZMQ sockets for all configured channels.
+        Runs exclusively inside the endpoint thread.
+        """
+        self._ctx = zmq.Context.instance()
+
+        # Poller for all inbound + ACK sockets
+        self._poller = zmq.Poller()
+
+        for ch_name, ch_cfg in self.cfg.channels.items():
+            # ---------------------------
+            # Outbound socket (DEALER -> ROUTER)
+            # ---------------------------
+            out_sock = self._ctx.socket(ch_cfg.outbound_socket_type)
+            out_sock.setsockopt_string(zmq.IDENTITY, self.cfg.module_id)
+            out_sock.connect(f"tcp://{self.cfg.host}:{ch_cfg.router_port}")
+
+            self._out_socks[ch_name] = out_sock
+
+            self.logger.info(
+                event_type="ENDPOINT_OUTBOUND_SETUP",
+                message=f"ModuleEndpoint {self.cfg.module_id} setup outbound {ch_name} ",
+                payload={
+                    "channels": list(self.cfg.channels.keys())
+                }
+            )
+
+            # ---------------------------
+            # Inbound socket (optional)
+            # ---------------------------
+            if ch_cfg.inbound_port is not None:
+                if ch_cfg.inbound_delivery == InboundDelivery.BROADCAST:
+                    in_sock = self._ctx.socket(zmq.SUB)
+                    in_sock.setsockopt(zmq.SUBSCRIBE, b"")
+                else:
+                    in_sock = self._ctx.socket(zmq.DEALER)
+                    in_sock.setsockopt_string(zmq.IDENTITY, self.cfg.module_id)
+
+
+                # Identity is required for DEALER, ignored for SUB
+                in_sock.setsockopt_string(zmq.IDENTITY, self.cfg.module_id)
+
+                # SUB sockets must subscribe explicitly
+                if ch_cfg.inbound_delivery.name == "BROADCAST":
+                    in_sock.setsockopt(zmq.SUBSCRIBE, b"")
+
+                in_sock.connect(f"tcp://{self.cfg.host}:{ch_cfg.inbound_port}")
+
+                self._in_socks[ch_name] = in_sock
+                self._sock_to_channel[in_sock] = ch_name
+                self._sock_is_ack[in_sock] = False
+                self._poller.register(in_sock, zmq.POLLIN)
+
+                self.logger.info(
+                    event_type="ENDPOINT_INBOUND_SETUP",
+                    message=f"ModuleEndpoint {self.cfg.module_id} setup inbound {ch_name} ",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
+
+
+            # ---------------------------
+            # ACK socket (optional, DIRECTED only)
+            # ---------------------------
+            if ch_cfg.ack_port is not None:
+                ack_sock = self._ctx.socket(ch_cfg.ack_socket_type)
+                ack_sock.setsockopt_string(zmq.IDENTITY, self.cfg.module_id)
+                ack_sock.connect(f"tcp://{self.cfg.host}:{ch_cfg.ack_port}")
+
+                self._ack_socks[ch_name] = ack_sock
+                self._sock_to_channel[ack_sock] = ch_name
+                self._sock_is_ack[ack_sock] = True
+                self._poller.register(ack_sock, zmq.POLLIN)
+
+                self.logger.info(
+                    event_type="ENDPOINT_ACK_SETUP",
+                    message=f"ModuleEndpoint {self.cfg.module_id} setup ACK {ch_name} ",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
+
+
+    def _teardown_zmq(self) -> None:
+        # Close sockets created in thread
+        for sock_dict in (self._out_socks, self._in_socks, self._ack_socks):
+            if not sock_dict:
+                continue
+            for sock in sock_dict.values():
+                try:
+                    sock.close(linger=0)
+                except Exception:
+                    pass
+
+
+        self._out_socks = None
+        self._in_socks = None
+        self._ack_socks = None
+        self._poller = None
+
+        # Do NOT terminate Context.instance() here; other endpoints may use it.
+        self._ctx = None
+
+    def _loop(self) -> None:
+        """
+        Main endpoint event loop.
+        Handles outbound flushing and inbound/ACK dispatch
+        across all configured channels.
+        """
+        while not self._stop_evt.is_set():
+            """
+            self._tx_registry.tick()
+            self._tx_registry.cleanup_completed()
+            """
+
+            # 1) Flush outbound messages (fair, bounded)
+            self._flush_outbound(max_per_tick=50)
+
+            # 2) Poll inbound + ACK sockets
+            if self._poller is None:
+                time.sleep(0.01)
+                continue
+
+            try:
+                events = dict(self._poller.poll(self.cfg.poll_timeout_ms))
+            except zmq.ZMQError as e: 
+                # Context terminated or shutting down
+
+                self.logger.info(
+                    event_type="ENDPOINT_ZMQ_ERROR",
+                    message=f"ModuleEndpoint {self.cfg.module_id} poller error : {e!r}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
+
+                return
+
+            # 3) Dispatch ready sockets
+            for sock in events:
+                is_ack = self._sock_is_ack.get(sock, False)
+                self._handle_inbound(sock, is_ack=is_ack)
+
+
+    def _flush_outbound(self, max_per_tick: int) -> None:
+        """
+        Flush outbound messages across all channels.
+        Respects backpressure and preserves message ordering per channel.
+        """
+        sent = 0
+
+        while sent < max_per_tick:
+            try:
+                ch_name, dest, payload = self._send_q.get_nowait()
+
+            except queue.Empty:
+                return
+
+            # Get outbound socket for channel
+            out_sock = self._out_socks.get(ch_name)
+            if out_sock is None:
+
+                self.logger.info(
+                    event_type="ENDPOINT_NO_OUTBOUND_SOCKET",
+                    message=f"ModuleEndpoint {self.cfg.module_id} out_sock None {ch_name} ",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
+
+                continue
+
+            # Send message
+            try:                
+                message_id = extract_message_id(payload)
+                tx = self._tx_registry.create(
+                    message_id=message_id,
+                    channel=ch_name,
+                    source=self.cfg.module_id,
+                    target=dest.decode("utf-8"),
+                    payload=payload,
+                )
+
+                
+                self.logger.info(
+                    event_type="ENDPOINT_TRANSACTION_CREATED",
+                    message=f"ModuleEndpoint {self.cfg.module_id} channel: {ch_name} outgoing message_id={message_id}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
+
+                # ROUTER addressing pattern:
+                # [dest_identity][empty][payload]
+                out_sock.send_multipart(
+                    [payload],
+                    flags=zmq.NOBLOCK
+                )
+
+                sent += 1
+
+                self.logger.info(
+                    event_type="ENDPOINT_SENT_MESSAGE",
+                    message=f"ModuleEndpoint {self.cfg.module_id} sent message on channel {ch_name} to {dest!r}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
+                
+
+            except zmq.Again:
+                # Backpressure: requeue and retry next loop
+                self._send_q.put((ch_name, dest, payload))
+                return
+
+    def _handle_inbound(self, sock, *, is_ack: bool) -> None:
+        """
+        Handles typical ROUTER->DEALER frames:
+          [identity][empty?][payload]
+        We keep this tolerant because your framing is still evolving.
+        """
+        frames = sock.recv_multipart()
+        payload = frames[-1]
+
+
+        if is_ack:
+            ack = AckMessage.from_bytes(payload)
+            event = self._tx_registry.apply_ack(ack)
+            
+            self.logger.info(
+                    event_type="ENDPOINT_RECEIVED_ACK",
+                    message=f"ModuleEndpoint {self.cfg.module_id} received ACK for correlation_id={ack.correlation_id}, event={event} ack type = {ack.ack_type}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
+            
+            if event != "ERROR 1" and event != "ERROR 2":
+                self._ack_q.put(ack)
+            else:
+                                
+                self.logger.info(
+                    event_type="ENDPOINT_ERROR_INVALID_ACK",
+                    message=f"ModuleEndpoint {self.cfg.module_id} Received invalid ACK: {ack!r}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
+
+        else:
+            msg_obj = CognitiveMessage.from_bytes(payload)
+            self._in_q.put(msg_obj)
+            message_id = msg_obj.message_id
+            tx = self._tx_registry.create(
+                    message_id=message_id,
+                    channel = None,
+                    source=msg_obj.source,
+                    target=msg_obj.targets,
+                    payload=payload,
+                )
+            
+            self.logger.info(
+                    event_type="ENDPOINT_CREATED_TRANSACTION",
+                    message=f"ModuleEndpoint {self.cfg.module_id}  Created transaction for incoming message_id={message_id}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+            )
+            
+            # send ACK back
+            try:
+                ack = AckMessage.create(
+                    msg_type="ACK",
+                    ack_type="MESSAGE_DELIVERED_ACK",
+                    status="SUCCESS",
+                    source=self.cfg.module_id,
+                    targets=[msg_obj.source],
+                    correlation_id=msg_obj.message_id,
+                    payload={ 
+                        "status": "published",
+                        "message_id": msg_obj.message_id
+                    }
+                )
+
+                self.send("CC", msg_obj.source, ack.to_bytes())
+
+                self.logger.info(
+                    event_type="ENDPOINT_SENT_ACK",
+                    message=f"ModuleEndpoint {self.cfg.module_id} sent ACK to {msg_obj.source}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
+
+            except Exception as e:
+                self.logger.info(
+                    event_type="ENDPOINT_ACK_SEND_ERROR",
+                    message=f"ModuleEndpoint {self.cfg.module_id} outbound ACK send error: {e!r}",
+                    payload={
+                        "channels": list(self.cfg.channels.keys())
+                    }
+                )
+
+            
+
+
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\transaction_record.py
+# ====================================
+
+from dataclasses import dataclass, field
+from typing import List, Optional, Dict, Any
+import time
+
+from src.core.cmb.transport_state_machine import AckStateMachine, AckTransitionEvent
+
+
+@dataclass
+class TransactionRecord:
+    """
+    Tracks the lifecycle of a single outbound message exchange on the CMB.
+
+    One TransactionRecord exists per message_id and owns:
+    - The ACK state machine
+    - Transition history
+    - Timing and diagnostics
+    """
+
+    # -------------------------------------------------
+    # Identity
+    # -------------------------------------------------
+    message_id: str
+    event_id: str
+    channel: str
+    source: str
+    target: str
+
+    # -------------------------------------------------
+    # Message payload (opaque to CMB)
+    # -------------------------------------------------
+    payload: bytes
+
+    # -------------------------------------------------
+    # Reliability core
+    # -------------------------------------------------
+    ack_sm: AckStateMachine = field(init=False)
+
+    # -------------------------------------------------
+    # Timeline
+    # -------------------------------------------------
+    created_at: float = field(default_factory=time.monotonic)
+    completed_at: Optional[float] = None
+
+    # -------------------------------------------------
+    # History
+    # -------------------------------------------------
+    transitions: List[AckTransitionEvent] = field(default_factory=list)
+
+    # -------------------------------------------------
+    # Terminal diagnostics
+    # -------------------------------------------------
+    final_state: Optional[str] = None
+    failure_reason: Optional[str] = None
+
+    # -------------------------------------------------
+    # Initialization
+    # -------------------------------------------------
+    def __post_init__(self):
+        self.ack_sm = AckStateMachine(message_id=self.message_id)
+
+    # -------------------------------------------------
+    # State transition handling
+    # -------------------------------------------------
+    def record_transition(self, event: AckTransitionEvent) -> None:
+        """
+        Records a state transition produced by the ACK state machine
+        and updates terminal metadata if applicable.
+        """
+        self.transitions.append(event)
+
+        if self.ack_sm.is_terminal():
+            self.completed_at = event.timestamp
+            self.final_state = event.new_state
+
+            if event.new_state in (
+                "TIMEOUT",
+                "COMPLETED_FAILURE",
+                "CANCELLED",
+            ):
+                self.failure_reason = event.reason
+
+    # -------------------------------------------------
+    # Status helpers
+    # -------------------------------------------------
+    def is_complete(self) -> bool:
+        return self.ack_sm.is_terminal()
+
+    def duration(self) -> Optional[float]:
+        if self.completed_at is None:
+            return None
+        return self.completed_at - self.created_at
+
+    # -------------------------------------------------
+    # Introspection / logging / GUI / DB
+    # -------------------------------------------------
+    def snapshot(self) -> Dict[str, Any]:
+        """
+        Lightweight, serializable view for GUI, logging, or persistence.
+        """
+        return {
+            "message_id": self.message_id,
+            "channel": self.channel,
+            "source": self.source,
+            "target": self.target,
+            "state": self.ack_sm.state.name,
+            "retry_count": self.ack_sm.retry_count,
+            "created_at": self.created_at,
+            "completed_at": self.completed_at,
+            "duration": self.duration(),
+            "final_state": self.final_state,
+            "failure_reason": self.failure_reason,
+        }
+
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\transaction_registry.py
+# ====================================
+
+import threading
+import time
+from typing import Dict, Optional, Iterable
+
+from src.core.cmb.cmb_exceptions import TransportError
+from src.core.cmb.transaction_record import TransactionRecord
+from src.core.cmb.transport_state_machine import AckTransitionEvent
+from src.core.messages.ack_message import AckMessage
+from src.core.messages.cognitive_message import CognitiveMessage
+
+
+class TransactionRegistry:
+    """
+    Central registry for all in-flight and completed CMB transactions.
+
+    Responsibilities:
+      - Own all TransactionRecord instances
+      - Route ACK events to the correct transaction
+      - Drive timeout / retry ticks
+      - Provide introspection and cleanup hooks
+    """
+
+    def __init__(self):
+        self._lock = threading.RLock()
+        self._transactions: Dict[str, TransactionRecord] = {}
+
+    # -------------------------------------------------
+    # Creation / lookup
+    # -------------------------------------------------
+    def create(
+        self,
+        *,
+        message_id: str,
+        channel: str,
+        source: str,
+        target: str,
+        payload: bytes,
+    ) -> TransactionRecord:
+        """
+        Create and register a new transaction.
+        """
+        with self._lock:
+            if message_id in self._transactions:
+                raise ValueError(f"Duplicate transaction for message_id={message_id}")
+
+            tx = TransactionRecord(
+                message_id=message_id,
+                event_id=message_id,  # For now, event_id == message_id
+                channel=channel,
+                source=source,
+                target=target,
+                payload=payload,
+            )
+
+            # Register a transaction for this message_id
+            self._transactions[message_id] = tx
+
+            # Initial SEND transition
+            event = tx.ack_sm.on_send()
+            tx.record_transition(event)
+
+            return tx
+
+    def get(self, message_id: str) -> Optional[TransactionRecord]:
+        with self._lock:
+            return self._transactions.get(message_id)
+
+    # -------------------------------------------------
+    # ACK dispatch
+    # -------------------------------------------------
+    def apply_ack(self, ack: AckMessage) -> Optional[AckTransitionEvent]:
+        """
+        Apply an ACK message to the corresponding transaction.
+
+        Returns the resulting AckTransitionEvent (if any).
+        """
+        with self._lock:
+            tx = self._transactions.get(ack.correlation_id)
+            if tx is None:
+                # Unknown or already cleaned-up transaction
+                raise TransportError("ERROR 1")
+
+            if ack.ack_type == "ROUTER_ACK":
+                event = tx.ack_sm.on_router_ack()
+
+            elif ack.ack_type == "MESSAGE_DELIVERED_ACK":
+                event = tx.ack_sm.on_msg_delivered_ack()               
+            else:
+                # Unknown ACK type â†’ ignore safely
+                event = "ERROR 2"
+                return event
+
+            tx.record_transition(event)
+            return event
+
+    def apply_msg_received(self, msg: CognitiveMessage) -> Optional[AckTransitionEvent]:
+        """
+        Apply a MSG_RECEIVED event to the corresponding transaction.
+
+        Returns the resulting AckTransitionEvent (if any).
+        """
+        with self._lock:
+            tx = self._transactions.get(msg.message_id)
+            if tx is None:
+                # Unknown or already cleaned-up transaction
+                return None
+
+            event = tx.ack_sm.on_msg_received()
+            tx.record_transition(event)
+            return event
+    # -------------------------------------------------
+    # Time-based processing
+    # -------------------------------------------------
+    def tick(self) -> Iterable[AckTransitionEvent]:
+        """
+        Drive time-based transitions (timeouts, retries).
+        Should be called periodically by ModuleEndpoint.
+        """
+        events = []
+
+        with self._lock:
+            for tx in self._transactions.values():
+                if tx.is_complete():
+                    continue
+
+                event = tx.ack_sm.tick()
+                if event is not None:
+                    tx.record_transition(event)
+                    events.append(event)
+
+        return events
+
+    # -------------------------------------------------
+    # Cancellation
+    # -------------------------------------------------
+    def cancel(self, message_id: str, reason: str = "CANCELLED") -> None:
+        with self._lock:
+            tx = self._transactions.get(message_id)
+            if not tx or tx.is_complete():
+                return
+
+            event = tx.ack_sm.cancel(reason=reason)
+            tx.record_transition(event)
+
+    # -------------------------------------------------
+    # Cleanup
+    # -------------------------------------------------
+    def cleanup_completed(self, max_age_sec: float = 60.0) -> None:
+        """
+        Remove completed transactions older than max_age_sec.
+        """
+        now = time.monotonic()
+
+        with self._lock:
+            to_delete = [
+                mid for mid, tx in self._transactions.items()
+                if tx.completed_at is not None
+                and (now - tx.completed_at) > max_age_sec
+            ]
+
+            for mid in to_delete:
+                del self._transactions[mid]
+
+    # -------------------------------------------------
+    # Introspection
+    # -------------------------------------------------
+    def snapshot(self) -> Dict[str, dict]:
+        """
+        Snapshot all current transactions (for GUI / debugging).
+        """
+        with self._lock:
+            return {
+                mid: tx.snapshot()
+                for mid, tx in self._transactions.items()
+            }
+
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\transport_state_machine.py
+# ====================================
+
+from enum import Enum, auto
+from dataclasses import dataclass
+from typing import Optional, Any
+import time
+
+from core.messages.ack_message import AckMessage
+
+class AckState(Enum):
+    SEND_PENDING = auto()
+    AWAIT_ROUTER_ACK = auto()
+    AWAIT_MESSAGE_DELIVERED_ACK = auto()
+    COMPLETED = auto()
+    TIMEOUT = auto()
+    ERROR = auto()
+    CANCELLED = auto()
+
+class AckDecision(Enum):
+    NOOP = auto()
+    RETRY = auto()
+    COMPLETE = auto()
+    FAIL = auto()
+
+@dataclass(frozen=True)
+class AckTransitionEvent:
+    message_id: str
+    old_state: str
+    new_state: str
+    reason: str
+    timestamp: float
+    retry_count: int
+    details: Optional[Any] = None
+
+class AckStateMachine:
+    """
+    Pure logic ACK state machine for a single outbound message.
+
+    - No I/O
+    - No logging
+    - No threading
+    - Emits AckTransitionEvent on every transition
+    """
+
+    def __init__(
+        self,
+        message_id: str,
+        *,
+        require_exec_ack: bool = True,
+        allow_progress_ack: bool = True,
+        router_timeout_s: float = 1.0,
+        exec_timeout_s: float = 5.0,
+        max_retries: int = 3,
+    ):
+        self.message_id = message_id
+
+        # Policy
+        self.require_exec_ack = require_exec_ack
+        self.allow_progress_ack = allow_progress_ack
+        self.router_timeout_s = router_timeout_s
+        self.exec_timeout_s = exec_timeout_s
+        self.max_retries = max_retries
+
+        # State
+        self.state = AckState.SEND_PENDING
+        self.retry_count = 0
+
+        now = time.monotonic()
+        self.created_at = now
+        self.last_transition_at = now
+
+        self.router_deadline: Optional[float] = None
+        self.exec_deadline: Optional[float] = None
+
+    def _transition(
+        self,
+        new_state: AckState,
+        *,
+        reason: str,
+        details: Optional[Any] = None,
+    ) -> AckTransitionEvent:
+        now = time.monotonic()
+
+        event = AckTransitionEvent(
+            message_id=self.message_id,
+            old_state=self.state.name,
+            new_state=new_state.name,
+            reason=reason,
+            timestamp=now,
+            retry_count=self.retry_count,
+            details=details,
+        )
+
+        self.state = new_state
+        self.last_transition_at = now
+        return event
+    
+    def on_send(self) -> AckTransitionEvent:
+        self.router_deadline = time.monotonic() + self.router_timeout_s
+        self.exec_deadline = None
+
+        return self._transition(
+            AckState.AWAIT_ROUTER_ACK,
+            reason="SEND",
+        )
+
+    def on_router_ack(self) -> AckTransitionEvent:
+        self.router_deadline = None
+        if self.require_exec_ack:
+            self.exec_deadline = time.monotonic() + self.exec_timeout_s
+            return self._transition(
+                AckState.AWAIT_MESSAGE_DELIVERED_ACK,
+                reason="ROUTER_ACK",
+            )
+
+        return self._transition(
+            AckState.COMPLETED,
+            reason="NO_MSG_DELIVERED_ACK_REQUIRED",
+        )
+
+
+    def on_msg_delivered_ack(self) -> AckTransitionEvent:
+        """
+        Handle EXEC ACK from the destination module.
+
+        Valid only when waiting for execution completion.
+        """
+
+        # --- Illegal state guard ---
+        if self.state != AckState.AWAIT_MESSAGE_DELIVERED_ACK:
+            return self._transition(
+                self.state,
+                reason="ILLEGAL_MSG_DELIVERED_ACK",
+            )
+
+        # --- Normal success / failure handling ---
+        else: 
+            return self._transition(
+            AckState.COMPLETED,
+            reason="MSG_DELIVERED_ACK_SUCCESS",
+        )
+        
+
+    
+    def on_msg_data(self, details: Optional[Any] = None) -> AckTransitionEvent:
+        if not self.allow_progress_ack:
+            return self._transition(
+                self.state,
+                reason="PROGRESS_ACK_IGNORED",
+            )
+
+        # Stay in EXECUTING, refresh timeout
+        self.exec_deadline = time.monotonic() + self.exec_timeout_s
+        return self._transition(
+            AckState.EXECUTING,
+            reason="PROGRESS_ACK",
+            details=details,
+        )
+
+    def tick(self, now: Optional[float] = None) -> Optional[AckTransitionEvent]:
+        if now is None:
+            now = time.monotonic()
+
+        if self.state == AckState.AWAIT_ROUTER_ACK:
+            if self.router_deadline and now >= self.router_deadline:
+                return self._handle_timeout("ROUTER_TIMEOUT")
+
+        if self.state in (AckState.AWAIT_EXEC_ACK, AckState.EXECUTING):
+            if self.exec_deadline and now >= self.exec_deadline:
+                return self._handle_timeout("EXEC_TIMEOUT")
+
+        return None
+
+    def _handle_timeout(self, reason: str) -> AckTransitionEvent:
+        self.retry_count += 1
+
+        if self.retry_count <= self.max_retries:
+            self.router_deadline = time.monotonic() + self.router_timeout_s
+            self.exec_deadline = None
+            return self._transition(
+                AckState.SEND_PENDING,
+                reason=f"{reason}_RETRY",
+            )
+
+        return self._transition(
+            AckState.TIMEOUT,
+            reason=f"{reason}_FAIL",
+        )
+
+    def cancel(self) -> AckTransitionEvent:
+        self.router_deadline = None
+        self.exec_deadline = None
+        return self._transition(
+            AckState.CANCELLED,
+            reason="CANCEL",
+        )
+    def is_terminal(self) -> bool:
+        return self.state in (
+            AckState.COMPLETED,
+            AckState.ERROR,
+            AckState.TIMEOUT,
+            AckState.CANCELLED,
+        )
+
+    def snapshot(self) -> dict:
+        return {
+            "message_id": self.message_id,
+            "state": self.state.name,
+            "retry_count": self.retry_count,
+            "created_at": self.created_at,
+            "last_transition_at": self.last_transition_at,
+        }
+
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\cmb\utils.py
+# ====================================
+
+import json
+
+
+def extract_message_id(payload: bytes) -> str:
+    """
+    Extract message_id from a serialized CognitiveMessage payload.
+
+    Raises ValueError if message_id is missing or payload is invalid.
+    """
+    try:
+        data = json.loads(payload.decode("utf-8"))
+    except Exception as e:
+        raise ValueError(f"Invalid message payload (not JSON): {e}")
+
+    message_id = data.get("message_id")
+    if not message_id:
+        raise ValueError("Payload missing 'message_id'")
+
+    return message_id
+
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\messages\__init__.py
+# ====================================
+
+
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\messages\ack_message.py
+# ====================================
+
+"""
+Module: ack_message.py
+Location: src/core/messages/
+Version: 0.1.0
+
+Defines the standard ack message structure used throughout the AGI system's Cognitive Message Bus (CMB).
+This module should be treated as canonical and never duplicated or modified outside of version-controlled updates.
+"""
+
+import uuid
+import time
+import json
+from dataclasses import dataclass, asdict
+
+
+
+@dataclass
+class AckMessage:
+    message_id: str              # Global unique identifier
+    msg_type: str                # Acknowledgement intent
+    ack_type: str                # Acknowledgement type
+    status: str                  # Acknowledgement status
+    source: str                  # Sending module
+    targets: list[str]           # Intended recipients
+    correlation_id: str | None   # Requestâ€“response linkage
+    payload: dict                # Message content
+
+
+    
+    @staticmethod
+    def create(
+       msg_type: str,
+       ack_type: str,
+       status: str,
+       source: str,
+       targets: list[str],
+       correlation_id: str | None,
+       payload: dict,
+
+    ) -> "AckMessage":
+        return AckMessage(
+            message_id=str(uuid.uuid4()),
+            msg_type = msg_type,
+            ack_type = ack_type,
+            status = status,
+            source=source,
+            targets=targets,
+            correlation_id = correlation_id,
+            payload=payload,
+
+        )
+
+
+    def to_json(self) -> str:
+        return json.dumps(asdict(self))
+
+    def to_bytes(self) -> bytes:
+        return self.to_json().encode("utf-8")
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
+    @classmethod
+    def from_bytes(cls, data: bytes) -> "AckMessage":
+        if not isinstance(data, (bytes, bytearray)):
+            raise TypeError(
+                f"AckMessage.from_bytes expects bytes, got {type(data)}"
+            )
+        try:
+            obj = json.loads(data.decode("utf-8"))
+        except Exception as e:
+            raise ValueError(f"Invalid ACK payload JSON: {e}") from e
+
+        return cls.from_dict(obj)
+
+
+    @staticmethod
+    def from_json(json_str: str) -> "AckMessage":
+        return AckMessage(**json.loads(json_str))
+    
+    @classmethod
+    def from_dict(cls, data: dict) -> "AckMessage":
+        try:
+            return cls(
+                message_id=data["message_id"],
+                msg_type=data["msg_type"],
+                ack_type=data["ack_type"],
+                status=data["status"],
+                source=data["source"],
+                targets=data.get("targets", []),
+                correlation_id=data.get("correlation_id"),
+                payload=data.get("payload", {})
+            )
+        except KeyError as e:
+            raise ValueError(f"Missing required AckMessage field: {e}")
+
+
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\messages\cognitive_message.py
+# ====================================
+
+"""
+Module: cognitive_message.py
+Location: src/core/messages/
+Version: 0.1.0
+
+Defines the standard message structure used throughout the AGI system's Cognitive Message Bus (CMB).
+This module should be treated as canonical and never duplicated or modified outside of version-controlled updates.
+"""
+
+import uuid
+import time
+import json
+from dataclasses import dataclass, asdict
+from src.core.messages.ack_message import AckMessage
+
+
+
+@dataclass
+class CognitiveMessage:
+    message_id: str              # Global unique identifier
+    schema_version: str          # Message schema version
+    msg_type: str                # Semantic intent
+    msg_version: str             # Message-type version
+    source: str                  # Sending module
+    targets: list[str]           # Intended recipients
+    context_tag: str | None      # Goal / task context
+    correlation_id: str | None   # Requestâ€“response linkage
+    payload: dict                # Message content
+    priority: int                # 0â€“100
+    timestamp: float             # Epoch seconds
+    ttl: float                   # Time-to-live (seconds)
+    signature: str | None        # Optional integrity/auth
+
+
+    
+    @staticmethod
+    def create(
+       schema_version: str,
+       msg_type: str,
+       msg_version: str,
+       source: str,
+       targets: list[str],
+       context_tag: str | None,
+       correlation_id: str | None,
+       payload: dict,
+       priority: int = 50,
+       ttl: float = 10.0,
+       signature: str = ""
+    ) -> "CognitiveMessage":
+        message_id = str(uuid.uuid4())
+        correlation_id = message_id if correlation_id is None else correlation_id
+        return CognitiveMessage(
+            message_id=message_id,
+            schema_version = CognitiveMessage.get_schema_version(),
+            msg_type = msg_type,
+            msg_version = msg_version,
+            source=source,
+            targets=targets,
+            context_tag = context_tag,
+            correlation_id = correlation_id,
+            payload=payload,
+            priority=priority,
+            timestamp=time.time(),
+            ttl=ttl,
+            signature=signature
+        )
+    
+    @staticmethod
+    def system_ack(payload: dict) -> "AckMessage":
+        return AckMessage(
+           message_id=str(uuid.uuid4()),
+           source="CMB_ROUTER",
+           targets=[],
+           payload=payload,
+           priority=0
+    )
+
+    @staticmethod
+    def get_schema_version():
+        return 1
+
+    def is_expired(self) -> bool:
+        return (time.time() - self.timestamp) > self.ttl
+
+    def to_json(self) -> str:
+        return json.dumps(asdict(self))
+
+    def to_bytes(self) -> bytes:
+        return self.to_json().encode("utf-8")
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
+    @staticmethod
+    def from_bytes(data: bytes) -> "CognitiveMessage":
+        obj = json.loads(data.decode("utf-8"))
+        return CognitiveMessage(**obj)
+
+    @staticmethod
+    def from_json(json_str: str) -> "CognitiveMessage":
+        return CognitiveMessage(**json.loads(json_str))
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "CognitiveMessage":
+        try:
+            return cls(
+                message_id=data["message_id"],
+                schema_version=data["schema_version"],
+                msg_type=data["msg_type"],
+                msg_version=data.get("msg_version", "0.0.0"),
+                source=data["source"],
+                targets=data.get("targets", []),
+                context_tag=data.get("context_tag"),
+                correlation_id=data.get("correlation_id"),
+                payload=data.get("payload", {}),
+                priority=data.get("priority", 0),
+                ttl=data.get("ttl", 0),
+                timestamp=data.get("timestamp"),
+                signature=data.get("signature"),
+            )
+        except KeyError as e:
+            raise ValueError(f"Missing required CognitiveMessage field: {e}")
+    
+
+
+# ====================================
+# FILE: C:\dev\agi-system\src\core\messages\message_module.py
+# ====================================
+
+# ======================================================
+# message_module.py (Message Architecture Scaffold)
+# ======================================================
+
+from enum import Enum
+from typing import Any, Dict, Optional
+from datetime import datetime
+
+# ------------------------------------------------------
+# Standardized Message Types
+# ------------------------------------------------------
+class MessageType(Enum):
+    LOG_ENTRY = "log_entry"
+    COMMAND = "command"
+    DIRECTIVE = "directive"
+    INTROSPECTION = "introspection"
+    VISUAL = "visual"
+    AUDIO = "audio"
+    LANGUAGE = "language"
+    SENSOR = "sensor"
+    REWARD = "reward"
+    ERROR = "error"
+    EXIT = "exit"
+    STATUS = "status"
+    QUERY = "query"
+    RESPONSE = "response"
+    ROUTE = "route"
+    DIAGNOSTIC = "diagnostic"
+
+# ------------------------------------------------------
+# Standardized Module Names
+# ------------------------------------------------------
+class ModuleName(Enum):
+    QUESTION_GENERATOR = "question_generator"
+    AEM = "aem"
+    NLP = "nlp"
+    PERCEPTION = "perception"
+    SELF_TALK = "self_talk"
+    CMB_LOGGER = "cmb_logger"
+    DIAGNOSTICS = "diagnostics"
+    ROUTER = "cmb_router"
+    LOGGER_UI = "logger_ui"
+    GUI_DIRECTIVE = "gui_directive"
+
+#
+
+
