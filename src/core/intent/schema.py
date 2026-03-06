@@ -27,7 +27,7 @@ def from_dict(data: dict[str, Any]) -> IntentObject:
     Convert a dict (typically LLM JSON output) into an IntentObject,
     enforcing enum validity and basic constraints.
     """
-    print(f"Debug: Raw LLM output for intent classification: {data}")
+    
     required = [
         "intent_label",
         "planning_required",

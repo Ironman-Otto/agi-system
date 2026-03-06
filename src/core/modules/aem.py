@@ -120,8 +120,9 @@ class AEM:
             if not isinstance(msg, CognitiveMessage):
                 continue
 
-            if msg.msg_type == MessageType.DIRECTIVE_DERIVATIVE.value:
-                self._handle_directive(msg)
+            if msg.msg_type == MessageType.INTENT_RESULT.value:
+                print(f"AEM received INTENT_RESULT message: {msg.to_dict()}")
+                #self._handle_directive(msg)
 
             elif msg.msg_type == "PLAN_RESPONSE":
                 self._handle_plan_response(msg)

@@ -15,11 +15,14 @@ from src.core.policy.model_selection.policy import ModelSelectionPolicy
 
 from src.core.cmb.endpoint_config import MultiChannelEndpointConfig
 from src.core.cmb.module_endpoint import ModuleEndpoint
+
 from src.core.logging.log_manager import LogManager, Logger
 from src.core.logging.log_severity import LogSeverity
 from src.core.logging.file_log_sink import FileLogSink
 from src.core.modules.common_module_loop import CommonModuleLoop
 from src.core.messages.cognitive_message import CognitiveMessage
+
+from src.core.modules.nlp.registry_singleton import registry
 
 
 MODULE_ID = "NLP"
@@ -118,6 +121,17 @@ def main():
             },
         )
 
+    def dispatch_message(msg: CognitiveMessage, ctx: dict):
+        result = registry.dispatch(msg, {"module_id": MODULE_ID})
+        if not result.handled:
+            logger.info(
+                event_type="NLP_UNHANDLED_MESSAGE",
+                message=f"No handler for msg_type={msg.msg_type} v={msg.msg_version}",
+                payload={
+                    "msg_type": msg.msg_type,
+                    "msg_version": msg.msg_version,
+                },
+            )
     # -----------------------------
     # Lifecycle hooks
     # -----------------------------
@@ -141,7 +155,7 @@ def main():
         module_id=MODULE_ID,
         endpoint=endpoint,
         logger=logger,
-        on_message=handle_message,
+        on_message=dispatch_message,
         on_start=on_start,
         on_shutdown=on_shutdown,
     )

@@ -46,7 +46,7 @@ class FileLogSink:
                 ),
             }
             with self._lock:
-                self._file.write(json.dumps(record) + "\n")
+                self._file.write(json.dumps(record) + "\n\n")
                 self._file.flush()
 
         except Exception:

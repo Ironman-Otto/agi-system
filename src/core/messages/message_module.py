@@ -10,6 +10,7 @@ from datetime import datetime
 # Standardized Message Types
 # ------------------------------------------------------
 class MessageType(Enum):
+    INTENT_RESULT = "INTENT_RESULT"
     LOG_ENTRY = "log_entry"
     COMMAND = "command"
     DIRECTIVE = "directive"

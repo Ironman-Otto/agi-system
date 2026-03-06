@@ -67,7 +67,7 @@ class CommonModuleLoop:
             while not self._stop_evt.is_set():
                 # Receive message (non-blocking or short timeout)
                 msg = self.endpoint.recv(timeout=self.poll_interval)
-
+               
                 if msg is not None:
                     self.logger.info(
                         event_type="MODULE_MESSAGE_RECV",
@@ -80,7 +80,13 @@ class CommonModuleLoop:
                     )
 
                     try:
-                        self.on_message(msg)
+                        ctx = {
+                            "module_id": self.module_id,
+                            "endpoint": self.endpoint,
+                            "logger": self.logger,
+                        }
+                        
+                        self.on_message(msg, ctx)
                     except Exception as e:
                         self.logger.info(
                             event_type="MODULE_MESSAGE_HANDLER_ERROR",

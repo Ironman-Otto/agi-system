@@ -25,8 +25,8 @@ PYTHON = sys.executable
 MODULES = {
     "router":     [PYTHON, "-m", "src.core.cmb.cmb_router_entry"],
     "behavior":   [PYTHON, "-m", "src.core.behaviors.behavior_stub"],
-    "executive":  [PYTHON, "-m", "src.core.modules.aem"],
-    "nlp":        [PYTHON, "-m", "src.core.modules.nlp_module"],
+    "executive":  [PYTHON, "-m", "src.core.modules.aem.aem"],
+    "nlp":        [PYTHON, "-m", "src.core.modules.nlp.nlp_module"],
     "planner":    [PYTHON, "-m", "src.core.modules.planner_module"],
     "tk_gui":     [PYTHON, "-m", "test_cases.run_directive_demo.gui.directive_gui_2"],
 }

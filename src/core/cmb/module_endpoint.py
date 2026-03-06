@@ -238,9 +238,7 @@ class ModuleEndpoint:
                 self.logger.info(
                     event_type="ENDPOINT_INBOUND_SETUP",
                     message=f"ModuleEndpoint {self.cfg.module_id} setup inbound {ch_name} ",
-                    payload={
-                        "channels": list(self.cfg.channels.keys())
-                    }
+    
                 )
 
 

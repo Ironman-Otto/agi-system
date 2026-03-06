@@ -158,7 +158,7 @@ class ChannelRegistry:
                 router_port=CMB_CHANNEL_INGRESS_PORTS["VB"],
                 inbound_delivery=InboundDelivery.DIRECTED,
                 inbound_port=CMB_CHANNEL_EGRESS_PORTS["VB"],
-                ack_port=CMB_ACK_PORT,
+                ack_port=CMB_ACK_EGRESS_PORTS["VB"],
             ),
 
             "BFC": ChannelConfig(
@@ -166,7 +166,7 @@ class ChannelRegistry:
                 router_port=CMB_CHANNEL_INGRESS_PORTS["BFC"],
                 inbound_delivery=InboundDelivery.DIRECTED,
                 inbound_port=CMB_CHANNEL_EGRESS_PORTS["BFC"],
-                ack_port=CMB_ACK_PORT,
+                ack_port=CMB_ACK_EGRESS_PORTS["BFC"],
             ),
 
             "DAC": ChannelConfig(
@@ -174,7 +174,7 @@ class ChannelRegistry:
                 router_port=CMB_CHANNEL_INGRESS_PORTS["DAC"],
                 inbound_delivery=InboundDelivery.DIRECTED,
                 inbound_port=CMB_CHANNEL_EGRESS_PORTS["DAC"],
-                ack_port=CMB_ACK_PORT,
+                ack_port=CMB_ACK_EGRESS_PORTS["DAC"],
             ),
 
             "IC": ChannelConfig(
@@ -182,7 +182,7 @@ class ChannelRegistry:
                 router_port=CMB_CHANNEL_INGRESS_PORTS["IC"],
                 inbound_delivery=InboundDelivery.DIRECTED,
                 inbound_port=CMB_CHANNEL_EGRESS_PORTS["IC"],
-                ack_port=CMB_ACK_PORT,
+                ack_port=CMB_ACK_EGRESS_PORTS["IC"],
             ),
 
             "TC": ChannelConfig(
@@ -190,7 +190,7 @@ class ChannelRegistry:
                 router_port=CMB_CHANNEL_INGRESS_PORTS["TC"],
                 inbound_delivery=InboundDelivery.DIRECTED,
                 inbound_port=CMB_CHANNEL_EGRESS_PORTS["TC"],
-                ack_port=CMB_ACK_PORT,
+                ack_port=CMB_ACK_EGRESS_PORTS["TC"],
             ),
 
             # Broadcast-style channels
