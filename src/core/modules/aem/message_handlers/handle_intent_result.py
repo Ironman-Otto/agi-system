@@ -1,4 +1,6 @@
 import uuid
+import logging
+import datetime
 
 from src.core.modules.aem.registry_singleton import registry
 from src.core.messages.cognitive_message import CognitiveMessage
@@ -16,11 +18,20 @@ def handle_intent_result(msg: CognitiveMessage, ctx: dict[str, object]) -> None:
     episode_id = str(uuid.uuid4())
 
     logger = ctx["logger"]
+    sys_logger = logging.getLogger("system_log")
+    logging.basicConfig(
+        filename="c:\\dev\\agi-system\\logs\\system.jsonl",
+        level=logging.INFO,
+        format="%(asctime)s | %(levelname)s | %(name)s | %(funcName)s:%(lineno)d | %(message)s"
+    )
+    sys_logger.info(f"Episode {episode_id}") 
     endpoint = ctx["endpoint"]
     module_id = ctx["module_id"]
     directive_text = msg.payload.get("directive_text")
     directive_source = msg.payload.get("directive_source", "UNKNOWN")
     intent = msg.payload.get("intent", {})
+    now = datetime.datetime.now()
+    formatted_time = now.strftime("%Y-%m-%d %H:%M:%S,%f")[:-3]
 
     logger.info(
         event_type="EPISODE_START",
@@ -30,6 +41,7 @@ def handle_intent_result(msg: CognitiveMessage, ctx: dict[str, object]) -> None:
             "directive_source": directive_source,
             "directive_text": directive_text,
             "intent": intent,
+            "system_time": formatted_time,
         }
     )
 

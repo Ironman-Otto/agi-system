@@ -135,6 +135,7 @@ DirectiveType (choose ONE):
 - goal_oriented
 - behavioral
 - supervisory
+- analysis
 
 UrgencyLevel (choose ONE):
 - low

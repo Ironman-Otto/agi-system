@@ -36,7 +36,20 @@ def handle_directive_submit(msg: CognitiveMessage, ctx: dict[str, object]) -> No
         adapter = OpenAIIntentAdapter(policy)
         extractor = IntentExtractor(adapter, min_confidence=0.60)
 
-        intent = extractor.extract_intent(directive_text, directive_source)
+        try:
+            intent = extractor.extract_intent(directive_text, directive_source)
+        except Exception as e:
+            logger.info(
+                event_type="NLP_DIRECTIVE_EXTRACTION_FAILED",
+                message="Failed to extract intent from directive",
+                payload={
+                    "source": msg.source,
+                    "message_id": msg.message_id,
+                    "directive_text": directive_text,
+                    "error": str(e),
+                }
+            )
+            return
 
         intent_payload = {
             "intent_id": intent.intent_id,

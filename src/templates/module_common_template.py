@@ -48,10 +48,11 @@ from src.core.messages.cognitive_message import CognitiveMessage
 # -----------------------------
 # Module identity
 # -----------------------------
-MODULE_ID = "NLP"  # e.g., "TIME", "AEM", "NLP"
+MODULE_ID = "REPLACE_ME"  # e.g., "TIME", "AEM", "NLP"
 UNHANDLED_LOG_EVENT_TYPE = f"{MODULE_ID}_UNHANDLED_MESSAGE"
 DEBUG = False
 CHANNELS = ["CC"]  # change per module
+
 
 # -----------------------------
 # Optional: a typed context container
@@ -130,7 +131,7 @@ def on_message(msg: CognitiveMessage, ctx: Dict[str, Any]) -> None:
     """
     if DEBUG:
         print(f"{ctx['module_id']} received: {msg.to_dict()}")
-
+        
     logger = ctx["logger"] 
     result = registry.dispatch(msg, ctx)
     if not result.handled:
