@@ -1,0 +1,112 @@
+Section 10 – Error Handling and Recovery
+10.1 Why Error Handling Is Part of Normal Operation
+In many systems, errors are treated as exceptional interruptions—something to catch, log, and move past. In this architecture, errors are treated as first-class elements of system behavior. They are expected, observable, and analyzable components of real-world execution.
+This approach follows directly from the system’s goals: - perform meaningful work over time - operate under uncertainty and changing conditions - coordinate across distributed modules - provide traceability, replay, and improvement
+A system that performs work in real environments will encounter failures: communication drops, invalid inputs, resource exhaustion, timing issues, inconsistent data, or unexpected external states. The architecture therefore designs for error handling as a continuous capability rather than an afterthought.
+For software architects, this means errors become structured, diagnosable pathways. For end users, it means the system responds predictably and transparently rather than silently failing or behaving inconsistently.
+
+10.2 Core Objectives of Error Handling
+Error handling in this architecture is designed to accomplish five objectives:
+Detection – identify abnormal conditions as early as possible.
+Containment – limit error propagation and isolate impact.
+Classification – distinguish transport failures from semantic failures.
+Recovery – restore progress when feasible via retries, fallbacks, or escalation.
+Learning – persist error evidence to improve future behavior and resilience.
+Errors are not merely corrected; they are used as data to harden the system.
+
+10.3 Error as an Event
+Errors are represented as Error Events within the event stream of a Work Instance. This ensures that failures are part of the same execution narrative as decisions and actions.
+An Error Event captures: - what failed - where it failed - when it failed (timestamp and sequence position) - which work and task were involved - any available diagnostic evidence
+Representing errors as events enables: - end-to-end tracing - deterministic replay of failure conditions - root-cause analysis - measurement of reliability trends
+
+10.4 Error Taxonomy
+To support consistent handling and analysis, errors are categorized. While implementations may add domain-specific categories, the architecture assumes at least these core classes:
+A) Input and Validation Errors
+Errors caused by invalid, malformed, or unauthorized inputs.
+Examples: - message schema violation - missing required identifiers - invalid directive format - unauthorized source
+Primary mitigation: - reject early - record error event - notify source if appropriate
+
+B) Transport and Communication Errors
+Errors related to message delivery and communication reliability.
+Examples: - timeout waiting for ACK - retry exhaustion - router failure - unreachable target module
+Primary mitigation: - retry per policy - failover or reroute if available - escalate when delivery cannot be ensured
+
+C) Execution and Task Errors
+Errors occurring during task execution.
+Examples: - exceptions - dependency failures - resource exhaustion - task precondition not met
+Primary mitigation: - task-level retries - fallback behaviors - partial completion - abort if unsafe
+
+D) Environmental and External System Errors
+Errors caused by conditions outside the system’s control.
+Examples: - sensor disagreement - actuator failure - external API unavailable - inconsistent external state
+Primary mitigation: - revert to safe mode - isolate external dependency - request human intervention
+
+E) Policy and Safety Violations
+Errors where planned actions violate rules, ethics, safety policies, or operational constraints.
+Examples: - forbidden action requested - unsafe actuator command - priority conflict with safety constraints
+Primary mitigation: - block action - record decision and rationale - escalate or seek confirmation
+
+10.5 Containment: Preventing Error Propagation
+A major architectural concern is preventing failures in one component from cascading through the system. Containment is achieved through:
+strict module boundaries
+explicit message validation
+isolation of transport mechanics from semantics
+task-level boundaries and failure states
+Containment ensures that failures remain diagnosable rather than becoming systemic ambiguity.
+
+10.6 Recovery Strategies
+Recovery is the process of returning the system to a usable state while preserving traceability and correctness. Recovery strategies vary by error class.
+A) Retry
+Retry is appropriate when failures are transient.
+Examples: - transport timeouts - temporary resource shortages
+Retry policies should specify: - max attempts - backoff behavior - expiration rules
+Retries are always recorded in the event stream to preserve a faithful execution narrative.
+
+B) Fallback Behavior
+When a preferred behavior fails, the system may select an alternative behavior.
+Examples: - switch to a different data source - use cached results - degrade precision to maintain availability
+Fallback selection is a decision and must be recorded as such.
+
+C) Defer and Resume
+Some errors are resolved by waiting.
+Examples: - external dependency unavailable - resource constraints
+Work may be suspended and resumed later, preserving its identity and event stream.
+
+D) Escalation
+Escalation occurs when the system cannot safely or confidently recover autonomously.
+Examples: - safety uncertainty - repeated failure patterns - ambiguous external states
+Escalation may target: - higher-level reasoning modules - human operators - administrative policies
+
+E) Abort and Safe Termination
+Abort is used when: - recovery is not feasible - continuing is unsafe - constraints are violated
+Abort must produce a terminal outcome event and preserve all evidence.
+
+10.7 Error Reporting and System-Wide Visibility
+To support operations and improvement, errors must be visible beyond the local module where they occur. The architecture supports a system-wide error reporting mechanism that:
+captures structured error events
+correlates them to work, tasks, and transport transactions
+enables dashboards and diagnostics
+Error reporting is not merely logging; it is an operational capability.
+
+10.8 Relationship to Persistence and Replay
+Error handling is tightly coupled to persistence and replay. By persisting error events with full context, the system can:
+reproduce failures offline
+test fixes against historical failure cases
+measure improvement over time
+Replay is particularly valuable for errors because it allows the system to move from reactive debugging to proactive resilience engineering.
+
+10.9 Reliability as an Emergent Property
+Reliability in this architecture emerges from: - early validation - explicit event recording - deterministic recovery policies - evidence-based improvement
+By designing error handling as part of the normal execution narrative, reliability becomes measurable and improvable rather than anecdotal.
+
+10.10 Practical Implications for Implementation
+From an implementation standpoint, error handling requires:
+strict message validation at module boundaries
+a structured error event record
+retry and fallback stubs aligned with transaction tracking
+clear rules for escalation and abort
+Early implementation stubs should demonstrate: - a transport timeout leading to retry - a task failure leading to fallback behavior - an unrecoverable error leading to abort and terminal outcome
+All cases must be persisted so replay tools can analyze them.
+
+10.11 Summary
+The Error Handling and Recovery model treats failure as a normal part of work execution. By representing errors as structured events, classifying them consistently, containing their impact, and applying explicit recovery strategies, the system becomes predictable, diagnosable, and resilient. Most importantly, persisted error evidence becomes fuel for continuous improvement: failures are not just handled—they are learned from.

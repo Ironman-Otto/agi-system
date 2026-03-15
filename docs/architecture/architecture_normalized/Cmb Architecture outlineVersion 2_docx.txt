@@ -1,0 +1,132 @@
+
+Cognitive Message Bus (CMB) Architecture – Version 2
+1. Introduction
+The Cognitive Message Bus (CMB) is the communication backbone of the ASP AGI Architecture. It provides a structured, asynchronous, channel-based messaging system that enables loosely coupled cognitive modules to exchange information without direct dependencies. The CMB functions as the nervous system of the AGI, supporting perception, cognition, memory, behavior, introspection, diagnostics, threat handling, and executive control through well-defined communication contracts.
+Version 2 of the CMB architecture is a corrective and formalizing revision. It incorporates lessons learned from the initial specification and demo implementation, resolves semantic drift in message formats, and establishes enforceable contracts for channels, messages, and module interaction. This document is intended to be authoritative: it defines what modules may send, where they may send it, and how those messages must be interpreted.
+
+2. Design Goals and Principles
+2.1 Core Goals
+Strict decoupling between modules (no direct calls)
+Asynchronous, non-blocking communication
+Explicit communication contracts between layers
+Canonical message schema with enforced semantics
+Support for tracing, correlation, and goal context
+Scalability across processes, machines, and hardware
+2.2 Architectural Principles
+The bus is an integration contract, not a convenience API
+Channels define semantic domains, not transport details
+Messages must be self-describing and traceable
+No module may infer intent from payload structure alone
+
+3. CMB Channel Architecture
+Each CMB channel represents a semantic communication domain aligned with one or more ASP architectural layers. Channels prevent semantic overload, reduce coupling, and constrain message meaning.
+3.1 Channel Definitions
+3.2 Channel Rules
+A message is sent on exactly one channel
+Channels must not be repurposed
+Modules may participate in multiple channels
+Channel choice encodes intent
+
+4. Canonical CognitiveMessage Schema
+All CMB communication uses the CognitiveMessage schema. This schema is mandatory and versioned.
+4.1 Message Structure (Python)
+@dataclass
+class CognitiveMessage:
+    message_id: str              # Global unique identifier
+    schema_version: str          # Message schema version
+    msg_type: str                # Semantic intent
+    msg_version: str             # Message-type version
+    source: str                  # Sending module
+    targets: list[str]           # Intended recipients
+    context_tag: str | None      # Goal / task context
+    correlation_id: str | None   # Request–response linkage
+    payload: dict                # Message content
+    priority: int                # 0–100
+    timestamp: float             # Epoch seconds
+    ttl: float                   # Time-to-live (seconds)
+    signature: str | None        # Optional integrity/auth
+4.2 Field Semantics
+message_id: Used for tracing, deduplication, and auditing
+schema_version: Enables controlled evolution of the bus
+msg_type: Primary semantic discriminator (no payload inference)
+msg_version: Allows evolution of message-specific schemas
+source: Identity of the sending module
+targets: Explicit addressing (supports multi-cast)
+context_tag: Identifies the active goal, plan, or episode
+correlation_id: Binds multi-step flows and responses
+payload: Structured content defined by msg_type
+priority: Used for urgency and preemption
+timestamp / ttl: Lifecycle control and staleness detection
+signature: Reserved for trust and integrity enforcement
+
+5. Message Types
+5.1 Directive Messages
+msg_type: directive.start_behavior
+{
+  "msg_type": "directive.start_behavior",
+  "payload": {
+    "behavior_name": "explore_area",
+    "parameters": {}
+  }
+}
+Purpose: Instruct downstream modules to initiate controlled actions.
+5.2 Acknowledgement Messages
+msg_type: ack.accepted | ack.rejected
+Used to confirm or deny directive handling.
+5.3 Query / Response Messages
+memory.retrieve
+memory.store
+Responses must include correlation_id referencing the request.
+5.4 Diagnostic Messages
+diagnostic.status
+diagnostic.alert
+Emitted on DAC for awareness and logging.
+
+6. Message Flow Examples
+6.1 Executive → Behavior: Start Behavior
+Trigger: Executive decides to initiate behavior
+Flow: 1. Executive sends directive.start_behavior on BFC 2. Router delivers to Behavior 3. Behavior validates context and executes 4. Behavior sends ack.accepted or ack.rejected
+6.2 Cognitive → Memory: Retrieval
+Cognitive sends memory.retrieve on MC
+Memory responds with result
+Response includes correlation_id
+
+7. CMB Infrastructure Components
+7.1 CMB Router
+One router per channel
+ROUTER socket for inbound messages
+PUB socket for outbound delivery
+May drop expired messages
+7.2 ModuleEndpoint
+Responsibilities: - Abstract ZeroMQ transport - Enforce canonical message usage - Support multi-channel participation
+
+8. Enforcement and Validation
+Messages missing required fields are invalid
+msg_type is mandatory and authoritative
+Routers may reject expired or malformed messages
+Payload must conform to msg_type schema
+
+9. Diagnostics, Logging, and Awareness
+Dedicated DAC logging module (cmb_logger)
+Optional global trace capture
+Awareness modules analyze message patterns
+
+10. Security and Trust (Planned)
+Signature validation
+Channel-level trust rules
+Executive-only authority for certain msg_types
+
+11. Versioning and Evolution
+schema_version governs compatibility
+msg_version governs message evolution
+No breaking changes without version bump
+
+12. Relationship to ASP Architecture
+The CMB is the integration contract binding all ASP layers. No module may communicate outside the bus.
+
+13. Next Steps
+Review and approve CMB v2
+Implement CMB v2 demo
+Add automated validation and test harness
+
+End of Document

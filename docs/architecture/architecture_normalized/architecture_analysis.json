@@ -1,0 +1,882 @@
+{
+  "ack state machine_docx.txt": {
+    "total_words": 556,
+    "module_mentions": {
+      "CMB": 1,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 10,
+      "Message": 2,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 4,
+      "Matrix": 0
+    }
+  },
+  "AGI Architecture_docx.txt": {
+    "total_words": 17127,
+    "module_mentions": {
+      "CMB": 24,
+      "AEM": 0,
+      "Behavior": 12,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 7,
+      "Concept": 12,
+      "Planner": 4,
+      "Router": 5,
+      "Matrix": 3
+    }
+  },
+  "AGI Summary Paper_docx.txt": {
+    "total_words": 529,
+    "module_mentions": {
+      "CMB": 2,
+      "AEM": 0,
+      "Behavior": 3,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 4,
+      "Concept": 6,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 2
+    }
+  },
+  "Architecture \u2013 Ack State Machine (cmb)_docx.txt": {
+    "total_words": 922,
+    "module_mentions": {
+      "CMB": 5,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 22,
+      "Message": 4,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 4,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Agent Loop And Behavior Matrix (v1)_docx.txt": {
+    "total_words": 808,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 9,
+      "Intent": 10,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 1,
+      "Router": 0,
+      "Matrix": 6
+    }
+  },
+  "Architecture \u2013 Cognitive Executive (aem) (v1)_docx.txt": {
+    "total_words": 899,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 21,
+      "Behavior": 5,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 2,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 2
+    }
+  },
+  "Architecture \u2013 Directive And Intent Specification_docx.txt": {
+    "total_words": 800,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 8,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 1,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Executive Message Contracts (v1)_docx.txt": {
+    "total_words": 617,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 12,
+      "Behavior": 0,
+      "Intent": 2,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 22,
+      "Concept": 0,
+      "Planner": 1,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Intent Object Schema_docx.txt": {
+    "total_words": 628,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 10,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 1,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Llm-based Intent Extraction Interface_docx.txt": {
+    "total_words": 685,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 10,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 2,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Objective Taxonomy And Priority Model (v1)_docx.txt": {
+    "total_words": 975,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Question Generation And Curiosity Subsystem (v1)_docx.txt": {
+    "total_words": 1258,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 2,
+      "Intent": 2,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 1,
+      "Router": 0,
+      "Matrix": 1
+    }
+  },
+  "Architecture \u2013 Question Template Schema (v1)_docx.txt": {
+    "total_words": 1013,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 1,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Reflection And Self-assessment Layer (v1)_docx.txt": {
+    "total_words": 804,
+    "module_mentions": {
+      "CMB": 1,
+      "AEM": 1,
+      "Behavior": 1,
+      "Intent": 2,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 1,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 1
+    }
+  },
+  "Architecture \u2013 Section 10 Error Handling And Recovery_docx.txt": {
+    "total_words": 1055,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 1,
+      "Intent": 0,
+      "Transport": 1,
+      "ACK": 1,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Section 11 Learning And Behavior Extraction_docx.txt": {
+    "total_words": 940,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 11,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 1,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Section 3 Conceptual Model Of Work_docx.txt": {
+    "total_words": 1436,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 2,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Section 4 Event Model_docx.txt": {
+    "total_words": 1103,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 1,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Section 5 Decision And Behavior Model_docx.txt": {
+    "total_words": 839,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 10,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Section 6 Execution Model_docx.txt": {
+    "total_words": 832,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 1,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Section 7 Identity And Traceability Model_docx.txt": {
+    "total_words": 1028,
+    "module_mentions": {
+      "CMB": 1,
+      "AEM": 0,
+      "Behavior": 1,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 1,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Section 8 Communication Architecture (cmb)_docx.txt": {
+    "total_words": 1123,
+    "module_mentions": {
+      "CMB": 19,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 0,
+      "Transport": 5,
+      "ACK": 0,
+      "Message": 4,
+      "Concept": 1,
+      "Planner": 0,
+      "Router": 1,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Section 9 Persistence And Replay Architecture_docx.txt": {
+    "total_words": 920,
+    "module_mentions": {
+      "CMB": 1,
+      "AEM": 0,
+      "Behavior": 1,
+      "Intent": 0,
+      "Transport": 1,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 System Architecture Skeleton & Introduction_docx.txt": {
+    "total_words": 545,
+    "module_mentions": {
+      "CMB": 2,
+      "AEM": 0,
+      "Behavior": 2,
+      "Intent": 0,
+      "Transport": 1,
+      "ACK": 0,
+      "Message": 1,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Architecture \u2013 Termination Metrics And Inquiry Budgets (v1)_docx.txt": {
+    "total_words": 823,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 1,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "architecture_agent_loop_and_behavior_matrix_v_1_md.txt": {
+    "total_words": 808,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 9,
+      "Intent": 10,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 1,
+      "Router": 0,
+      "Matrix": 6
+    }
+  },
+  "architecture_cognitive_executive_aem_v_1_md.txt": {
+    "total_words": 899,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 21,
+      "Behavior": 5,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 2,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 2
+    }
+  },
+  "ARCHITECTURE_DATA_STRUCTURES_docx.txt": {
+    "total_words": 2123,
+    "module_mentions": {
+      "CMB": 3,
+      "AEM": 0,
+      "Behavior": 7,
+      "Intent": 0,
+      "Transport": 3,
+      "ACK": 1,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 12,
+      "Router": 1,
+      "Matrix": 0
+    }
+  },
+  "ARCHITECTURE_DATA_STRUCTURES_md.txt": {
+    "total_words": 2123,
+    "module_mentions": {
+      "CMB": 3,
+      "AEM": 0,
+      "Behavior": 7,
+      "Intent": 0,
+      "Transport": 3,
+      "ACK": 1,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 12,
+      "Router": 1,
+      "Matrix": 0
+    }
+  },
+  "architecture_directive_and_intent_specification_md.txt": {
+    "total_words": 800,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 8,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 1,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "architecture_executive_message_contracts_v_1_md.txt": {
+    "total_words": 617,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 12,
+      "Behavior": 0,
+      "Intent": 2,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 22,
+      "Concept": 0,
+      "Planner": 1,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "architecture_intent_object_schema_md.txt": {
+    "total_words": 629,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 10,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 1,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "architecture_llm_based_intent_extraction_interface_md.txt": {
+    "total_words": 687,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 10,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 2,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "architecture_md.txt": {
+    "total_words": 751,
+    "module_mentions": {
+      "CMB": 3,
+      "AEM": 0,
+      "Behavior": 2,
+      "Intent": 0,
+      "Transport": 1,
+      "ACK": 0,
+      "Message": 1,
+      "Concept": 1,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "architecture_objective_taxonomy_and_priority_model_v_1_md.txt": {
+    "total_words": 975,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "architecture_question_generation_and_curiosity_subsystem_v_1_md.txt": {
+    "total_words": 1258,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 2,
+      "Intent": 2,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 1,
+      "Router": 0,
+      "Matrix": 1
+    }
+  },
+  "architecture_question_template_schema_v_1_md.txt": {
+    "total_words": 1013,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 1,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "architecture_reflection_and_self_assessment_layer_v_1_md.txt": {
+    "total_words": 804,
+    "module_mentions": {
+      "CMB": 1,
+      "AEM": 1,
+      "Behavior": 1,
+      "Intent": 2,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 1,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 1
+    }
+  },
+  "architecture_termination_metrics_and_inquiry_budgets_v_1_md.txt": {
+    "total_words": 823,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 1,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "Asp Agi Architecture \u2013 Executive Outline_docx.txt": {
+    "total_words": 563,
+    "module_mentions": {
+      "CMB": 4,
+      "AEM": 0,
+      "Behavior": 2,
+      "Intent": 1,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 3,
+      "Concept": 3,
+      "Planner": 0,
+      "Router": 1,
+      "Matrix": 1
+    }
+  },
+  "ASP Architecture Draft 1_docx.txt": {
+    "total_words": 1803,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 12,
+      "Intent": 2,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 1,
+      "Concept": 7,
+      "Planner": 1,
+      "Router": 0,
+      "Matrix": 4
+    }
+  },
+  "ASP Architecture Summary Canvas - AA Overview_docx.txt": {
+    "total_words": 790,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 5,
+      "Intent": 1,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 2,
+      "Concept": 11,
+      "Planner": 3,
+      "Router": 0,
+      "Matrix": 2
+    }
+  },
+  "ASP Architecture_pptx.txt": {
+    "total_words": 469,
+    "module_mentions": {
+      "CMB": 1,
+      "AEM": 0,
+      "Behavior": 8,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 2,
+      "Concept": 4,
+      "Planner": 4,
+      "Router": 0,
+      "Matrix": 3
+    }
+  },
+  "Cmb Ack Vocabulary Specification_docx.txt": {
+    "total_words": 500,
+    "module_mentions": {
+      "CMB": 4,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 27,
+      "Message": 4,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 3,
+      "Matrix": 0
+    }
+  },
+  "Cmb Architecture outlineVersion 2_docx.txt": {
+    "total_words": 698,
+    "module_mentions": {
+      "CMB": 12,
+      "AEM": 0,
+      "Behavior": 5,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 8,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 2,
+      "Matrix": 0
+    }
+  },
+  "Cmb Architecture \u2013 Documentation Invariants And Design Notes_docx.txt": {
+    "total_words": 687,
+    "module_mentions": {
+      "CMB": 5,
+      "AEM": 0,
+      "Behavior": 1,
+      "Intent": 1,
+      "Transport": 1,
+      "ACK": 8,
+      "Message": 2,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 8,
+      "Matrix": 0
+    }
+  },
+  "cmb_architecture_specification_v3_docx.txt": {
+    "total_words": 6586,
+    "module_mentions": {
+      "CMB": 32,
+      "AEM": 0,
+      "Behavior": 25,
+      "Intent": 1,
+      "Transport": 2,
+      "ACK": 29,
+      "Message": 16,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 15,
+      "Matrix": 0
+    }
+  },
+  "cmb_architecture_v1_docx.txt": {
+    "total_words": 1393,
+    "module_mentions": {
+      "CMB": 11,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 13,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 0,
+      "Matrix": 0
+    }
+  },
+  "cmb_architecture_v2_docx.txt": {
+    "total_words": 4174,
+    "module_mentions": {
+      "CMB": 21,
+      "AEM": 0,
+      "Behavior": 26,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 5,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 3,
+      "Matrix": 0
+    }
+  },
+  "cmb_architecture_v3_docx.txt": {
+    "total_words": 6432,
+    "module_mentions": {
+      "CMB": 31,
+      "AEM": 0,
+      "Behavior": 27,
+      "Intent": 1,
+      "Transport": 2,
+      "ACK": 26,
+      "Message": 15,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 15,
+      "Matrix": 0
+    }
+  },
+  "cmb_architecture_v3_pdf.txt": {
+    "total_words": 6913,
+    "module_mentions": {
+      "CMB": 35,
+      "AEM": 0,
+      "Behavior": 29,
+      "Intent": 2,
+      "Transport": 2,
+      "ACK": 35,
+      "Message": 21,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 22,
+      "Matrix": 0
+    }
+  },
+  "cmb_comments_v1_docx.txt": {
+    "total_words": 6724,
+    "module_mentions": {
+      "CMB": 45,
+      "AEM": 0,
+      "Behavior": 1,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 32,
+      "Message": 11,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 16,
+      "Matrix": 0
+    }
+  },
+  "cmb_message_lifecycle_specification_md.txt": {
+    "total_words": 538,
+    "module_mentions": {
+      "CMB": 2,
+      "AEM": 0,
+      "Behavior": 0,
+      "Intent": 0,
+      "Transport": 3,
+      "ACK": 8,
+      "Message": 6,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 3,
+      "Matrix": 0
+    }
+  },
+  "CMB_Roadmap_v1_docx.txt": {
+    "total_words": 852,
+    "module_mentions": {
+      "CMB": 3,
+      "AEM": 0,
+      "Behavior": 1,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 11,
+      "Message": 0,
+      "Concept": 0,
+      "Planner": 0,
+      "Router": 4,
+      "Matrix": 0
+    }
+  },
+  "L_Series_pptx.txt": {
+    "total_words": 49,
+    "module_mentions": {
+      "CMB": 0,
+      "AEM": 0,
+      "Behavior": 1,
+      "Intent": 0,
+      "Transport": 0,
+      "ACK": 0,
+      "Message": 1,
+      "Concept": 1,
+      "Planner": 1,
+      "Router": 0,
+      "Matrix": 0
+    }
+  }
+}

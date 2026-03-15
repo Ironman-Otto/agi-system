@@ -1,0 +1,177 @@
+Cognitive Message Bus (CMB) – Messaging Architecture Specification
+1. CMB Channel Architecture
+The Cognitive Message Bus (CMB) is organized into a fixed set of dedicated channels. Each channel represents a specialized cognitive or system pathway, analogous to distinct neural pathways in biological cognition. Channels are transport-level constructs that define routing, performance characteristics, and processing expectations.
+1.1 Control Channel (CC)
+Definition: Manages system-wide control, orchestration, and lifecycle coordination. Usage: Module startup/shutdown, reset cascades, synchronization barriers, directive dispatch.
+1.2 Symbolic Message Channel (SMC)
+Definition: Transports symbolic, linguistic, and logic-oriented data. Usage: NLP outputs, parsed intent, symbolic reasoning chains, rule-based inference.
+1.3 Vector Bus (VB)
+Definition: High-bandwidth channel for sub-symbolic numeric representations. Usage: Embeddings, similarity vectors, concept-space traversal data.
+1.4 Behavioral Flow Channel (BFC)
+Definition: Coordinates activation, sequencing, and monitoring of behaviors. Usage: Skill execution requests, action feedback loops, behavior state transitions.
+1.5 Diagnostic and Awareness Channel (DAC)
+Definition: Conveys system health, anomalies, and reflective awareness signals. Usage: Performance metrics, error reports, confidence levels, self-evaluation signals.
+1.6 External Interface Gateway (EIG)
+Definition: Boundary channel between external systems and internal cognition. Usage: Sensor ingestion, user commands, API inputs, safety-filtered external events.
+1.7 Perception Channel (PC)
+Definition: Transmits raw and pre-processed sensory information. Usage: Vision frames, audio tokens, sensor readings, perceptual embeddings.
+1.8 Memory Channel (MC)
+Definition: Governs interaction with episodic, semantic, and working memory. Usage: Store/retrieve requests, memory consolidation signals, recall queries.
+1.9 Introspection Channel (IC)
+Definition: Supports internal self-reflection and cognitive monitoring. Usage: Self-talk, question generation, confidence reporting, task review cycles.
+1.10 Threat Channel (TC)
+Definition: Dedicated pathway for safety- and risk-related signaling. Usage: Threat detection, policy violations, emergency interrupts, safety overrides.
+
+2. Canonical Message Data Structure
+All communication on the CMB uses a unified canonical message structure. The structure is intentionally transport-agnostic and versioned to support long-term evolution.
+2.1 CognitiveMessage Structure
+A CognitiveMessage is a structured record composed of the following fields:
+Header (identity, routing, control)
+Payload (semantic content)
+Metadata (context, traceability, lifecycle)
+
+3. Message Field Definitions
+Each field below is mandatory unless otherwise specified.
+message_id
+Definition: Globally unique identifier for the message instance. Usage: Deduplication, tracing, auditing, correlation across modules.
+schema_version
+Definition: Version of the overall message schema. Usage: Enables backward compatibility and controlled schema evolution.
+msg_type
+Definition: Semantic type identifier for the message. Usage: Declares intent and expected handling logic (e.g., directive.start_behavior).
+msg_version
+Definition: Version of the specific message type. Usage: Allows independent evolution of individual message contracts.
+source
+Definition: Logical name of the originating module. Usage: Attribution, trust evaluation, response routing.
+targets
+Definition: List of intended recipient module names. Usage: Routing and selective delivery.
+priority
+Definition: Relative importance of the message. Usage: Scheduling, preemption, and congestion management.
+timestamp
+Definition: Time at which the message was created. Usage: Ordering, latency analysis, TTL evaluation.
+ttl
+Definition: Time-to-live in seconds. Usage: Automatic expiration and stale-message suppression.
+correlation_id (optional)
+Definition: Identifier linking related messages. Usage: Request/response matching, workflow tracking.
+context_tag
+Definition: Identifier for the active goal, subgoal, or task context. Usage: Situational awareness, goal alignment, traceability.
+signature (optional)
+Definition: Cryptographic or logical signature. Usage: Integrity verification, trust enforcement.
+payload
+Definition: Message-specific data structure. Usage: Carries the semantic or numeric content defined by msg_type.
+
+4. Initial Message Types
+The following message types are defined for the current system state.
+directive.start_behavior
+Channel: CC → BFC Purpose: Request activation of a named behavior. Payload: { behavior_name, parameters }
+directive.stop_behavior
+Channel: CC → BFC Purpose: Request termination of an active behavior.
+ack.accepted
+Channel: CC Purpose: Acknowledge successful receipt and acceptance of a directive.
+ack.rejected
+Channel: CC / DAC Purpose: Indicate directive rejection with reason.
+memory.store
+Channel: MC Purpose: Persist information to memory.
+memory.retrieve
+Channel: MC Purpose: Query memory for information.
+perception.observation
+Channel: PC Purpose: Publish a perceptual event or data frame.
+diagnostic.alert
+Channel: DAC Purpose: Signal detected anomaly or error condition.
+introspection.question
+Channel: IC Purpose: Emit internally generated questions.
+introspection.review
+Channel: IC Purpose: Reflective assessment of completed actions or decisions.
+
+5. Diagnostic and Awareness Processing Model (DAC)
+When a DAC message is received, the Awareness subsystem performs standard processing steps:
+Validate message integrity and schema.
+Assess severity, scope, and urgency.
+Query current system state (active goals, load, errors).
+Generate a structured awareness context.
+Forward context and questions to an LLM-based evaluator.
+Receive corrective recommendations.
+Execute approved corrective procedures.
+Log actions and notify affected modules.
+5.1 Core Awareness Questions (Initial Set)
+What subsystem is affected?
+Is the anomaly transient or persistent?
+Does this impact current goals or safety?
+What recent events preceded this condition?
+Are similar events recorded in memory?
+What corrective actions are available?
+What is the cost and risk of each action?
+Should human or external intervention be requested?
+
+6. Supporting Modules for the CMB
+This section defines the supporting modules required to make the Cognitive Message Bus reliable, observable, and cognitively useful beyond simple message transport. These modules operate alongside the bus and routers but do not replace domain-specific cognitive modules.
+6.1 Message Validator Module
+Purpose: Ensure structural and semantic correctness of messages. Core Functions: - Validate schema_version and required fields - Validate msg_type and msg_version against Message Registry - Validate payload structure per msg_type - Reject or flag malformed messages
+6.2 Message Type Registry Module
+Purpose: Act as the authoritative catalog of supported message types. Core Functions: - Register msg_type definitions - Associate msg_type with channels and allowed sources/targets - Provide payload schemas and documentation - Support versioning and deprecation
+6.3 Trace and Correlation Module
+Purpose: Provide end-to-end traceability across asynchronous flows. Core Functions: - Track correlation_id chains - Build execution timelines - Support causal analysis and debugging - Feed introspection and DAC reasoning
+6.4 CMB Traffic Monitor / Visualizer
+Purpose: Make CMB activity observable and understandable. Core Functions: - Monitor per-channel traffic - Track message rates, priorities, drops, TTL expirations - Visualize flows between modules - Support replay and inspection
+6.5 Replay and Time-Travel Module
+Purpose: Enable post-hoc analysis and system introspection. Core Functions: - Persist selected message streams - Reinject messages into the bus - Support deterministic replay for debugging
+6.6 DAC Awareness and Correction Module
+Purpose: Provide system-level awareness, diagnosis, and corrective action. Core Functions: - Receive diagnostic.alert and related messages - Query current system state (goals, load, errors) - Generate awareness context - Formulate awareness questions - Invoke LLM-based reasoning - Evaluate corrective action options - Dispatch corrective directives - Log outcomes and learning artifacts
+
+7. Diagnostic and Awareness Channel (DAC) – Detailed Design
+The DAC is not a passive logging channel. It is an active cognitive subsystem responsible for maintaining system health, safety, and goal alignment.
+7.1 Standard DAC Processing Pipeline
+Message intake and validation
+Severity and scope classification
+Context gathering (system state, recent history)
+Awareness question generation
+LLM-based reasoning and evaluation
+Corrective procedure selection
+Execution via Control or Behavioral channels
+Logging, trace update, and notification
+7.2 Core Awareness Questions (Baseline)
+What subsystem is affected?
+Is the condition transient, persistent, or escalating?
+Does this impact safety, goals, or deadlines?
+What recent messages or actions preceded this event?
+Are similar events recorded in memory?
+What corrective actions are available?
+What are the costs, risks, and side effects of each action?
+Should other modules be informed or paused?
+Is external or human intervention required?
+7.3 DAC Outputs
+corrective.directive messages
+escalation.alert messages
+introspection.review artifacts
+audit and learning logs
+
+8. Message Types – Extended Initial Set
+In addition to previously defined message types, the following are implied or required to support a full CMB system:
+lifecycle.heartbeat
+Channel: DAC Purpose: Periodic module health signal.
+lifecycle.register
+Channel: CC Purpose: Module announces presence and capabilities.
+lifecycle.unregister
+Channel: CC Purpose: Module shutdown or removal notification.
+error.report
+Channel: DAC Purpose: Structured error notification.
+corrective.directive
+Channel: CC / BFC Purpose: Enact DAC-recommended corrective actions.
+awareness.snapshot
+Channel: DAC / IC Purpose: Capture system-wide awareness state.
+
+9. Utility and Ease-of-Use Features
+To improve developer productivity and architectural clarity, the following utilities are recommended:
+Canonical message builder helpers
+Automatic correlation_id propagation
+Channel-aware endpoint factories
+Human-readable message logging
+Interactive CMB inspection tools
+
+10. Review Questions (Updated)
+Are additional message fields needed for cost, confidence, or safety level?
+Should TTL and priority be enforced uniformly or per-channel?
+How strict should message validation be during early development?
+Should DAC reasoning outputs be treated as first-class messages?
+What minimum set of supporting modules is required for a usable CMB MVP?
+
+This expanded specification positions the CMB as a complete cognitive communication substrate, not merely a transport bus. It is intended to be implemented incrementally, starting with stubs and acknowledgements, and evolving toward full cognitive coordination.

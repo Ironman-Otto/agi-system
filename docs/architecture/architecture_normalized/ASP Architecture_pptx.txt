@@ -1,0 +1,117 @@
+LSDinfotech
+Building AGI one Thought at a Time
+Color Codes
+Awareness
+Behavior
+Cognition
+Environment
+Planning
+L Series Architecture
+LSD Thinking Machine
+Cognitive Hardware
+HAT
+Hardware Awareness technology
+Sensor array
+Env
+LSD OS
+Operating System
+CAPPs
+Cognitive Applications
+ASP
+AGI Executive
+User Interface
+
+
+CLP
+Awareness
+Cognitive Awareness Bus
+Cognitive
+Message
+Bus
+Awareness   API
+
+CLP
+CRE
+
+
+Packaging
+Raw
+Data
+Concept
+Planner
+CRE
+Skills
+Sequencer
+Behavior
+Mattix
+Cognitive Cycle
+Cognition
+Environment
+Sensory Input
+Behavior
+
+
+
+
+
+Raw Data
+Packaged Data
+Instructions
+Action
+
+Feedback
+Self-Talk
+Plan Formation
+
+
+
+
+
+
+Slide: Outline of ASP Architecture Presentation
+1. Introduction
+LSDinfotech vision: Building AGI one thought at a time 
+2. Core Concepts
+Color codes for AGI functions: Awareness, Behavior, Cognition, Environment, Planning 
+3. System Architecture
+L Series Architecture: Cognitive hardware, OS, AGI Executive, Awareness Bus, Message Bus, Planner, Skills, Sequencer 
+4. Cognitive Cycle
+Cognition → Environment → Sensory Input → Behavior → Data → Instructions → Action → Feedback → Self-Talk 
+5. Goal Setting & Planning
+NLP, Visualizer, Concept Graph, Behavior Matrix, Knowledge Base, Plan Formation 
+6. Self-Awareness in AGI
+External/Internal Awareness, Time Perception, Post-Behavior Reflection, Self-Talk, Improvement Planning 
+7. ASP Core System Layers
+Perception, Memory, Cognitive, Behavioral, Output/Actuator, Executive Control, Self-Awareness, Resource Interfaces 
+8. Cognitive Flow & Executive Program
+Perception, Executive, Cognitive Layer, Behavioral, Reflection, Memory, Modes (Subconscious, Conscious, Hybrid, Behavioral Adjustment) 
+9. Modular AGI System Architecture
+Core Control, Memory, Perception, Decision Engine, LLM, Cognitive Model Matrix, Motor/Output, Safety & Alignment, Real-World Interaction 
+10. Self-Talk & Recursive Cognition
+Control, Perception, NLP/LLM, Cognitive, Self-Awareness, Memory, Behavior, Output/Actuator, Recursive Cognition, Thought Trace Logging 
+11. Hardware & Communication
+CMB Optical Backplane, CLM Module, Optical Interface, Multiplexing, Channel Parsing 
+12. Detailed AGI System Diagrams
+Control, Perception, Memory, Decision Engine, Cognitive Model Matrix, LLM, Motor/Output 
+13. Cognitive Flow & Reasoning
+Sensory Streams, Reasoning, Meta-Reasoning, Question Engine, Concept System, Execution System 
+14. Hybrid AI Planner & Emergent Reasoning
+Language Input, Symbolic/Subsymbolic AI, Concepts, Inference Engine, Planning Rules, Meta-Reasoning, Instinctual Perception 
+15. Modular Concept Space
+User Input, Tokenizer, Self-Talk, Planner, Reflection, Tool Use, Context 
+
+Slide: High-Level Overview – Functional Model of the Mind for AGI
+Purpose:Design a software architecture that emulates cognitive processes and self-awareness, enabling AGI systems to perceive, reason, plan, act, and reflect like a human mind.
+Key Components:
+Perception Layer: Sensory input integration and NLP for concept extraction 
+Memory System: Knowledge storage, experience update, feedback 
+Cognitive Layer: Reasoning, planning, decision-making simulation 
+Behavioral Layer: Action execution based on plans and feedback 
+Executive Control: Oversees self-awareness, reflection, improvement 
+Self-Talk Module: Internal dialogue for coherence and motivation 
+Safety & Alignment: Ethical constraints, value alignment 
+Hardware Integration: Optical backplane, modular interfaces for scalability 
+Cognitive Cycle:Continuous sensing, processing, acting, and learning, with feedback and self-reflection for improvement.
+Modes of Operation:Supports conscious, subconscious, and hybrid processing for complex task management.
+Goal:Create an AGI system capable of autonomous thought, adaptive learning, and ethical decision-making, bridging functional cognition and robust software architecture.
+Instructions:

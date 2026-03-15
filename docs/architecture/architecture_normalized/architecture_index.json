@@ -1,0 +1,277 @@
+[
+  {
+    "source_file": "c:\\dev\\architecture_raw\\ack state machine.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\ack state machine_docx.txt",
+    "size": 4301
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\AGI Architecture.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\AGI Architecture_docx.txt",
+    "size": 110561
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\AGI Summary Paper.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\AGI Summary Paper_docx.txt",
+    "size": 4040
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Ack State Machine (cmb).docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Ack State Machine (cmb)_docx.txt",
+    "size": 8121
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Agent Loop And Behavior Matrix (v1).docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Agent Loop And Behavior Matrix (v1)_docx.txt",
+    "size": 6129
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Cognitive Executive (aem) (v1).docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Cognitive Executive (aem) (v1)_docx.txt",
+    "size": 7073
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Directive And Intent Specification.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Directive And Intent Specification_docx.txt",
+    "size": 6054
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Executive Message Contracts (v1).docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Executive Message Contracts (v1)_docx.txt",
+    "size": 5415
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Intent Object Schema.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Intent Object Schema_docx.txt",
+    "size": 5271
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Llm-based Intent Extraction Interface.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Llm-based Intent Extraction Interface_docx.txt",
+    "size": 5416
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Objective Taxonomy And Priority Model (v1).docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Objective Taxonomy And Priority Model (v1)_docx.txt",
+    "size": 7785
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Question Generation And Curiosity Subsystem (v1).docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Question Generation And Curiosity Subsystem (v1)_docx.txt",
+    "size": 9933
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Question Template Schema (v1).docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Question Template Schema (v1)_docx.txt",
+    "size": 8108
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Reflection And Self-assessment Layer (v1).docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Reflection And Self-assessment Layer (v1)_docx.txt",
+    "size": 6251
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Section 10 Error Handling And Recovery.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Section 10 Error Handling And Recovery_docx.txt",
+    "size": 7973
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Section 11 Learning And Behavior Extraction.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Section 11 Learning And Behavior Extraction_docx.txt",
+    "size": 7123
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Section 3 Conceptual Model Of Work.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Section 3 Conceptual Model Of Work_docx.txt",
+    "size": 9939
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Section 4 Event Model.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Section 4 Event Model_docx.txt",
+    "size": 8114
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Section 5 Decision And Behavior Model.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Section 5 Decision And Behavior Model_docx.txt",
+    "size": 5964
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Section 6 Execution Model.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Section 6 Execution Model_docx.txt",
+    "size": 6397
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Section 7 Identity And Traceability Model.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Section 7 Identity And Traceability Model_docx.txt",
+    "size": 7307
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Section 8 Communication Architecture (cmb).docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Section 8 Communication Architecture (cmb)_docx.txt",
+    "size": 8467
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Section 9 Persistence And Replay Architecture.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Section 9 Persistence And Replay Architecture_docx.txt",
+    "size": 6892
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 System Architecture Skeleton & Introduction.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 System Architecture Skeleton & Introduction_docx.txt",
+    "size": 4081
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Architecture \u2013 Termination Metrics And Inquiry Budgets (v1).docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Architecture \u2013 Termination Metrics And Inquiry Budgets (v1)_docx.txt",
+    "size": 6483
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\architecture.md",
+    "normalized_file": "c:\\dev\\architecture_normalized\\architecture_md.txt",
+    "size": 5905
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\architecture_agent_loop_and_behavior_matrix_v_1.md",
+    "normalized_file": "c:\\dev\\architecture_normalized\\architecture_agent_loop_and_behavior_matrix_v_1_md.txt",
+    "size": 6573
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\architecture_cognitive_executive_aem_v_1.md",
+    "normalized_file": "c:\\dev\\architecture_normalized\\architecture_cognitive_executive_aem_v_1_md.txt",
+    "size": 7550
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\ARCHITECTURE_DATA_STRUCTURES.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\ARCHITECTURE_DATA_STRUCTURES_docx.txt",
+    "size": 17969
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\ARCHITECTURE_DATA_STRUCTURES.md",
+    "normalized_file": "c:\\dev\\architecture_normalized\\ARCHITECTURE_DATA_STRUCTURES_md.txt",
+    "size": 18490
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\architecture_directive_and_intent_specification.md",
+    "normalized_file": "c:\\dev\\architecture_normalized\\architecture_directive_and_intent_specification_md.txt",
+    "size": 6291
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\architecture_executive_message_contracts_v_1.md",
+    "normalized_file": "c:\\dev\\architecture_normalized\\architecture_executive_message_contracts_v_1_md.txt",
+    "size": 5945
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\architecture_intent_object_schema.md",
+    "normalized_file": "c:\\dev\\architecture_normalized\\architecture_intent_object_schema_md.txt",
+    "size": 5572
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\architecture_llm_based_intent_extraction_interface.md",
+    "normalized_file": "c:\\dev\\architecture_normalized\\architecture_llm_based_intent_extraction_interface_md.txt",
+    "size": 5708
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\architecture_objective_taxonomy_and_priority_model_v_1.md",
+    "normalized_file": "c:\\dev\\architecture_normalized\\architecture_objective_taxonomy_and_priority_model_v_1_md.txt",
+    "size": 8217
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\architecture_question_generation_and_curiosity_subsystem_v_1.md",
+    "normalized_file": "c:\\dev\\architecture_normalized\\architecture_question_generation_and_curiosity_subsystem_v_1_md.txt",
+    "size": 10491
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\architecture_question_template_schema_v_1.md",
+    "normalized_file": "c:\\dev\\architecture_normalized\\architecture_question_template_schema_v_1_md.txt",
+    "size": 8745
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\architecture_reflection_and_self_assessment_layer_v_1.md",
+    "normalized_file": "c:\\dev\\architecture_normalized\\architecture_reflection_and_self_assessment_layer_v_1_md.txt",
+    "size": 6660
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\architecture_termination_metrics_and_inquiry_budgets_v_1.md",
+    "normalized_file": "c:\\dev\\architecture_normalized\\architecture_termination_metrics_and_inquiry_budgets_v_1_md.txt",
+    "size": 6894
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Asp Agi Architecture \u2013 Executive Outline.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Asp Agi Architecture \u2013 Executive Outline_docx.txt",
+    "size": 4585
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\ASP Architecture Draft 1.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\ASP Architecture Draft 1_docx.txt",
+    "size": 13366
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\ASP Architecture Summary Canvas - AA Overview.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\ASP Architecture Summary Canvas - AA Overview_docx.txt",
+    "size": 6051
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\ASP Architecture.pptx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\ASP Architecture_pptx.txt",
+    "size": 3847
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Cmb Ack Vocabulary Specification.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Cmb Ack Vocabulary Specification_docx.txt",
+    "size": 3798
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Cmb Architecture outlineVersion 2.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Cmb Architecture outlineVersion 2_docx.txt",
+    "size": 5786
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\Cmb Architecture \u2013 Documentation Invariants And Design Notes.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\Cmb Architecture \u2013 Documentation Invariants And Design Notes_docx.txt",
+    "size": 4919
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\cmb_architecture_specification_v3.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\cmb_architecture_specification_v3_docx.txt",
+    "size": 46005
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\cmb_architecture_v1.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\cmb_architecture_v1_docx.txt",
+    "size": 11027
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\cmb_architecture_v2.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\cmb_architecture_v2_docx.txt",
+    "size": 27665
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\cmb_architecture_v3.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\cmb_architecture_v3_docx.txt",
+    "size": 44314
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\cmb_architecture_v3.pdf",
+    "normalized_file": "c:\\dev\\architecture_normalized\\cmb_architecture_v3_pdf.txt",
+    "size": 52837
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\cmb_comments_v1.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\cmb_comments_v1_docx.txt",
+    "size": 45416
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\cmb_message_lifecycle_specification.md",
+    "normalized_file": "c:\\dev\\architecture_normalized\\cmb_message_lifecycle_specification_md.txt",
+    "size": 4951
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\CMB_Roadmap_v1.docx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\CMB_Roadmap_v1_docx.txt",
+    "size": 6230
+  },
+  {
+    "source_file": "c:\\dev\\architecture_raw\\L_Series.pptx",
+    "normalized_file": "c:\\dev\\architecture_normalized\\L_Series_pptx.txt",
+    "size": 359
+  }
+]

@@ -1,0 +1,38 @@
+L Series Architecture
+LSD Thinking Machine
+Cognitive Hardware
+HAT
+Hardware Awareness technology
+Sensor array
+Env
+LSD OS
+Operating System
+CAPPs
+Cognitive Applications
+ASP
+AGI Executive
+User Interface
+
+
+CLP
+Awareness
+Cognitive Awareness Bus
+Cognitive
+Message
+Bus
+Awareness   API
+
+CLP
+CRE
+
+
+Packaging
+Raw
+Data
+Concept
+Planner
+CRE
+Skills
+Sequencer
+Behavior
+Mattix

@@ -1,0 +1,83 @@
+Section 6 – Execution Model
+6.1 Why Execution Deserves Its Own Model
+Execution is where architectural intent meets reality. Decisions authorize action, behaviors define how action should occur, but execution determines what actually happens under real constraints such as time, concurrency, partial failure, and resource limits.
+Many systems blur execution with decision-making or transport. This architecture deliberately separates them. The Execution Model defines how approved behaviors are carried out as concrete activity, how progress is tracked, and how execution remains observable, interruptible, and recoverable.
+For software architects, this section defines the operational semantics of the system. For end users, it explains how work actually unfolds step-by-step rather than as an abstract promise.
+
+6.2 Execution in the Context of Work
+Execution always occurs within a Work Instance. Work defines intent and scope; execution realizes that intent through action.
+Key principles: - No execution occurs without an authorizing decision. - All execution produces events. - Execution is bounded by task and work lifecycles. - Execution may be paused, resumed, altered, or terminated.
+This framing ensures that execution is never detached from meaning or accountability.
+
+6.3 Tasks as the Unit of Execution
+The primary unit of execution is the Task.
+A Task represents a logically bounded piece of executable work derived from a behavior. Tasks bridge the gap between behavior definition and runtime activity.
+A task is characterized by: - a clear start and end - defined inputs and outputs - preconditions and postconditions - a measurable execution state
+Tasks may be: - computational (e.g., data processing) - coordinative (e.g., orchestrating other tasks) - physical (e.g., issuing actuator commands)
+
+6.4 Task Lifecycle
+Each task progresses through a well-defined lifecycle. While implementations may extend this lifecycle, the architecture assumes at least the following states:
+Created – task defined but not yet started
+Ready – preconditions satisfied
+Executing – task actively running
+Suspended – execution paused
+Completed – execution finished successfully
+Failed – execution terminated unsuccessfully
+Aborted – execution intentionally stopped
+State transitions are recorded as events and form part of the execution narrative.
+
+6.5 Sequencing and Concurrency
+Real work rarely executes as a single linear sequence. The Execution Model therefore explicitly supports:
+Sequential execution – tasks must complete in order
+Parallel execution – tasks may run concurrently
+Conditional execution – tasks run only if conditions are met
+Iterative execution – tasks repeat until criteria are satisfied
+Sequencing is defined at planning time, but actual execution order is observed and recorded through events.
+Concurrency is treated as a normal condition, not an exception. The architecture relies on explicit sequencing (ESN) to preserve determinism in analysis and replay.
+
+6.6 Execution Context and Resources
+Execution does not occur in a vacuum. Each task executes within an execution context that includes: - resource availability (CPU, memory, hardware access) - concurrency limits - environmental conditions - safety and policy constraints
+Execution context may change during runtime, generating contextual events that influence subsequent decisions.
+
+6.7 Monitoring and Progress Reporting
+Execution is continuously monitored. Tasks emit execution events that report: - start - progress milestones (optional) - completion - failure
+Monitoring serves multiple purposes: - enabling dynamic adjustment - detecting stalls or failures - providing transparency to users
+Progress reporting is intentionally separated from transport acknowledgment; execution progress is semantic, not mechanical.
+
+6.8 Interruption, Suspension, and Resumption
+Long-running or critical work must be interruptible.
+The Execution Model supports: - Interruption – immediate halt due to higher-priority work or safety concerns - Suspension – pause with intent to resume later - Resumption – continuation using preserved execution context
+These transitions are explicitly recorded so that work continuity is preserved and replay remains accurate.
+
+6.9 Execution and Error Interaction
+Execution is the primary source of operational errors. Failures during execution trigger error events, which then feed back into the Decision Model.
+Examples: - a failed task may trigger retry or fallback - repeated execution failures may trigger escalation - unsafe conditions may trigger immediate abort
+This feedback loop ensures that execution outcomes directly inform adaptive behavior.
+
+6.10 Execution Boundaries and Side Effects
+Execution may produce side effects, especially in physical or external systems. The architecture therefore emphasizes:
+explicit boundaries between execution and external systems
+traceable execution commands
+ability to disable or simulate side effects during replay
+This is critical for safe replay, testing, and learning.
+
+6.11 Relationship to Other Architectural Sections
+The Execution Model connects directly to:
+Section 3 – Conceptual Model of Work (execution realizes work intent)
+Section 4 – Event Model (execution generates events)
+Section 5 – Decision and Behavior Model (decisions authorize execution)
+Section 7 – Identity and Traceability Model (tasks and execution are traceable)
+Section 9 – Persistence and Replay Architecture (execution history is replayed)
+Section 10 – Error Handling and Recovery (execution failures drive recovery)
+
+6.12 What Remains to Be Defined
+This section establishes the architectural intent of execution. The following details are intentionally deferred to companion specifications:
+formal task dependency graphs
+scheduling and prioritization algorithms
+execution engine interfaces
+resource arbitration policies
+hardware vs software execution mappings
+Deferring these details preserves architectural flexibility while keeping execution semantics clear.
+
+6.13 Summary
+The Execution Model defines how authorized behaviors become real activity. By treating execution as structured, observable, interruptible, and traceable, the architecture ensures that work unfolds predictably even under concurrency, failure, and changing conditions. Execution is where intent becomes outcome—and this model ensures that transition is controlled, explainable, and improvable.

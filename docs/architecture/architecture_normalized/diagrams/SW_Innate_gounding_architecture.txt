@@ -1,0 +1,15 @@
+[Sensory Streams]
+     │
+     ▼
+[Modality Differentiator]
+     │
+     ├──▶ [Pattern Segmenter]
+     │          │
+     │          ▼
+     │    [Event Chunker]─────▶ [Temporal Tracker]
+     │                             │
+     ▼                             ▼
+[Physical Consequence Detector]→[Cause-Effect Associator]
+     │                             │
+     ▼                             ▼
+  [Proto-Concept Generator]────→[Concept Memory Formation]

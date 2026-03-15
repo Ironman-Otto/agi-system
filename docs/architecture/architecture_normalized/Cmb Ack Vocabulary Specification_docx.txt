@@ -1,0 +1,98 @@
+CMB ACK Vocabulary Specification
+Purpose
+This section formally defines the ACK (Acknowledgement) vocabulary used by the Cognitive Message Bus (CMB). The vocabulary establishes a strict contract between ModuleEndpoints, Routers, ACK State Machines, and Transaction Registries, ensuring deterministic behavior, reliable message delivery, and debuggable failure modes.
+This vocabulary is protocol-level and must remain stable once finalized. All ACK handling logic, state machines, logging, and persistence depend on these definitions.
+
+Design Principles
+Event-driven, not message-driven
+ACK messages are translated into ACK events before entering the ACK State Machine.
+Finite and closed vocabulary
+Only the events listed in this document are valid. Any unrecognized or out-of-order ACK results in an ILLEGAL_ACK event.
+Correlation-driven
+Every ACK event is associated with exactly one transaction, identified by correlation_id.
+State-machine authoritative
+The ACK State Machine is the sole authority for deciding transaction state transitions.
+
+Canonical ACK Events
+The following events are the only valid inputs to the ACK State Machine.
+1. SEND_REQUESTED
+Source: Module logic
+Trigger: Module requests message transmission via ModuleEndpoint.send()
+Description: Transaction is created and registered, but no socket activity has occurred yet.
+
+2. SEND_DISPATCHED
+Source: ModuleEndpoint transport thread
+Trigger: Message is successfully written to the outbound ZeroMQ socket
+Description: Confirms physical dispatch of the message from the endpoint.
+
+3. ROUTER_ACK_RECEIVED
+Source: CMB Router
+Trigger: Router emits ROUTER_ACK
+Description: Router has validated, accepted, and forwarded the message to the target module.
+Guarantee: Message routing is complete; execution may or may not occur.
+
+4. EXEC_ACK_RECEIVED
+Source: Target module
+Trigger: Target emits EXECUTION_ACK
+Description: Target has completed execution of the message.
+Outcome Variants:
+SUCCESS
+FAILURE
+
+5. TIMEOUT_EXPIRED
+Source: ACK State Machine
+Trigger: Configured ACK timeout expires
+Description: Expected ACK did not arrive within allowed time window.
+Notes: Timeouts are evaluated per state (router vs execution).
+
+6. RETRY_DISPATCHED
+Source: ACK State Machine
+Trigger: Retry policy initiates retransmission
+Description: Message is resent due to timeout or transient failure.
+
+7. CANCEL_REQUESTED
+Source: Module logic
+Trigger: Module explicitly cancels an in-flight transaction
+Description: Transaction is aborted regardless of current state.
+
+8. ILLEGAL_ACK
+Source: ACK State Machine
+Trigger:
+ACK received in invalid state
+Duplicate ACK
+ACK with unknown correlation ID
+ACK after terminal state
+Description: Protocol violation or unexpected behavior detected.
+
+Mapping: ACK Messages → ACK Events
+
+Event Guarantees
+Every valid transaction must receive exactly one terminal event:
+COMPLETED_SUCCESS
+COMPLETED_FAILURE
+TIMEOUT
+CANCELLED
+ACK events never directly mutate module logic; they only mutate transaction state.
+ACK events must be logged and recorded in the Transaction Record.
+
+Logging & Traceability Requirements
+Each ACK event must produce a structured log entry containing:
+transaction_id (message_id)
+correlation_id
+event_type
+previous_state
+new_state
+timestamp
+source (router / module / state machine)
+optional reason or error context
+These logs form the basis for: - GUI tracing - File-based logging - Database persistence - Post-mortem debugging
+
+Forward Compatibility Notes
+This vocabulary is intentionally extensible. New ACK events may be added only if:
+Existing semantics remain unchanged
+New events map cleanly into the state machine
+Backward compatibility is preserved
+
+Status
+Version: 1.0 (Draft – Ready for Architecture Integration)
+This section is approved for direct inclusion in the CMB Architecture document.

@@ -1,0 +1,87 @@
+Section 5 – Decision and Behavior Model
+5.1 Why Decisions and Behaviors Are Treated Explicitly
+In many systems, decisions are implicit and behaviors are hard‑coded responses. This architecture treats decisions and behaviors as explicit, observable, and separable concepts. The reason is simple: if a system is expected to operate autonomously, adapt over time, and be explainable to humans, then why it chose to act must be as visible as what it did.
+For software architects, this separation enables clean modularity and auditability. For end users, it enables trust: the system can explain not only its actions, but the reasoning path that led to those actions.
+In this architecture: - Decisions represent moments of choice. - Behaviors represent executable patterns of action. - Work provides the context in which decisions and behaviors occur.
+
+5.2 What Is a Decision
+A Decision is a discrete internal choice made by the system in response to one or more events, within the context of a Work Instance. A decision selects one path among alternatives based on goals, priorities, policies, and available context.
+Key characteristics of a decision:
+Context‑dependent – Decisions are made relative to current work state, environment, and constraints.
+Explicit – Decisions are recorded as first‑class events.
+Bounded – A decision has a clear scope and outcome.
+Justifiable – Inputs and rationale can be examined post‑hoc.
+Action‑enabling – Decisions authorize or block behaviors.
+A system that cannot observe its own decisions cannot meaningfully explain or improve its behavior.
+
+5.3 Decision Triggers
+Decisions are not made continuously; they are triggered by specific conditions. Common decision triggers include:
+arrival of an initiating event
+receipt of new contextual information
+completion or failure of a task
+detection of an error
+time‑based conditions (timeouts, deadlines)
+Each trigger represents a moment where the system must reassess what to do next.
+
+5.4 Decision Inputs
+Decisions are informed by multiple classes of input:
+A) Events
+Recent events provide the immediate stimulus for a decision.
+B) Work Context
+The current Work Instance contributes: - intent - phase of execution - partial results - prior decisions
+C) Goals and Objectives
+Goals define what outcomes are desirable and how trade‑offs should be evaluated.
+D) Policies and Rules
+Policies constrain decisions to ensure safety, compliance, and correctness.
+E) Priorities
+Priority determines urgency and relative importance when multiple options exist.
+F) Resource Availability
+Decisions must consider compute, time, hardware, and concurrency limits.
+
+5.5 Decision Outcomes
+A decision produces one of several outcome types:
+Act – authorize execution of one or more behaviors.
+Defer – postpone action until conditions change.
+Ignore – record awareness but take no action.
+Escalate – request higher‑level reasoning or human intervention.
+Abort – terminate current work.
+These outcomes are recorded explicitly to avoid ambiguity during replay and analysis.
+
+5.6 What Is a Behavior
+A Behavior is a reusable, executable pattern of action that the system can perform to advance work toward an outcome. Behaviors may be simple or complex, but they are always intentional and bounded.
+Examples of behaviors include: - query a data source - generate a report - execute a test sequence - adjust a control parameter - notify an operator
+Behaviors are not synonymous with tasks. A behavior defines how something is done; tasks define when and in what order behaviors are executed within work.
+
+5.7 Behavior Selection
+Behavior selection is the process of choosing which behavior to execute after a decision to act has been made.
+Selection may be based on: - rule‑based matching - priority tables - learned policies - historical performance - contextual similarity
+The architecture does not mandate a single selection mechanism. Instead, it ensures that the selection itself is observable and traceable.
+
+5.8 Behavior Execution and Monitoring
+Once selected, behaviors are executed through tasks and coordinated actions. Execution is monitored via events that report: - start - progress - completion - failure
+Monitoring enables dynamic adjustment, retries, and fallback strategies.
+
+5.9 Decision–Behavior Feedback Loop
+Decisions and behaviors form a feedback loop:
+Events trigger decisions.
+Decisions authorize behaviors.
+Behaviors generate execution events.
+Execution events inform subsequent decisions.
+This loop continues until work reaches a terminal outcome.
+
+5.10 Learning from Decisions and Behaviors
+Over time, the system can analyze past decisions and behaviors to improve future performance. By examining: - which decisions led to successful outcomes - which behaviors were efficient or reliable - where failures occurred
+The system can refine policies, priorities, and behavior selection strategies.
+This learning process is evidence‑based because it is grounded in explicit event and decision records.
+
+5.11 Practical Implications for Architecture and Implementation
+The Decision and Behavior Model implies several architectural commitments:
+Decisions must be explicitly recorded as events.
+Behavior selection must be observable.
+Behaviors must be modular and reusable.
+Execution must be monitored and reported.
+Decisions and behaviors must remain independent of transport mechanisms.
+For early implementation stubs, this model can be validated by: - logging decisions and selected behaviors - executing simple behaviors deterministically - replaying decision sequences from stored events
+
+5.12 Summary
+The Decision and Behavior Model defines how the system chooses actions and executes them in pursuit of work. By making decisions explicit and behaviors reusable, the architecture supports explainability, adaptability, and continuous improvement. This model completes the core loop that transforms events into meaningful outcomes and prepares the system for learning and evolution over time.

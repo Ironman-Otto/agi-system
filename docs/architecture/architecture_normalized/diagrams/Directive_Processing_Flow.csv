@@ -1,0 +1,9 @@
+Module,Function,Output
+Perception,perceive_input,Perceived: Plan a response to unexpected sensor failure.
+NLP/LLM,process_language,Processed NLP: Perceived: Plan a response to unexpected sensor failure.
+Control,decide_to_initiate_self_talk,Reflect on: Plan a response to unexpected sensor failure.
+Cognitive,think,Thought: Reflect on: Plan a response to unexpected sensor failure.?
+Self-Awareness,reflect,Self-awareness reflection on: Thought: Reflect on: Plan a response to unexpected sensor failure.?
+Memory,remember,Stored in memory.
+Behavior,decide_action,Decision made based on: Self-awareness reflection on: Thought: Reflect on: Plan a response to unexpected sensor failure.?
+Output,act,Action executed: Decision made based on: Self-awareness reflection on: Thought: Reflect on: Plan a response to unexpected sensor failure.?

@@ -1,0 +1,100 @@
+Section 9 – Persistence and Replay Architecture
+9.1 Why Persistence and Replay Are Core Capabilities
+In many systems, persistence is treated as a storage concern and replay as a debugging convenience. In this architecture, persistence and replay are foundational capabilities. They are essential to making work, events, decisions, and behaviors durable, analyzable, and improvable over time.
+Because the system is designed to operate continuously, across modules and possibly across physical boundaries, it must retain an authoritative record of execution. Without durable persistence, traceability collapses. Without replay, learning becomes speculative rather than evidence-based.
+For software architects, persistence and replay provide the basis for diagnostics, verification, and system evolution. For end users, they enable transparency, accountability, and trust: the system can show not just outcomes, but how those outcomes were produced.
+
+9.2 Persistence as an Architectural Responsibility
+Persistence in this architecture is not an afterthought or a logging side-channel. It is an architectural responsibility that spans the entire execution lifecycle.
+The system assumes that: - significant events are persisted durably - identifiers are preserved unchanged - ordering and causality are retained - historical data can be queried and replayed
+Persistence is therefore designed alongside communication, identity, and execution—not layered on later.
+
+9.3 What Must Be Persisted
+The architecture distinguishes between what must be persisted and what may be transient.
+Persisted Artifacts (Authoritative Record)
+The following artifacts form the minimum persistent record:
+Work Records – Work identity, lifecycle state, start/end markers
+Event Records – Event identity, type, sequence, timestamps, causality
+Decision Records – Decision identity, inputs, selected outcomes
+Task Records – Task identity, execution state transitions
+Outcome Records – Success/failure evaluations
+Transport Summaries – Transaction outcomes and failure reasons
+Together, these artifacts define the execution narrative of the system.
+Transient Artifacts
+Examples of data that may remain transient include: - in-memory queues - active retry timers - ephemeral caches
+These are implementation details, not part of the architectural record.
+
+9.4 Append-Only Event Persistence Model
+The core persistence mechanism is an append-only event store scoped by Work Instance. Once recorded, events are never modified or deleted.
+Key properties of the event store:
+Immutability – Events are facts, not mutable state.
+Ordering – Events are ordered by sequence number within work.
+Completeness – All meaningful execution changes are captured.
+Durability – Events survive process restarts and failures.
+This model avoids ambiguity and supports deterministic replay.
+
+9.5 Separation of State and History
+A critical architectural distinction is made between current state and historical record.
+State answers: “What is the system doing right now?”
+History answers: “What has the system done over time?”
+State may be derived, cached, or reconstructed. History must be preserved.
+By deriving state from history rather than mutating state directly, the system gains resilience: crashes or restarts do not erase understanding of what occurred.
+
+9.6 Replay as a First-Class Operation
+Replay is the controlled reprocessing of historical execution data to reproduce, analyze, or simulate system behavior.
+Replay may be used to: - debug failures - validate changes to decision logic - compare alternative behaviors - simulate execution under new constraints - train or refine learning components
+Replay operates on persisted artifacts, primarily event streams.
+
+9.7 Types of Replay
+The architecture supports multiple forms of replay:
+A) Full Work Replay
+Re-executes an entire Work Instance from initiation to outcome using recorded events and decisions.
+Use cases: - forensic debugging - end-to-end validation
+B) Partial Replay
+Replays a subset of events, such as: - a single task - a failure segment - a decision point
+Use cases: - targeted debugging - behavior refinement
+C) Deterministic Simulation
+Replays events while substituting alternative decision logic or behaviors.
+Use cases: - A/B comparison of strategies - what-if analysis
+
+9.8 Replay Boundaries and Safety
+Replay must be isolated from live execution unless explicitly authorized. The architecture assumes:
+replay occurs in a controlled environment
+side effects (e.g., physical actuation) are disabled or simulated
+external interactions are stubbed or mocked
+This ensures that replay remains an analytical tool rather than a source of unintended action.
+
+9.9 Persistence for Learning and Optimization
+Persistence is not only about correctness; it is about improvement. By analyzing persisted execution history, the system can:
+identify successful behavior patterns
+detect inefficiencies or bottlenecks
+correlate decisions with outcomes
+extract reusable behavior templates
+Learning is grounded in evidence rather than assumptions because it operates on real execution data.
+
+9.10 Data Retention and Lifecycle Considerations
+Not all persisted data must be retained forever. The architecture supports tiered retention policies:
+Long-term: work, events, decisions, outcomes
+Medium-term: task details
+Short-term: transport-level artifacts
+Retention policies are configurable and governed by operational, legal, or domain-specific requirements.
+
+9.11 Relationship to Other Architectural Sections
+The Persistence and Replay Architecture connects directly to:
+Section 3 – Conceptual Model of Work (what is persisted)
+Section 4 – Event Model (events are the primary persisted artifacts)
+Section 5 – Decision and Behavior Model (decisions and behaviors are replayed)
+Section 7 – Identity and Traceability Model (identifiers bind history)
+Section 8 – Communication Architecture (CMB) (messages carry persisted context)
+Persistence is the backbone that makes these sections operationally meaningful.
+
+9.12 Practical Implications for Implementation
+From an implementation perspective, this section implies:
+An append-only event store with strong ordering guarantees.
+Explicit persistence points for work, decision, and outcome records.
+Replay tooling that can consume persisted artifacts.
+Clear separation between live execution and replay environments.
+Early implementation stubs should: - persist events immediately after creation - reconstruct state from persisted history - demonstrate replay of a simple work instance
+
+9.13 Summary
+The Persistence and Replay Architecture ensures that system execution is durable, analyzable, and improvable. By treating execution history as a first-class asset, the system gains the ability to explain itself, recover from failure, and evolve based on evidence. Persistence preserves what happened; replay turns that history into understanding.

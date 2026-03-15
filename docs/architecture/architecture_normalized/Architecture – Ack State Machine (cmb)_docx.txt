@@ -1,0 +1,192 @@
+ACK State Machine for the Cognitive Message Bus (CMB)
+Purpose and Scope
+This document defines a formal ACK (Acknowledgment) state machine for the Cognitive Message Bus (CMB). It is intended to be integrated into CMB Architecture Version 3 and serve as the authoritative reference for reliable message exchange semantics across all modules.
+The ACK mechanism is not a transport-level confirmation, but a semantic progress protocol that allows modules, routers, and orchestration layers (e.g., Executive) to reason deterministically about message lifecycle, failures, and system health.
+
+Design Principles
+ACKs represent state, not sockets
+ZeroMQ already provides best-effort transport guarantees. ACKs represent meaningful milestones in message handling.
+Centralized routing, decentralized execution
+Router confirms receipt and delivery
+Target module confirms execution
+Sender owns timeout and retry logic
+Directed, never broadcast
+ACKs are always routed via dedicated ACK channels (ROUTER/DEALER), never PUB/SUB.
+Correlation-first design
+Every ACK must reference the originating message using correlation_id.
+Deterministic logging is mandatory
+Every state transition must be loggable and replayable.
+
+ACK Channel Topology (Invariant)
+There is exactly one shared ACK channel pair system-wide:
+ACK Ingress: Module → Router (DEALER → ROUTER)
+ACK Egress: Router → Module (ROUTER → DEALER)
+This avoids port explosion, duplicated logic, and inconsistent semantics.
+
+Canonical ACK Types
+Invariant: Routers never report execution status. Modules never report routing status.
+
+ACK Message Structure
+ACKs reuse the CognitiveMessage schema with the following fields:
+msg_type      = "ACK"
+ack_type      = ROUTER_ACK | DELIVERY_ACK | EXECUTION_ACK | PROGRESS_ACK | TIMEOUT | CANCEL
+status        = SUCCESS | FAILURE | REJECTED | IN_PROGRESS
+source        = router | target module | sender
+targets       = [originating sender]
+correlation_id= original message_id
+payload       = optional diagnostic details
+
+Minimal ACK Policy (Recommended Baseline)
+To achieve reliability without complexity, the minimal viable system must support:
+ROUTER_ACK – immediate
+EXECUTION_ACK – terminal (SUCCESS or FAILURE)
+This already enables: - Fault isolation - Retry logic - Deterministic tracing
+
+Sender-Side ACK State Machine
+State Enumeration
+IDLE
+ └─► SEND_PENDING
+       └─► ROUTED
+             └─► DELIVERED
+                   └─► EXECUTING
+                         ├─► COMPLETED_SUCCESS
+                         ├─► COMPLETED_FAILURE
+                         └─► TIMEOUT_ABORT
+
+State Definitions and Transitions
+IDLE
+Description: No active exchange
+Exit Trigger: Application issues a send request
+
+SEND_PENDING
+Description: Message sent, awaiting ROUTER_ACK
+Actions: - Send message to router - Start router_ack_timer
+Transitions: - ROUTER_ACK → ROUTED - Timeout → TIMEOUT_ABORT
+
+ROUTED
+Description: Router accepted message
+Actions: - Stop router_ack_timer - Start delivery_ack_timer
+Transitions: - DELIVERY_ACK → DELIVERED - Timeout → TIMEOUT_ABORT
+
+DELIVERED
+Description: Target module confirmed receipt
+Actions: - Log delivery - Start execution_timer
+Transitions: - EXECUTION_ACK (IN_PROGRESS) → EXECUTING - EXECUTION_ACK (SUCCESS) → COMPLETED_SUCCESS - EXECUTION_ACK (FAILURE) → COMPLETED_FAILURE - Timeout → TIMEOUT_ABORT
+
+EXECUTING
+Description: Long-running execution
+Actions: - Await terminal EXECUTION_ACK - Optionally process PROGRESS_ACKs
+Transitions: - EXECUTION_ACK (SUCCESS) → COMPLETED_SUCCESS - EXECUTION_ACK (FAILURE) → COMPLETED_FAILURE - Timeout or CANCEL → TIMEOUT_ABORT
+
+COMPLETED_SUCCESS
+Description: Execution completed successfully
+Actions: - Finalize workflow - Notify orchestration layer
+Next State: IDLE
+
+COMPLETED_FAILURE
+Description: Execution failed
+Actions: - Log error - Trigger retry or recovery policy
+Next State: IDLE (or retry loop)
+
+TIMEOUT_ABORT
+Description: Failure due to timeout or cancellation
+Actions: - Log failure - Optionally emit CANCEL - Cleanup correlation state
+Next State: IDLE
+
+Timers (Critical Invariant)
+Each phase has an independent timer:
+Timers must never overlap ambiguously.
+
+Logging and Observability
+Every transition must log deterministically:
+[MSG_ID][STATE] → [STATE] (EVENT)
+Example:
+[abc-123] ROUTED → DELIVERED (DELIVERY_ACK)
+This enables: - Replayable traces - GUI timelines - Postmortem analysis - Patent-grade determinism
+
+Responsibilities Summary
+
+Integration Notes for CMB Architecture v3
+This state machine is mandatory for ModuleEndpoint implementations
+ACK handling must be centralized per correlation_id
+Logging hooks must be available at every transition
+GUI and diagnostics modules should consume ACK events, not raw sockets
+
+Transition Event Emission (Normative)
+Purpose
+The ACK state machine must not perform logging or I/O. Instead, it emits structured transition events whenever its internal state changes. These events form the single source of truth for: - logging (file, DB, telemetry) - GUI timelines - orchestration decisions - debugging and replay
+This design guarantees determinism, testability, and backend independence.
+
+AckTransitionEvent (Canonical Structure)
+An AckTransitionEvent is an immutable data record emitted on every state transition.
+Required fields: - message_id – unique identifier of the message - old_state – previous AckState - new_state – resulting AckState - reason – symbolic cause of the transition (ACK type, timeout, retry, cancel) - timestamp – monotonic or wall-clock time - retry_count – current retry attempt
+Optional fields: - channel - source - target - details (diagnostic payload)
+
+AckTransitionEvent (Reference Definition)
+from dataclasses import dataclass
+from typing import Optional, Any
+
+@dataclass(frozen=True)
+class AckTransitionEvent:
+    message_id: str
+    old_state: str
+    new_state: str
+    reason: str
+    timestamp: float
+    retry_count: int
+    details: Optional[Any] = None
+
+Emission Rule (Invariant)
+Every state change MUST emit exactly one AckTransitionEvent.
+No silent transitions are permitted.
+
+State Machine Integration Pattern
+The ACK state machine performs transitions exclusively through a single internal helper:
+def _transition(self, new_state: AckState, *, reason: str, details=None):
+    event = AckTransitionEvent(
+        message_id=self.message_id,
+        old_state=self.state.name,
+        new_state=new_state.name,
+        reason=reason,
+        timestamp=time.monotonic(),
+        retry_count=self.retry_count,
+        details=details,
+    )
+    self.state = new_state
+    self.last_transition_at = event.timestamp
+    return event
+All public handlers (on_send, on_router_ack, on_exec_ack, on_timeout) must return the event produced by _transition().
+
+Example: ROUTER_ACK Handling
+def on_router_ack(self):
+    if self.require_exec_ack:
+        return self._transition(
+            AckState.AWAIT_EXEC_ACK,
+            reason="ROUTER_ACK",
+        )
+    else:
+        return self._transition(
+            AckState.COMPLETED_SUCCESS,
+            reason="ROUTER_ACK_NO_EXEC",
+        )
+
+Endpoint Responsibility
+The ModuleEndpoint: 1. Receives the AckTransitionEvent 2. Logs it (file / DB) 3. Updates the transaction registry 4. Notifies GUI subscribers 5. Feeds orchestration logic (optional)
+The state machine remains pure logic.
+
+Logging Implication
+Because events are structured and immutable: - File logging is trivial - Database persistence is trivial - Trace reconstruction is deterministic - GUI timelines require no socket inspection
+
+Architectural Guarantee
+This event-emission model ensures: - deterministic replay - auditability - clean separation of concerns - long-term extensibility (OpenTelemetry, distributed tracing)
+
+Next Steps
+Extend AckStateMachine skeleton to return AckTransitionEvent
+Define TransactionRecord wrapping state machine + events
+Add file-based logger in ModuleEndpoint
+Integrate EXECUTION_ACK path
+Integrate this document into CMB Architecture v3 – ACK section
+Define Python enums for states and ACK types
+Implement a reusable AckStateMachine class
+Add file-based logging, then database-backed logging
+Expose ACK timelines to GUI and diagnostics modules

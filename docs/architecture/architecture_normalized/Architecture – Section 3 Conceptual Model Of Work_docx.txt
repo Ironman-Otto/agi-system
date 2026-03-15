@@ -1,0 +1,87 @@
+Section 3 – Conceptual Model of Work
+3.1 Why “Work” is the Core Abstraction
+Most AI discussions start with models, algorithms, or interfaces. This architecture starts with work—because in practical systems the purpose is not to “produce an answer,” but to accomplish an outcome under real constraints. Outcomes may be informational (a report, a diagnosis recommendation, a plan, a test result) or physical (a device adjustment, a manufacturing action, a robotic motion). In either case, the system must decide what to do, coordinate actions across components, and determine whether the outcome meets expectations.
+By making work the primary organizing unit, the system becomes: - Traceable: you can reconstruct what happened and why. - Replayable: you can reproduce execution from recorded history. - Debbugable: you can isolate failure causes and measure reliability. - Optimizable: you can improve performance using evidence, not intuition. - Evolvable: you can learn from completed work and convert successful patterns into reusable behaviors.
+For a software architect, the “work” abstraction provides a stable anchor for module responsibilities and data contracts. For an end user, it provides a consistent story: the system receives an input (directive or event), performs work, and produces a measurable outcome.
+
+3.2 What “Work” Means in This Architecture
+A Work Instance is a bounded effort undertaken by the system to pursue a goal or respond to a situation. It is the conceptual equivalent of a project in a project plan: it can have phases, tasks, sequencing, checkpoints, and completion criteria.
+A Work Instance has five defining characteristics:
+Intent – The system is trying to accomplish something. Intent may come from a human directive, an internal goal, or a policy response to a detected event.
+Scope – Work has boundaries. It is not “everything the system does,” but a coherent unit with a start and an end.
+Structure – Work may be decomposed into tasks and coordinated activities. Some tasks can run in parallel, others must be sequential.
+Constraints – Work executes under limits: time, resources, safety rules, priorities, and policies.
+Outcome – Work is evaluated. Even partial completion has meaning if it can be measured and learned from.
+This definition is intentionally neutral: it applies equally to a knowledge-assistant producing a research summary, a manufacturing controller responding to a defect signal, or a hybrid agent coordinating both.
+
+3.3 Work Origins: How Work Begins
+Work begins when the system reaches a commit point—a decision gate where it chooses to act rather than ignore, defer, or discard an input.
+Work can originate from:
+A) Human Directives
+A human directive is an explicit request or instruction, delivered through a UI, API, or upstream system. Examples include: - “Generate a test plan for this board revision.” - “Summarize the last 30 days of defect data.” - “Adjust process parameters to reduce rework.”
+In directive-driven work, the system must interpret intent, confirm constraints, plan execution, and provide outputs that are understandable and trustworthy.
+B) Internal Goals
+Internal goals are self-generated directives based on objectives, schedules, policies, or reflective routines. Examples include: - periodic health checks - scheduled audits - proactive monitoring and anomaly detection
+Internal goals are crucial for continuous systems that operate without constant human input.
+C) Environmental or Informational Events
+Events may be physical (sensor changes) or informational (data updates, message arrivals, status transitions). Examples include: - temperature threshold exceeded - new defect cluster detected in inspection images - a critical subsystem reports degraded status
+Event-driven work requires rapid prioritization and policy-driven response selection.
+A key principle: work is not created by every event. Many events are simply recorded, filtered, or used as context. Work begins when the system commits to action.
+
+3.4 Work Structure: Phases, Tasks, and Sequencing
+Work is not a single action. It is a structured lifecycle that typically includes phases. The architecture does not enforce one fixed lifecycle, but it does assume that most practical work follows a recognizable pattern:
+Intake and Validation – ensure the trigger is well-formed and permitted.
+Interpretation and Context – understand intent and current conditions.
+Planning and Decomposition – define tasks, dependencies, and strategy.
+Execution and Coordination – perform tasks and manage interactions.
+Evaluation and Completion – assess outcomes, record results, and close the work.
+Tasks
+A Task is a logical unit of execution within a work instance. Tasks can be: - sequential (Task B requires Task A) - parallel (Task C and D can run concurrently) - conditional (Task E runs only if a test fails)
+Tasks are the bridge between “what we want” (intent) and “what we do” (execution). They enable scheduling, monitoring, partial completion, and clean failure boundaries.
+Sequencing
+Work sequencing is represented in two ways: - planned sequencing (dependencies between tasks) - observed sequencing (the actual event stream during execution)
+The system must support both. Planned sequencing enables coordination; observed sequencing enables replay and analysis.
+
+3.5 Work Context: Priorities, Policies, and Constraints
+Work always competes with other work. Even in small systems, multiple triggers may arrive close together. The architecture therefore treats priorities and constraints as first-class inputs into work formation.
+Examples of constraints: - safety rules (“never actuate if sensors disagree”) - authority rules (“only accept directives from approved sources”) - resource limits (compute budget, hardware availability) - time constraints (deadlines, TTL, escalation thresholds) - concurrency limits (max parallel tasks per module)
+Priority and Scheduling
+Priority is used to decide: - whether to begin work now, defer it, or reject it - which tasks get resources first - when to interrupt lower-value work for higher urgency events
+This architecture anticipates future scheduling sophistication, but it begins with a simple truth: priority is part of the work definition, not an afterthought.
+
+3.6 Work Observability: Events as the Execution Timeline
+A Work Instance unfolds as a stream of events (initiating, contextual, decision, execution, error, outcome). Events are not merely logs; they are the primary evidence of what occurred.
+For architects, the event stream provides: - causality reconstruction (why a behavior was selected) - state reconstruction (where execution was when it failed) - performance measurement (time per phase/task)
+For end users, the event stream supports: - explainability (“here is why the system acted”) - accountability (“here is what it did and when”) - trust (“here is how it arrived at the outcome”)
+The event stream is also what allows the system to become better over time: successful event patterns can be mined into reusable behaviors.
+
+3.7 Work Completion: Outcomes and Success Criteria
+Work ends when the system records a terminal outcome. The outcome is not merely “done,” but a structured evaluation against success criteria.
+Outcomes can include: - success - partial success (useful output but not fully satisfied) - failure (goal unmet) - aborted (canceled by policy or operator) - expired (deadline exceeded)
+Success criteria should be explicit whenever possible. For knowledge tasks, criteria may include completeness, citation coverage (if applicable), or coherence. For physical tasks, criteria may include sensor-confirmed state change, test pass rates, or compliance thresholds.
+Explicit outcomes are essential for learning: without outcomes, the system cannot measure which behaviors are good.
+
+3.8 Work as a Foundation for Traceability and Learning
+Work is the container that makes traceability meaningful. Without a Work Instance boundary, logs become a flat, noisy stream. With it, the system can provide start-to-finish narratives:
+What triggered the work?
+What context was considered?
+What decisions were made?
+What tasks executed?
+What messages were exchanged?
+What errors occurred?
+What outcome was reached?
+This architecture is designed so that every completed Work Instance can become a candidate for improvement: - Identify bottlenecks and failure points - Compare different strategies for the same class of work - Extract stable “behavior templates” from high-performing work
+Over time, the system can build a library of proven behaviors grounded in evidence.
+
+3.9 Practical Implications for Architecture and Implementation
+From a system engineering perspective, the Work Model implies several concrete design commitments:
+A Work Owner exists (often an Executive module) to maintain coherence and sequencing.
+Events are append-only and structured, not ad hoc text logs.
+Work boundaries are explicit (work starts at a commit point and ends at an outcome).
+Work decomposes into tasks that can be tracked, retried, and measured.
+Work is transport-independent: messaging is how modules coordinate, not how work is defined.
+For implementation stubs, this section implies a minimal demonstrable loop: - accept a trigger - commit to work (create Work ID) - generate and record events - execute one or more tasks - produce an outcome - persist the timeline
+This is enough to validate the architecture in code while keeping the system small and understandable.
+
+3.10 Summary
+The Conceptual Model of Work is the architectural center of gravity. It defines how the system moves from triggers to outcomes in a structured, measurable, and improvable way. By treating work as a project-like lifecycle—complete with events, sequencing, tasks, constraints, and outcomes—the architecture provides a practical foundation for building AI systems that can operate continuously, coordinate across modules, and learn from experience.

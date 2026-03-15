@@ -1,0 +1,92 @@
+Section 7 – Identity and Traceability Model
+7.1 Why Identity and Traceability Are Architectural Concerns
+In many systems, identifiers are treated as implementation details—added late, inconsistently, and primarily for debugging. In this architecture, identity and traceability are first-class architectural concerns. They exist not merely to diagnose failures, but to make the system understandable over time.
+Because the system is designed to perform work continuously, coordinate across modules, and evolve through learning, it must be able to answer fundamental questions at any point: - What work is this system performing right now? - What led to this action? - Which decisions authorized it? - What sequence of events produced this outcome? - Where did something go wrong?
+Identity and traceability provide the connective tissue that links events, decisions, tasks, execution, and outcomes into a coherent narrative. Without them, the system degenerates into disconnected components with local logs and no global meaning.
+
+7.2 Identity as a Semantic Concept
+Identity in this architecture is not merely about uniqueness. It is about semantic binding—the ability to say that multiple observations, actions, and communications all belong to the same conceptual thread of work.
+Each identifier binds a specific conceptual boundary: - work identity binds intent and outcome - event identity binds observation and time - transaction identity binds delivery and reliability
+By carefully separating these identities, the architecture avoids a common failure mode in distributed systems: conflating transport mechanics with semantic meaning.
+
+7.3 The Work Identity (WID)
+A Work ID (WID) uniquely identifies a single Work Instance: a bounded effort undertaken by the system to pursue a goal or respond to a situation.
+Purpose
+The WID answers the question: “What was the system trying to do?”
+It is the primary grouping key for: - events - decisions - tasks - outcomes
+Scope and Lifetime
+A WID is created at the moment the system commits to work.
+It persists for the entire lifecycle of that work.
+It terminates when a terminal outcome is recorded.
+Architectural Implications
+Every semantic message related to work must carry the WID.
+All analysis, replay, and learning is scoped first by WID.
+For architects, WID is the equivalent of a project identifier. For end users, it enables coherent explanations and reporting.
+
+7.4 Event Identity and Sequencing (EID / ESN)
+An Event ID (EID) uniquely identifies a single recorded event. An Event Sequence Number (ESN) establishes the authoritative order of events within a Work Instance.
+Purpose
+Together, EID and ESN answer the questions: - “What happened?” - “In what order did it happen?”
+Why Sequence Matters
+In concurrent and distributed systems, timestamps alone are insufficient. Two events may occur nearly simultaneously or be observed out of order. The ESN provides a deterministic execution order for replay and analysis.
+Scope and Lifetime
+EID is unique per event.
+ESN is monotonic within a WID.
+Once assigned, neither is ever modified.
+Architectural Implications
+The event stream for a WID is append-only and ordered by ESN.
+Replay, debugging, and performance analysis rely on ESN rather than timestamps.
+For end users, this enables clear narratives: first this happened, then this decision was made, then this action occurred.
+
+7.5 Causality and Event Relationships
+Ordering alone does not fully explain behavior. The architecture therefore supports explicit causality between events.
+Examples: - a decision event references the event(s) that triggered it - a task start event references the decision that authorized it - an error event references the execution step that failed
+Explicit causality allows the system to reconstruct why something happened, not just when it happened.
+This capability is essential for root-cause analysis and behavior improvement.
+
+7.6 Transaction Identity (XID)
+A Transaction ID (XID) identifies a bounded transport-level accountability scope. It is concerned with how messages are delivered, not with what they mean.
+Purpose
+XID answers the question: “Was this message delivered successfully?”
+Scope and Lifetime
+XID is created when a message requiring tracking is sent.
+It persists until delivery succeeds, fails, or times out.
+It is short-lived compared to WID and EID.
+Architectural Implications
+XID enables retries, acknowledgments, and timeout handling.
+XID may reference WID and EID for diagnostic correlation, but it does not define work semantics.
+By isolating XID to transport concerns, the architecture maintains a clean separation between reliability and meaning.
+
+7.7 Correlation Across Boundaries
+In distributed execution, actions often span multiple modules. To trace such flows, the system uses correlation identifiers that link related interactions without redefining their semantics.
+Correlation enables: - request–response pairing - command–acknowledgment flows - multi-hop message tracing
+Correlation identifiers complement WID and XID rather than replacing them.
+
+7.8 Traceability as a System Capability
+Traceability is not an afterthought; it is a capability intentionally designed into the system. By combining WID, EID/ESN, and XID, the system can produce:
+complete execution timelines
+causal graphs of decisions and actions
+transport reliability histories
+performance metrics per work instance
+For architects, this enables system-level observability. For end users, it enables transparency and trust.
+
+7.9 Persistence and Replay
+Traceability only has value if it persists. The architecture therefore assumes:
+events are stored in append-only logs
+identifiers are preserved unchanged
+replay tools can reconstruct execution by WID and ESN
+Replay allows the system to: - debug failures offline - validate changes to behavior logic - compare alternative strategies on the same historical data
+
+7.10 Relationship to Other Architectural Sections
+The Identity and Traceability Model connects directly to: - Section 3 – Conceptual Model of Work (identity binds work execution) - Section 4 – Event Model (identity structures event streams) - Section 5 – Decision and Behavior Model (decisions and behaviors are traced) - Section 8 – Communication Architecture (CMB) (identifiers are transported) - Section 9 – Persistence and Replay Architecture (identifiers enable replay)
+
+7.11 Practical Implications for Implementation
+From an implementation perspective, this model implies:
+Identifier creation rules must be explicit and enforced.
+Identifiers must be propagated consistently across modules.
+Semantic and transport identifiers must remain distinct.
+Persistence schemas must preserve identifiers without transformation.
+Early stubs should focus on: - generating WID at work commit points - assigning ESN centrally - attaching XID to tracked messages - persisting event records verbatim
+
+7.12 Summary
+The Identity and Traceability Model ensures that the system can explain itself over time. By assigning clear semantic meaning to identifiers and enforcing their disciplined use, the architecture enables complete execution narratives, reliable diagnostics, and evidence-based learning. Identity is not just about uniqueness—it is about making work, decisions, and outcomes intelligible from start to finish.
