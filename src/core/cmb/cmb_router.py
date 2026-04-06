@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import json
 import threading
-from core.cmb.channel_registry import ChannelRegistry
+from src.core.cmb.channel_registry import ChannelRegistry
 import zmq
 
 from src.core.messages.cognitive_message import CognitiveMessage

@@ -168,7 +168,7 @@ class DirectiveGUI:
             msg_type="DIRECTIVE_SUBMIT",
             msg_version="0.1.0",
             source=self.module_id,
-            targets=["NLP"],
+            targets=["AEM"],
             context_tag=None,
             correlation_id=None,
             payload={
