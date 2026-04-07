@@ -32,18 +32,18 @@ class FileLogSink:
         """
         try:
             record = {
-                "log_id": entry.log_id,
-                "timestamp": entry.timestamp,
-                "severity": entry.severity.name,
-                "source_module": entry.source_module,
                 "event_type": entry.event_type,
+                "source_module": entry.source_module,
                 "message": entry.message,
+                "severity": entry.severity.name,
                 "payload": entry.payload,
                 "context": (
                     vars(entry.context)
                     if entry.context is not None
                     else None
                 ),
+                "log_id": entry.log_id,
+                "timestamp": entry.timestamp,
             }
             with self._lock:
                 self._file.write(json.dumps(record) + "\n\n")

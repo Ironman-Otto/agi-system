@@ -205,7 +205,7 @@ class ModuleEndpoint:
                 event_type="ENDPOINT_OUTBOUND_SETUP",
                 message=f"ModuleEndpoint {self.cfg.module_id} setup outbound {ch_name} ",
                 payload={
-                    "channels": list(self.cfg.channels.keys())
+                    None
                 }
             )
 

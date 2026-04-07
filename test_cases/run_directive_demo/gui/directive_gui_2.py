@@ -51,7 +51,7 @@ class DirectiveGUI:
         self.create_widgets()
         # Decide which channels the GUI participates in.
         # Start minimal for the demo: choose the channel(s) you use in the dropdown.
-        _channels = ["CC", "SMC", "VB", "BFC", "DAC", "EIG", "PC", "MC", "IC", "TC"]
+        _channels = ["CC"]
 
         cfg = MultiChannelEndpointConfig.from_channel_names(
             module_id=self.module_id,  # Identity of this module on the bus
@@ -165,7 +165,7 @@ class DirectiveGUI:
 
         msg = CognitiveMessage.create(
             schema_version=str(CognitiveMessage.get_schema_version()),
-            msg_type="DIRECTIVE_SUBMIT",
+            msg_type="DIRECTIVE_SUBMITTED",
             msg_version="0.1.0",
             source=self.module_id,
             targets=["AEM"],
@@ -185,8 +185,8 @@ class DirectiveGUI:
             signature="",
         )
 
-        self.ep.send("CC", "NLP", msg.to_bytes())
-        self._append_output(f"[GUI] Sent DIRECTIVE_SUBMIT to NLP (message_id={msg.message_id})\n")
+        self.ep.send("CC", "AEM", msg.to_bytes())
+        self._append_output(f"[GUI] Sent DIRECTIVE_SUBMITTED to NLP (message_id={msg.message_id})\n")
 
 def main():
     gui = DirectiveGUI(logfile="logs/system.jsonl")

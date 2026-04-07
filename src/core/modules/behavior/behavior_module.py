@@ -17,7 +17,7 @@ from src.core.logging.file_log_sink import FileLogSink
 from src.core.modules.common_module_loop import CommonModuleLoop
 
 
-MODULE_ID = "behavior"
+MODULE_ID = "BEHAVIOR"
 
 
 def main():
@@ -37,8 +37,7 @@ def main():
     # Endpoint setup
     # -----------------------------
     channels = [
-        "CC", "SMC", "VB", "BFC", "DAC",
-        "EIG", "PC", "MC", "IC", "TC"
+        "CC"
     ]
 
     cfg = MultiChannelEndpointConfig.from_channel_names(

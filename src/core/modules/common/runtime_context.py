@@ -17,4 +17,4 @@ class ExecutiveLoopContext:
     started_at: float = field(default_factory=time.time)
     db_conn: Any = None
     config: Dict[str, Any] = field(default_factory=dict)
-    current_message: Optional[Cognitiv
+    current_message: Optional[CognitiveMessage] = None

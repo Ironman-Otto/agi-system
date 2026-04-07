@@ -13,7 +13,7 @@ from src.core.intent.router import DirectiveRouter
 # Directive handling
 # ------------------------------------------------------------------
 @registry.register("INTENT_RESULT")
-def handle_intent_result(msg: CognitiveMessage, ctx: dict[str, object]) -> None:
+def handle_directive_submited(msg: CognitiveMessage, ctx: dict[str, object]) -> None:
     print(f"\nhandle_intent_result received msg: {msg.to_dict()} >>ctx: {ctx}\n")
     episode_id = str(uuid.uuid4())
 
