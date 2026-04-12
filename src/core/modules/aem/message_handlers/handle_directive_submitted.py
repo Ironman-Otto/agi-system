@@ -6,6 +6,7 @@ from src.core.modules.common.handler_result import (
     HandlerError,
     HandlerResult,
     HandlerStatus,
+    InternalTask,
     StructuredLogEntry,
 )
 from src.core.modules.common.runtime_context import ExecutiveLoopContext
@@ -16,19 +17,6 @@ def handle_directive_submitted(
     msg: CognitiveMessage,
     ctx: ExecutiveLoopContext,
 ) -> HandlerResult:
-    """
-    Phase 1 intake handler template for AEM.
-
-    Purpose in Phase 1:
-    - confirm handler dispatch works
-    - validate the inbound directive payload
-    - return a structured HandlerResult
-    - emit structured logs only
-    - do NOT write to DB
-    - do NOT update workspace
-    - do NOT send outbound messages
-    """
-
     logger = ctx.logger
     module_id = ctx.module_id
 
@@ -65,6 +53,7 @@ def handle_directive_submitted(
                 )
             ],
         )
+    
 
     logger.info(
         event_type="AEM_DIRECTIVE_SUBMITTED_HANDLER",
@@ -90,6 +79,16 @@ def handle_directive_submitted(
                 message="DIRECTIVE_SUBMITTED accepted by AEM",
                 payload={
                     "module_id": module_id,
+                    "message_id": getattr(msg, "message_id", None),
+                    "directive_source": directive_source,
+                    "directive_text": directive_text,
+                },
+            )
+        ],
+        follow_on_tasks=[
+            InternalTask(
+                task_name="PHASE2_INTAKE_CONFIRMED",
+                payload={
                     "message_id": getattr(msg, "message_id", None),
                     "directive_source": directive_source,
                     "directive_text": directive_text,

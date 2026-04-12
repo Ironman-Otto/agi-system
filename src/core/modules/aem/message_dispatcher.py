@@ -24,7 +24,7 @@ def dispatch_message(msg, ctx: ExecutiveLoopContext) -> HandlerResult:
     This adapter lets AEM move into the new executive loop incrementally.
     """
     result = registry.dispatch(msg, ctx)
-
+    print(f"\nDispatched message: {msg}")
     if hasattr(result, "success") and hasattr(result, "status"):
         return result
 

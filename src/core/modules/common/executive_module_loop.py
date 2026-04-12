@@ -1,25 +1,34 @@
 from __future__ import annotations
 
+import queue
 import threading
 import time
+import uuid
 from typing import Callable, Optional
 
 from src.core.cmb.module_endpoint import ModuleEndpoint
 from src.core.logging.log_manager import Logger
 from src.core.messages.cognitive_message import CognitiveMessage
-from src.core.modules.common.handler_result import HandlerResult
+from src.core.modules.common.handler_result import HandlerResult, InternalTask
 from src.core.modules.common.runtime_context import ExecutiveLoopContext
+from src.core.modules.common.runtime_work_items import (
+    RuntimeTaskStatus,
+    RuntimeWorkItem,
+    WorkItemType,
+)
+
 
 class ExecutiveModuleLoop:
     """
-    Phase 1 executive loop.
+    Phase 2 executive loop.
 
     Responsibilities:
-    - poll inbound message
-    - build context
-    - dispatch message to handler
+    - poll inbound messages
+    - dispatch to handlers
     - accept HandlerResult
-    - log the intake flow
+    - enqueue runtime work items
+    - drain runtime queue
+    - process internal tasks using runtime-owned stubs
     """
 
     def __init__(
@@ -34,6 +43,7 @@ class ExecutiveModuleLoop:
         on_tick: Optional[Callable[[ExecutiveLoopContext], None]] = None,
         on_shutdown: Optional[Callable[[], None]] = None,
         poll_interval: float = 0.1,
+        max_queue_items_per_cycle: int = 10,
     ):
         self.module_id = module_id
         self.endpoint = endpoint
@@ -44,6 +54,8 @@ class ExecutiveModuleLoop:
         self.on_tick = on_tick
         self.on_shutdown = on_shutdown
         self.poll_interval = poll_interval
+        self.max_queue_items_per_cycle = max_queue_items_per_cycle
+        self.runtime_queue: "queue.Queue[RuntimeWorkItem]" = queue.Queue()
         self._stop_evt = threading.Event()
         self._started_at = time.time()
 
@@ -76,9 +88,15 @@ class ExecutiveModuleLoop:
     def run(self) -> None:
         try:
             while not self._stop_evt.is_set():
-                msg = self.endpoint.recv(timeout=self.poll_interval)
+                did_work = False
 
+                processed = self._drain_runtime_queue(limit=self.max_queue_items_per_cycle)
+                if processed > 0:
+                    did_work = True
+
+                msg = self.endpoint.recv(timeout=self.poll_interval)
                 if msg is not None:
+                    did_work = True
                     self._handle_inbound_message(msg)
 
                 if self.on_tick:
@@ -90,6 +108,9 @@ class ExecutiveModuleLoop:
                             event_type="EXECUTIVE_LOOP_TICK_ERROR",
                             message=str(e),
                         )
+
+                if not did_work:
+                    time.sleep(0.01)
         finally:
             self._shutdown()
 
@@ -98,11 +119,13 @@ class ExecutiveModuleLoop:
             module_id=self.module_id,
             endpoint=self.endpoint,
             logger=self.logger,
+            runtime_queue=self.runtime_queue,
             started_at=self._started_at,
             db_conn=self.db_conn,
             current_message=current_message,
         )
-    
+
+
     def _handle_inbound_message(self, msg: CognitiveMessage) -> None:
         self.logger.info(
             event_type="EXECUTIVE_MESSAGE_RECV",
@@ -118,6 +141,7 @@ class ExecutiveModuleLoop:
 
         try:
             result = self.on_message(msg, ctx)
+            print(f"\nHandler result: {result}")
         except Exception as e:
             self.logger.info(
                 event_type="EXECUTIVE_MESSAGE_HANDLER_ERROR",
@@ -154,6 +178,7 @@ class ExecutiveModuleLoop:
                 "correlation_id": result.correlation_id,
                 "source_message_id": result.source_message_id,
                 "error_count": len(result.errors),
+                "follow_on_task_count": len(result.follow_on_tasks),
             },
         )
 
@@ -175,6 +200,111 @@ class ExecutiveModuleLoop:
                 },
             )
 
+        print(f"\nAccepted handler result: {result}")
+        for task in result.follow_on_tasks:
+            self.enqueue_internal_task(
+                task=task,
+                correlation_id=result.correlation_id,
+                source_message_id=result.source_message_id,
+            )
+
+
+    def enqueue_internal_task(
+        self,
+        *,
+        task: InternalTask,
+        correlation_id: Optional[str] = None,
+        source_message_id: Optional[str] = None,
+    ) -> str:
+        work_id = str(uuid.uuid4())
+        item = RuntimeWorkItem(
+            work_id=work_id,
+            work_type=WorkItemType.INTERNAL_TASK,
+            task=task,
+            correlation_id=correlation_id,
+            source_message_id=source_message_id,
+        )
+        self.runtime_queue.put(item)
+
+        self.logger.info(
+            event_type="EXECUTIVE_WORK_ITEM_ENQUEUED",
+            message="Runtime work item enqueued",
+            payload={
+                "work_id": work_id,
+                "work_type": item.work_type,
+                "task_name": getattr(task, "task_name", None),
+                "correlation_id": correlation_id,
+                "source_message_id": source_message_id,
+            },
+        )
+        return work_id
+    
+
+    def _drain_runtime_queue(self, limit: int) -> int:
+        processed = 0
+        while processed < limit:
+            try:
+                item = self.runtime_queue.get_nowait()
+            except queue.Empty:
+                break
+
+            self.logger.info(
+                event_type="EXECUTIVE_WORK_ITEM_DEQUEUED",
+                message="Runtime work item dequeued",
+                payload={
+                    "work_id": item.work_id,
+                    "work_type": item.work_type,
+                    "correlation_id": item.correlation_id,
+                },
+            )
+
+            try:
+                item.status = RuntimeTaskStatus.IN_PROGRESS
+                self._process_work_item(item)
+                item.status = RuntimeTaskStatus.COMPLETED
+                self.logger.info(
+                    event_type="EXECUTIVE_WORK_ITEM_COMPLETED",
+                    message="Runtime work item completed",
+                    payload={
+                        "work_id": item.work_id,
+                        "work_type": item.work_type,
+                    },
+                )
+            except Exception as e:
+                item.status = RuntimeTaskStatus.FAILED
+                self.logger.info(
+                    event_type="EXECUTIVE_WORK_ITEM_ERROR",
+                    message="Runtime work item failed",
+                    payload={
+                        "work_id": item.work_id,
+                        "work_type": item.work_type,
+                        "exception_type": type(e).__name__,
+                        "exception": str(e),
+                    },
+                )
+            finally:
+                processed += 1
+                self.runtime_queue.task_done()
+
+        return processed
+
+
+    def _process_work_item(self, item: RuntimeWorkItem) -> None:
+        if item.work_type == WorkItemType.INTERNAL_TASK:
+            self._process_internal_task(item.task)
+            return
+
+        raise ValueError(f"Unsupported work item type: {item.work_type}")
+
+    def _process_internal_task(self, task: InternalTask) -> None:
+        self.logger.info(
+            event_type="EXECUTIVE_INTERNAL_TASK_STUB",
+            message="Internal task stub invoked",
+            payload={
+                "task_name": task.task_name,
+                "payload": task.payload,
+            },
+        )
 
     def _shutdown(self) -> None:
         if self.on_shutdown:
@@ -193,3 +323,4 @@ class ExecutiveModuleLoop:
             message="Executive loop exited",
             payload={"module_id": self.module_id},
         )
+      

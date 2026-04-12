@@ -28,6 +28,12 @@ class StructuredLogEntry:
 
 
 @dataclass
+class InternalTask:
+    task_name: str
+    payload: Dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
 class HandlerResult:
     success: bool
     status: HandlerStatus
@@ -36,3 +42,4 @@ class HandlerResult:
     source_message_id: Optional[str] = None
     errors: List[HandlerError] = field(default_factory=list)
     logs: List[StructuredLogEntry] = field(default_factory=list)
+    follow_on_tasks: List[InternalTask] = field(default_factory=list)
