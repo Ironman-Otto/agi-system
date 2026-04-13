@@ -6,6 +6,10 @@ import time
 import uuid
 from typing import Callable, Optional
 
+
+from src.core.modules.common.runtime_work_items import WorkItemType
+from src.core.modules.common.state_transition_task import StateTransitionTask
+from src.core.modules.common.runtime_episode import EpisodeStore
 from src.core.cmb.module_endpoint import ModuleEndpoint
 from src.core.logging.log_manager import Logger
 from src.core.messages.cognitive_message import CognitiveMessage
@@ -44,6 +48,7 @@ class ExecutiveModuleLoop:
         on_shutdown: Optional[Callable[[], None]] = None,
         poll_interval: float = 0.1,
         max_queue_items_per_cycle: int = 10,
+        
     ):
         self.module_id = module_id
         self.endpoint = endpoint
@@ -58,6 +63,7 @@ class ExecutiveModuleLoop:
         self.runtime_queue: "queue.Queue[RuntimeWorkItem]" = queue.Queue()
         self._stop_evt = threading.Event()
         self._started_at = time.time()
+        self.episode_store = EpisodeStore()
 
     def start(self) -> None:
         self.logger.info(
@@ -168,6 +174,21 @@ class ExecutiveModuleLoop:
 
 
     def _accept_handler_result(self, result: HandlerResult) -> None:
+        
+        for task in result.follow_on_tasks:
+            if isinstance(task, StateTransitionTask):
+                self.enqueue_state_transition(
+                    task,
+                    correlation_id=result.correlation_id,
+                    source_message_id=result.source_message_id
+                )
+            else:
+                self.enqueue_internal_task(
+                    task=task,
+                    correlation_id=result.correlation_id,
+                    source_message_id=result.source_message_id
+                )
+
         self.logger.info(
             event_type="EXECUTIVE_HANDLER_RESULT_ACCEPTED",
             message="Handler result accepted",
@@ -239,6 +260,27 @@ class ExecutiveModuleLoop:
         )
         return work_id
     
+    def enqueue_state_transition(self, task: StateTransitionTask, correlation_id=None, source_message_id=None):
+        work_id = str(uuid.uuid4())
+        item = RuntimeWorkItem(
+            work_id=work_id,
+            work_type=WorkItemType.STATE_TRANSITION,
+            task=task,
+            correlation_id=correlation_id,
+            source_message_id=source_message_id,
+        )
+
+        self.runtime_queue.put(item)
+
+        self.logger.info(
+            event_type="EXECUTIVE_WORK_ITEM_ENQUEUED",
+            message="State transition enqueued",
+            payload={
+                "work_id": work_id,
+                "episode_id": task.episode_id,
+                "new_state": task.new_state,
+            },
+        )
 
     def _drain_runtime_queue(self, limit: int) -> int:
         processed = 0
@@ -293,6 +335,10 @@ class ExecutiveModuleLoop:
         if item.work_type == WorkItemType.INTERNAL_TASK:
             self._process_internal_task(item.task)
             return
+        
+        if item.work_type == WorkItemType.STATE_TRANSITION:
+            self._process_state_transition(item.task)
+            return
 
         raise ValueError(f"Unsupported work item type: {item.work_type}")
 
@@ -303,6 +349,32 @@ class ExecutiveModuleLoop:
             payload={
                 "task_name": task.task_name,
                 "payload": task.payload,
+            },
+        )
+
+    def _process_state_transition(self, task: StateTransitionTask):
+        ep = self.episode_store.get(task.episode_id)
+
+        if ep is None:
+            ep = self.episode_store.create_episode(task.episode_id)
+            self.logger.info(
+                event_type="EPISODE_CREATED",
+                message="Episode created",
+                payload={
+                    "episode_id": task.episode_id,
+                },
+            )
+
+        old_state = ep.current_state
+        ep.current_state = task.new_state
+
+        self.logger.info(
+            event_type="EXECUTIVE_STATE_TRANSITION",
+            message="Episode state transition",
+            payload={
+                "episode_id": task.episode_id,
+                "old_state": old_state,
+                "new_state": task.new_state,
             },
         )
 

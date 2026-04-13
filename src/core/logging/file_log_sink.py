@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from typing import Optional
 import threading
+from datetime import datetime, timezone
 
 from src.core.logging.log_entry import LogEntry
 
@@ -24,6 +25,12 @@ class FileLogSink:
         # Open file in append mode, line-buffered
         self._file = open(self._path, "a", encoding="utf-8")
 
+    
+    def to_human(self,ts: float) -> str:
+        return datetime.fromtimestamp(ts, tz=timezone.utc)\
+            .astimezone()\
+            .strftime("%Y-%m-%d %H:%M:%S.") + f"{int(ts % 1 * 1000):03d}"   
+
     def emit(self, entry: LogEntry) -> None:
         """
         Persist a log entry to disk.
@@ -44,6 +51,7 @@ class FileLogSink:
                 ),
                 "log_id": entry.log_id,
                 "timestamp": entry.timestamp,
+                "human_timestamp": self.to_human(entry.timestamp),
             }
             with self._lock:
                 self._file.write(json.dumps(record) + "\n\n")

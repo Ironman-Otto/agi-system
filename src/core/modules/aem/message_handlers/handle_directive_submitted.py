@@ -10,6 +10,7 @@ from src.core.modules.common.handler_result import (
     StructuredLogEntry,
 )
 from src.core.modules.common.runtime_context import ExecutiveLoopContext
+from src.core.modules.common.state_transition_task import StateTransitionTask
 
 
 @registry.register("DIRECTIVE_SUBMITTED")
@@ -87,12 +88,17 @@ def handle_directive_submitted(
         ],
         follow_on_tasks=[
             InternalTask(
-                task_name="PHASE2_INTAKE_CONFIRMED",
+                task_name="PROCESS_REQUEST_ACCEPTED"
                 payload={
                     "message_id": getattr(msg, "message_id", None),
                     "directive_source": directive_source,
                     "directive_text": directive_text,
                 },
+            ),
+
+            StateTransitionTask(
+                episode_id=getattr(msg, "correlation_id", None),
+                new_state="RECEIVED"
             )
         ],
     )

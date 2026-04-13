@@ -8,6 +8,7 @@ from typing import Any, Optional
 
 class WorkItemType(str, Enum):
     INTERNAL_TASK = "INTERNAL_TASK"
+    STATE_TRANSITION = "STATE_TRANSITION"
 
 
 class RuntimeTaskStatus(str, Enum):
@@ -26,3 +27,13 @@ class RuntimeWorkItem:
     created_at: float = field(default_factory=time.time)
     correlation_id: Optional[str] = None
     source_message_id: Optional[str] = None
+
+# ==============================
+# NEW: state_transition_task
+# ==============================
+
+@dataclass
+class StateTransitionTask:
+    episode_id: str
+    new_state: str
+    old_state: Optional[str] = None

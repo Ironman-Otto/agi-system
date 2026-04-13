@@ -9,6 +9,7 @@ from src.core.cmb.module_endpoint import ModuleEndpoint
 from src.core.logging.log_manager import Logger
 from src.core.messages.cognitive_message import CognitiveMessage
 from src.core.modules.common.runtime_work_items import RuntimeWorkItem
+from src.core.modules.common.runtime_episode import EpisodeStore
 
 
 @dataclass
