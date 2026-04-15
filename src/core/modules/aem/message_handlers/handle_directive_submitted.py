@@ -88,7 +88,7 @@ def handle_directive_submitted(
         ],
         follow_on_tasks=[
             InternalTask(
-                task_name="PROCESS_REQUEST_ACCEPTED"
+                task_name="PROCESS_REQUEST_ACCEPTED",
                 payload={
                     "message_id": getattr(msg, "message_id", None),
                     "directive_source": directive_source,

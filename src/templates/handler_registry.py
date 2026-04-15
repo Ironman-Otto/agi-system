@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+from src.core.logging.debug_flag import debug_flag
 from dataclasses import dataclass
+from multiprocessing.util import debug
 from typing import Any, Callable, Dict, Optional, Tuple
 
 HandlerFn = Callable[[Any, dict], None]
@@ -41,18 +43,29 @@ class HandlerRegistry:
             return fn
         return self._handlers.get(("*", None))
 
-    def dispatch(self, message: Any, ctx: dict) -> DispatchResult:
+    def dispatch(self, message: Any, ctx: dict) -> Any:
+        
         msg_type = getattr(message, "msg_type", None)
         msg_version = getattr(message, "msg_version", None)
-        print(f"Dispatching message of type '{msg_type}' ctx: {ctx}")
+
+        if debug_flag == True:
+             print(f"\nDispatching message of type '{msg_type}' ctx: {ctx}\n")
+
         if not isinstance(msg_type, str) or not msg_type:
             return DispatchResult(False, reason="Message missing valid msg_type")
 
         fn = self.resolve(msg_type, msg_version)
+
         if fn is None:
             return DispatchResult(False, reason=f"No handler for msg_type='{msg_type}' version='{msg_version}'")
-        print(f"Calling message of type '{msg_type}' ctx: {ctx}")
-        fn(message, ctx)
+        
+        if debug_flag == True:
+            print(f"\nCalling message of type '{msg_type}' ctx: {ctx}\n")
+        
+        handler_result = fn(message, ctx)
+        if handler_result is not None:
+            return handler_result 
+
         return DispatchResult(True, handler_name=getattr(fn, "__name__", "<handler>"))
 
     def list_handlers(self) -> Dict[str, str]:

@@ -7,6 +7,7 @@ import uuid
 from typing import Callable, Optional
 
 
+from src.core.logging import debug_flag
 from src.core.modules.common.runtime_work_items import WorkItemType
 from src.core.modules.common.state_transition_task import StateTransitionTask
 from src.core.modules.common.runtime_episode import EpisodeStore
@@ -147,7 +148,9 @@ class ExecutiveModuleLoop:
 
         try:
             result = self.on_message(msg, ctx)
-            print(f"\nHandler result: {result}")
+
+            print(f"\nHandler result: {result}\n")
+
         except Exception as e:
             self.logger.info(
                 event_type="EXECUTIVE_MESSAGE_HANDLER_ERROR",
@@ -174,11 +177,11 @@ class ExecutiveModuleLoop:
 
 
     def _accept_handler_result(self, result: HandlerResult) -> None:
-        
+
         for task in result.follow_on_tasks:
             if isinstance(task, StateTransitionTask):
                 self.enqueue_state_transition(
-                    task,
+                    task=task,
                     correlation_id=result.correlation_id,
                     source_message_id=result.source_message_id
                 )
@@ -219,14 +222,6 @@ class ExecutiveModuleLoop:
                     "retryable": err.retryable,
                     "details": err.details,
                 },
-            )
-
-        print(f"\nAccepted handler result: {result}")
-        for task in result.follow_on_tasks:
-            self.enqueue_internal_task(
-                task=task,
-                correlation_id=result.correlation_id,
-                source_message_id=result.source_message_id,
             )
 
 
@@ -343,6 +338,10 @@ class ExecutiveModuleLoop:
         raise ValueError(f"Unsupported work item type: {item.work_type}")
 
     def _process_internal_task(self, task: InternalTask) -> None:
+
+        if debug_flag == True:
+             print(f"\nProcessing internal task: {task}\n")
+
         self.logger.info(
             event_type="EXECUTIVE_INTERNAL_TASK_STUB",
             message="Internal task stub invoked",

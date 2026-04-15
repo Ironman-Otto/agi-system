@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from src.core.logging import debug_flag
 from src.core.modules.aem.registry_singleton import registry
 from src.core.modules.common.handler_result import (
     HandlerError,
@@ -24,7 +25,11 @@ def dispatch_message(msg, ctx: ExecutiveLoopContext) -> HandlerResult:
     This adapter lets AEM move into the new executive loop incrementally.
     """
     result = registry.dispatch(msg, ctx)
-    print(f"\nDispatched message: {msg}")
+
+    if debug_flag == True:
+        print(f"\nDispatched message: {msg}\n")
+        print(f"\nDispatch result: {result}\n")
+
     if hasattr(result, "success") and hasattr(result, "status"):
         return result
 
