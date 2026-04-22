@@ -1,3 +1,6 @@
+# File: src/core/modules/common/runtime_work_items.py
+# Purpose: Runtime queue item types and queue payload structure.
+
 from __future__ import annotations
 
 import time

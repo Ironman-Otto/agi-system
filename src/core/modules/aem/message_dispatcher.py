@@ -1,6 +1,8 @@
+# File: src/core/modules/aem/message_dispatcher.py
+# Purpose: AEM dispatcher adapter that preserves real HandlerResult returns.
+
 from __future__ import annotations
 
-from src.core.logging import debug_flag
 from src.core.modules.aem.registry_singleton import registry
 from src.core.modules.common.handler_result import (
     HandlerError,
@@ -15,20 +17,7 @@ UNHANDLED_LOG_EVENT_TYPE = "AEM_UNHANDLED_MESSAGE"
 
 
 def dispatch_message(msg, ctx: ExecutiveLoopContext) -> HandlerResult:
-    """
-    Phase 1 adapter around the existing registry dispatch path.
-
-    Assumption:
-    - registry.dispatch(msg, ctx) returns an object with a boolean `handled`
-    - handlers may or may not yet return a HandlerResult directly
-
-    This adapter lets AEM move into the new executive loop incrementally.
-    """
     result = registry.dispatch(msg, ctx)
-
-    if debug_flag == True:
-        print(f"\nDispatched message: {msg}\n")
-        print(f"\nDispatch result: {result}\n")
 
     if hasattr(result, "success") and hasattr(result, "status"):
         return result
@@ -51,7 +40,6 @@ def dispatch_message(msg, ctx: ExecutiveLoopContext) -> HandlerResult:
                 )
             ],
         )
-
 
     return HandlerResult(
         success=False,

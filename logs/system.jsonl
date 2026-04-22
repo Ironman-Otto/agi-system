@@ -711,3 +711,371 @@ ck type = ROUTER_ACK", "severity": "INFO", "payload": {"channels": ["CC"]}, "con
 
 {"event_type": "EXECUTIVE_WORK_ITEM_COMPLETED", "source_module": "AEM", "message": "Runtime work item completed", "severity": "INFO", "payload": {"work_id": "27d77e8a-d7e2-49bc-9494-e2e71957af68", "work_type": "STATE_TRANSITION"}, "context": null, "log_id": "d998645a-2dec-44ab-a478-07e79ab88505", "timestamp": 1776221669.0444672, "human_timestamp": "2026-04-14 22:54:29.044"}
 
+
+# Test run 04/22/2026 - new functional units
+{"event_type": "ENDPOINT_CONFIG_INIT", "source_module": "endpoint_config", "message": "Endpoint configuration ", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "689c9dad-94c6-4484-bf43-632610ffefb0", "timestamp": 1776863884.8251376, "human_timestamp": "2026-04-22 09:18:04.825"}
+
+{"event_type": "ENDPOINT_CONFIG_INIT", "source_module": "endpoint_config", "message": "Endpoint configuration ", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "4fbcaf20-a945-4f94-831f-536702405eb8", "timestamp": 1776863884.8267684, "human_timestamp": "2026-04-22 09:18:04.826"}
+
+{"event_type": "ENDPOINT_CONFIG_INIT", "source_module": "endpoint_config", "message": "Endpoint configuration ", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "a855e4cc-8eb5-4bc2-94d7-de6e4de845b5", "timestamp": 1776863884.8269663, "human_timestamp": "2026-04-22 09:18:04.826"}
+
+{"event_type": "ENDPOINT_CONFIG_INIT", "source_module": "endpoint_config", "message": "Endpoint configuration ", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "5998d8a8-31f9-4499-91d9-3478b2719fe0", "timestamp": 1776863884.8270528, "human_timestamp": "2026-04-22 09:18:04.827"}
+
+{"event_type": "BEHAVIOR_INIT", "source_module": "BEHAVIOR", "message": "Behavior module initializing", "severity": "INFO", "payload": {}, "context": null, "log_id": "42f2ce8e-8031-40f8-8d0c-8e27db277c98", "timestamp": 1776863884.8426383, "human_timestamp": "2026-04-22 09:18:04.842"}
+
+{"event_type": "NLP_INIT", "source_module": "NLP", "message": "NLP initializing", "severity": "INFO", "payload": {}, "context": null, "log_id": "83ff47e7-79b8-440f-b903-6d2c132eae38", "timestamp": 1776863884.8441026, "human_timestamp": "2026-04-22 09:18:04.844"}
+
+{"event_type": "DIRECTIVE_GUI_INIT", "source_module": "DIRGUI", "message": "GUI module initializing", "severity": "INFO", "payload": {}, "context": null, "log_id": "11ad0642-7d4c-4495-a6f7-3e6cae13554a", "timestamp": 1776863884.848455, "human_timestamp": "2026-04-22 09:18:04.848"}
+
+{"event_type": "ROUTER_INIT", "source_module": "CC", "message": "Router CC port: 6001 ack: 6102 module_egress: 7001", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "585f0e5d-e4c0-496d-83aa-f581e27e81b4", "timestamp": 1776863884.8511052, "human_timestamp": "2026-04-22 09:18:04.851"}
+
+{"event_type": "ENDPOINT_START", "source_module": "BEHAVIOR", "message": "ModuleEndpoint started BEHAVIOR", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "ba3ab4f9-10bc-4f97-bea7-3dd3cca95e3e", "timestamp": 1776863884.8585093, "human_timestamp": "2026-04-22 09:18:04.858"}
+
+{"event_type": "MODULE_LOOP_START", "source_module": "BEHAVIOR", "message": "Module loop starting", "severity": "INFO", "payload": {"module_id": "BEHAVIOR"}, "context": null, "log_id": "4aaa41e6-9e88-49f5-9d4c-372bf4495812", "timestamp": 1776863884.859581, "human_timestamp": "2026-04-22 09:18:04.859"}
+
+{"event_type": "ENDPOINT_INBOUND_SETUP", "source_module": "BEHAVIOR", "message": "ModuleEndpoint BEHAVIOR setup inbound CC ", "severity": "INFO", "payload": {}, "context": null, "log_id": "27cf8815-e360-4ac5-b3bf-881c54124684", "timestamp": 1776863884.8628285, "human_timestamp": "2026-04-22 09:18:04.862"}
+
+{"event_type": "ENDPOINT_CONFIG_INIT", "source_module": "endpoint_config", "message": "Endpoint configuration ", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "8204117d-8342-4487-8909-0cf33c7bcff0", "timestamp": 1776863884.8635595, "human_timestamp": "2026-04-22 09:18:04.863"}
+
+{"event_type": "ENDPOINT_ACK_SETUP", "source_module": "BEHAVIOR", "message": "ModuleEndpoint BEHAVIOR setup ACK CC ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "7a13e265-c687-4893-ac38-d2ef010b231c", "timestamp": 1776863884.8655994, "human_timestamp": "2026-04-22 09:18:04.865"}
+
+{"event_type": "BEHAVIOR_START", "source_module": "BEHAVIOR", "message": "Behavior module started", "severity": "INFO", "payload": {}, "context": null, "log_id": "36716ccb-9982-4d45-b231-d0df27387516", "timestamp": 1776863884.8657906, "human_timestamp": "2026-04-22 09:18:04.865"}
+
+{"event_type": "ROUTER_START", "source_module": "CC", "message": "Router CC started", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "f3957299-20f5-403c-8f89-4d1f3c869084", "timestamp": 1776863884.8688197, "human_timestamp": "2026-04-22 09:18:04.868"}
+
+{"event_type": "PLANNER_INIT", "source_module": "PLANNER", "message": "PLANNER initializing", "severity": "INFO", "payload": {}, "context": null, "log_id": "331a2116-a1d0-465a-b040-1773f4df39d9", "timestamp": 1776863884.8748224, "human_timestamp": "2026-04-22 09:18:04.874"}
+
+{"event_type": "MODULE_LOOP_START", "source_module": "PLANNER", "message": "Module loop starting", "severity": "INFO", "payload": {"module_id": "PLANNER"}, "context": null, "log_id": "dab4d9f6-76ac-48a1-92fe-b73ad23e25b0", "timestamp": 1776863884.8765085, "human_timestamp": "2026-04-22 09:18:04.876"}
+
+{"event_type": "ENDPOINT_START", "source_module": "PLANNER", "message": "ModuleEndpoint started PLANNER", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "04ee8b12-dfe7-4bfd-a859-b3debc8ee99b", "timestamp": 1776863884.8849373, "human_timestamp": "2026-04-22 09:18:04.884"}
+
+{"event_type": "PLANNER_START", "source_module": "PLANNER", "message": "PLANNER started", "severity": "INFO", "payload": {}, "context": null, "log_id": "d910fe9c-3159-43fc-aca1-ae0d79b8b2fb", "timestamp": 1776863884.8855727, "human_timestamp": "2026-04-22 09:18:04.885"}
+
+{"event_type": "ENDPOINT_INBOUND_SETUP", "source_module": "PLANNER", "message": "ModuleEndpoint PLANNER setup inbound CC ", "severity": "INFO", "payload": {}, "context": null, "log_id": "bb766668-a27d-4ca5-b0de-53d0346add02", "timestamp": 1776863884.8881843, "human_timestamp": "2026-04-22 09:18:04.888"}
+
+{"event_type": "ENDPOINT_ACK_SETUP", "source_module": "PLANNER", "message": "ModuleEndpoint PLANNER setup ACK CC ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "307caee5-81f7-4842-a42a-f15e7e55f5f4", "timestamp": 1776863884.8908875, "human_timestamp": "2026-04-22 09:18:04.890"}
+
+{"event_type": "ROUTER_START_RUN", "source_module": "CC", "message": "[Router.CC] ROUTER ingress on 6001, egress on 7001, ACK on 6102", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "6582c0fd-7082-428e-b4e0-a820983ab957", "timestamp": 1776863884.8934855, "human_timestamp": "2026-04-22 09:18:04.893"}
+
+{"event_type": "AEM_INIT", "source_module": "AEM", "message": "AEM initializing", "severity": "INFO", "payload": {}, "context": null, "log_id": "7586acfd-5add-49ad-92ac-cc906b0975ca", "timestamp": 1776863885.0798411, "human_timestamp": "2026-04-22 09:18:05.079"}
+
+{"event_type": "ENDPOINT_INBOUND_SETUP", "source_module": "GUI", "message": "ModuleEndpoint GUI setup inbound CC ", "severity": "INFO", "payload": {}, "context": null, "log_id": "90efe7a9-b5d6-4da4-8d39-a3acc2450d27", "timestamp": 1776863885.7265978, "human_timestamp": "2026-04-22 09:18:05.726"}
+
+{"event_type": "ENDPOINT_ACK_SETUP", "source_module": "GUI", "message": "ModuleEndpoint GUI setup ACK CC ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "647a3095-255a-4b6b-bd0a-a61a3f03a951", "timestamp": 1776863885.728016, "human_timestamp": "2026-04-22 09:18:05.728"}
+
+{"event_type": "ENDPOINT_START", "source_module": "GUI", "message": "ModuleEndpoint started GUI", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "7531335c-0098-4329-9d77-ac13208149fd", "timestamp": 1776863885.7267506, "human_timestamp": "2026-04-22 09:18:05.726"}
+
+{"event_type": "MODULE_LOOP_START", "source_module": "NLP", "message": "Module loop starting", "severity": "INFO", "payload": {"module_id": "NLP"}, "context": null, "log_id": "036071c3-f733-4861-94d1-db57c3746b18", "timestamp": 1776863886.356558, "human_timestamp": "2026-04-22 09:18:06.356"}
+
+{"event_type": "EXECUTIVE_LOOP_START", "source_module": "AEM", "message": "Executive loop starting", "severity": "INFO", "payload": {"module_id": "AEM"}, "context": null, "log_id": "cfa4ddc1-f32a-4328-b029-9fb517ef5cd5", "timestamp": 1776863886.358235, "human_timestamp": "2026-04-22 09:18:06.358"}
+
+{"event_type": "ENDPOINT_START", "source_module": "NLP", "message": "ModuleEndpoint started NLP", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "a22b1899-504a-4c4d-a7fb-164dbdabdedd", "timestamp": 1776863886.3628318, "human_timestamp": "2026-04-22 09:18:06.362"}
+
+{"event_type": "NLP_START", "source_module": "NLP", "message": "NLP started", "severity": "INFO", "payload": {}, "context": null, "log_id": "a35bf727-6bb1-4477-a94a-3c46902d4f37", "timestamp": 1776863886.363285, "human_timestamp": "2026-04-22 09:18:06.363"}
+
+{"event_type": "ENDPOINT_INBOUND_SETUP", "source_module": "NLP", "message": "ModuleEndpoint NLP setup inbound CC ", "severity": "INFO", "payload": {}, "context": null, "log_id": "7fa5d34d-4e5e-4617-ba12-29a6e0a403e5", "timestamp": 1776863886.3631785, "human_timestamp": "2026-04-22 09:18:06.363"}
+
+{"event_type": "ENDPOINT_ACK_SETUP", "source_module": "NLP", "message": "ModuleEndpoint NLP setup ACK CC ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "a22547ab-f2b2-4adc-ae35-3f9c97a2cea7", "timestamp": 1776863886.3651671, "human_timestamp": "2026-04-22 09:18:06.365"}
+
+{"event_type": "ENDPOINT_INBOUND_SETUP", "source_module": "AEM", "message": "ModuleEndpoint AEM setup inbound CC ", "severity": "INFO", "payload": {}, "context": null, "log_id": "9d6e13a3-a888-4bb0-8338-c5e052f977a8", "timestamp": 1776863886.3656654, "human_timestamp": "2026-04-22 09:18:06.365"}
+
+{"event_type": "ENDPOINT_ACK_SETUP", "source_module": "AEM", "message": "ModuleEndpoint AEM setup ACK CC ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "16aa8657-4cfe-438f-8304-f28b4cb74bdc", "timestamp": 1776863886.3675177, "human_timestamp": "2026-04-22 09:18:06.367"}
+
+{"event_type": "ENDPOINT_START", "source_module": "AEM", "message": "ModuleEndpoint started AEM", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "2c4e1644-9207-48ed-a0d1-abdc9799e1b2", "timestamp": 1776863886.3678017, "human_timestamp": "2026-04-22 09:18:06.367"}
+
+{"event_type": "AEM_START", "source_module": "AEM", "message": "AEM started", "severity": "INFO", "payload": {}, "context": null, "log_id": "beb8cc62-4884-469b-a6f8-6de444fe0bfc", "timestamp": 1776863886.3681054, "human_timestamp": "2026-04-22 09:18:06.368"}
+
+{"event_type": "ENDPOINT_TRANSACTION_CREATED", "source_module": "GUI", "message": "ModuleEndpoint GUI channel: CC outgoing message_id=e99009f5-503b-43bf-aaf4-f3e21080532a", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "11bf7f74-f609-4de9-8735-328cb11d0c11", "timestamp": 1776863923.9535558, "human_timestamp": "2026-04-22 09:18:43.953"}
+
+{"event_type": "ENDPOINT_SENT_MESSAGE", "source_module": "GUI", "message": "ModuleEndpoint GUI sent message on channel CC to b'AEM'", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "6ea122a0-4927-4f5b-8b0d-42b7d44b177b", "timestamp": 1776863923.953786, "human_timestamp": "2026-04-22 09:18:43.953"}
+
+{"event_type": "ENDPOINT_RECEIVED_ACK", "source_module": "GUI", "message": "ModuleEndpoint GUI received ACK for correlation_id=e99009f5-503b-43bf-aaf4-f3e21080532a, event=AckTransitionEvent(message_id='e99009f5-503b-43bf-aaf4-f3e21080532a', old_state='AWAIT_ROUTER_ACK', new_state='AWAIT_MESSAGE_DELIVERED_ACK', reason='ROUTER_ACK', timestamp=432499.0841346, retry_count=0, details=None) ack type = ROUTER_ACK", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "fe0e44ff-39fa-4f78-a460-8ca216164303", "timestamp": 1776863923.9550529, "human_timestamp": "2026-04-22 09:18:43.955"}
+
+{"event_type": "ENDPOINT_CREATED_TRANSACTION", "source_module": "AEM", "message": "ModuleEndpoint AEM  Created transaction for incoming message_id=e99009f5-503b-43bf-aaf4-f3e21080532a", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "a6216031-ef43-44dc-9265-876bede8c121", "timestamp": 1776863923.9550211, "human_timestamp": "2026-04-22 09:18:43.955"}
+
+{"event_type": "EXECUTIVE_MESSAGE_RECV", "source_module": "AEM", "message": "Inbound message received", "severity": "INFO", "payload": {"msg_type": "DIRECTIVE_SUBMITTED", "source": "GUI", "message_id": "e99009f5-503b-43bf-aaf4-f3e21080532a"}, "context": null, "log_id": "32f8058c-296c-478c-997d-1ec73072c204", "timestamp": 1776863923.9551902, "human_timestamp": "2026-04-22 09:18:43.955"}
+
+{"event_type": "ENDPOINT_SENT_ACK", "source_module": "AEM", "message": "ModuleEndpoint AEM sent ACK to GUI", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "dbcdc118-513c-4195-aab1-1ea79cb4ff0e", "timestamp": 1776863923.9555573, "human_timestamp": "2026-04-22 09:18:43.955"}
+
+{"event_type": "ENDPOINT_TRANSACTION_CREATED", "source_module": "AEM", "message": "ModuleEndpoint AEM channel: CC outgoing message_id=c7ca3d19-bf8b-4aed-8880-b390dfe436d2", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "a8997d94-35a4-42d9-98c8-a5f021f592f9", "timestamp": 1776863923.9559026, "human_timestamp": "2026-04-22 09:18:43.955"}
+
+{"event_type": "ENDPOINT_SENT_MESSAGE", "source_module": "AEM", "message": "ModuleEndpoint AEM sent message on channel CC to b'GUI'", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "904ce949-0278-472a-a141-18548fa1be38", "timestamp": 1776863923.956501, "human_timestamp": "2026-04-22 09:18:43.956"}
+
+{"event_type": "AEM_DIRECTIVE_SUBMITTED_HANDLER", "source_module": "AEM", "message": "DIRECTIVE_SUBMITTED handler invoked", "severity": "INFO", "payload": {"module_id": "AEM", "message_id": "e99009f5-503b-43bf-aaf4-f3e21080532a", "correlation_id": "e99009f5-503b-43bf-aaf4-f3e21080532a", "directive_source": "human", "directive_text": "This is a test directive of all the new functional units"}, "context": null, "log_id": "f8e93ea0-5acf-47d0-b46b-be9e2e34dba5", "timestamp": 1776863923.9573028, "human_timestamp": "2026-04-22 09:18:43.957"}
+
+{"event_type": "ENDPOINT_RECEIVED_ACK", "source_module": "GUI", "message": "ModuleEndpoint GUI received ACK for correlation_id=e99009f5-503b-43bf-aaf4-f3e21080532a, event=AckTransitionEvent(message_id='e99009f5-503b-43bf-aaf4-f3e21080532a', old_state='AWAIT_MESSAGE_DELIVERED_ACK', new_state='COMPLETED', reason='MSG_DELIVERED_ACK_SUCCESS', timestamp=432499.086799, retry_count=0, details=None) ack type = MESSAGE_DELIVERED_ACK", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "d5e6971c-f78b-4461-baac-89a1d520d486", "timestamp": 1776863923.9577396, "human_timestamp": "2026-04-22 09:18:43.957"}
+
+{"event_type": "EXECUTIVE_HANDLER_RESULT_ACCEPTED", "source_module": "AEM", "message": "Handler result accepted", "severity": "INFO", "payload": {"success": true, "status": "OK", "handled": true, "correlation_id": "e99009f5-503b-43bf-aaf4-f3e21080532a", "source_message_id": "e99009f5-503b-43bf-aaf4-f3e21080532a", "error_count": 0, "follow_on_task_count": 5}, "context": null, "log_id": "d9560015-e53b-4e28-96b8-cc67f5f852c3", "timestamp": 1776863923.9575186, "human_timestamp": "2026-04-22 09:18:43.957"}
+
+{"event_type": "AEM_DIRECTIVE_SUBMITTED_ACCEPTED", "source_module": "AEM", "message": "DIRECTIVE_SUBMITTED accepted by AEM", "severity": "INFO", "payload": {"module_id": "AEM", "message_id": "e99009f5-503b-43bf-aaf4-f3e21080532a", "directive_source": "human", "directive_text": "This is a test directive of all the new functional units"}, "context": null, "log_id": "429bd481-4a0c-4200-9bd0-6289583c1061", "timestamp": 1776863923.9581275, "human_timestamp": "2026-04-22 09:18:43.958"}
+
+{"event_type": "EXECUTIVE_WORK_ITEM_ENQUEUED", "source_module": "AEM", "message": "Runtime work item enqueued", "severity": "INFO", "payload": {"work_id": "6621d1f9-04d3-49dd-9470-4998606dfd8d", "work_type": "INTERNAL_TASK", "task_name": "PROCESS_REQUEST_ACCEPTED", "correlation_id": "e99009f5-503b-43bf-aaf4-f3e21080532a", "source_message_id": "e99009f5-503b-43bf-aaf4-f3e21080532a"}, "context": null, "log_id": "3ba5c0cd-522c-43f9-a9ed-ef5fa1198725", "timestamp": 1776863923.958397, "human_timestamp": "2026-04-22 09:18:43.958"}
+
+{"event_type": "EXECUTIVE_WORK_ITEM_ENQUEUED", "source_module": "AEM", "message": "Runtime work item enqueued", "severity": "INFO", "payload": {"work_id": "f812e154-35ff-4646-870e-e114e8ca4bb0", "work_type": "INTERNAL_TASK", "task_name": "CREATE_DIRECTIVE_INTAKE_RECORD", "correlation_id": "e99009f5-503b-43bf-aaf4-f3e21080532a", "source_message_id": "e99009f5-503b-43bf-aaf4-f3e21080532a"}, "context": null, "log_id": "cdabb9e8-bc14-4273-8ad7-f98fc7f76ba3", "timestamp": 1776863923.9587379, "human_timestamp": "2026-04-22 09:18:43.958"}
+
+{"event_type": "EXECUTIVE_WORK_ITEM_ENQUEUED", "source_module": "AEM", "message": "State transition enqueued", "severity": "INFO", "payload": {"work_id": "46af46d7-48df-4f00-a6dc-4c1df5d19698", "episode_id": "e99009f5-503b-43bf-aaf4-f3e21080532a", "new_state": "RECEIVED"}, "context": null, "log_id": "b76dc292-191a-45ba-be6f-4f8e2dcface1", "timestamp": 1776863923.9590054, "human_timestamp": "2026-04-22 09:18:43.959"}
+
+{"event_type": "EXECUTIVE_WORK_ITEM_ENQUEUED", "source_module": "AEM", "message": "Runtime work item enqueued", "severity": "INFO", "payload": {"work_id": "193ba9c7-0315-4892-a656-67ad7b11ccee", "work_type": "INTERNAL_TASK", "task_name": "UPDATE_GLOBAL_WORKSPACE", "correlation_id": "e99009f5-503b-43bf-aaf4-f3e21080532a", "source_message_id": "e99009f5-503b-43bf-aaf4-f3e21080532a"}, "context": null, "log_id": "67434195-50b9-405b-8b02-26d2e294cac3", "timestamp": 1776863923.9591925, "human_timestamp": "2026-04-22 09:18:43.959"}
+
+{"event_type": "EXECUTIVE_WORK_ITEM_ENQUEUED", "source_module": "AEM", "message": "Runtime work item enqueued", "severity": "INFO", "payload": {"work_id": "786137cd-9935-4c2a-8d4f-1ddd6a649d5e", "work_type": "INTERNAL_TASK", "task_name": "BROADCAST_WORKSPACE_CHANGE", "correlation_id": "e99009f5-503b-43bf-aaf4-f3e21080532a", "source_message_id": "e99009f5-503b-43bf-aaf4-f3e21080532a"}, "context": null, "log_id": "bc3dddc0-e3b4-4339-9bff-22367d8705c6", "timestamp": 1776863923.959371, "human_timestamp": "2026-04-22 09:18:43.959"}
+
+{"event_type": "EXECUTIVE_WORK_ITEM_DEQUEUED", "source_module": "AEM", "message": "Runtime work item dequeued", "severity": "INFO", "payload": {"work_id": "6621d1f9-04d3-49dd-9470-4998606dfd8d", "work_type": "INTERNAL_TASK", "correlation_id": "e99009f5-503b-43bf-aaf4-f3e21080532a"}, "context": null, "log_id": "14c85798-fea7-4c4d-a978-3c2bbb41924b", "timestamp": 1776863923.9595397, "human_timestamp": "2026-04-22 09:18:43.959"}
+
+{"event_type": "EXECUTIVE_INTERNAL_TASK_STUB", "source_module": "AEM", "message": "Internal task stub invoked", "severity": "INFO", "payload": {"task_name": "PROCESS_REQUEST_ACCEPTED", "payload": {"message_id": "e99009f5-503b-43bf-aaf4-f3e21080532a", "directive_source": "human", "directive_text": "This is a test directive of all the new functional units"}}, "context": null, "log_id": "899138d1-9fe8-40c2-a9da-f13c1283a387", "timestamp": 1776863923.959763, "human_timestamp": "2026-04-22 09:18:43.959"}
+
+{"event_type": "EXECUTIVE_WORK_ITEM_COMPLETED", "source_module": "AEM", "message": "Runtime work item completed", "severity": "INFO", "payload": {"work_id": "6621d1f9-04d3-49dd-9470-4998606dfd8d", "work_type": "INTERNAL_TASK"}, "context": null, "log_id": "74530581-08be-430b-b38d-d00244cccd81", "timestamp": 1776863923.9599478, "human_timestamp": "2026-04-22 09:18:43.959"}
+
+{"event_type": "EXECUTIVE_WORK_ITEM_DEQUEUED", "source_module": "AEM", "message": "Runtime work item dequeued", "severity": "INFO", "payload": {"work_id": "f812e154-35ff-4646-870e-e114e8ca4bb0", "work_type": "INTERNAL_TASK", "correlation_id": "e99009f5-503b-43bf-aaf4-f3e21080532a"}, "context": null, "log_id": "57508825-3f2e-4818-a641-208106c14675", "timestamp": 1776863923.9602733, "human_timestamp": "2026-04-22 09:18:43.960"}
+
+{"event_type": "DIRECTIVE_INTAKE_RECORDED", "source_module": "AEM", "message": "Directive intake record created and attached to episode", "severity": "INFO", "payload": {"episode_id": "e99009f5-503b-43bf-aaf4-f3e21080532a", "directive_text": "This is a test directive of all the new functional units", "directive_source": "human"}, "context": null, "log_id": "5911c7d2-8803-413a-ab8d-77a071aa2912", "timestamp": 1776863923.9606893, "human_timestamp": "2026-04-22 09:18:43.960"}
+
+{"event_type": "EXECUTIVE_WORK_ITEM_COMPLETED", "source_module": "AEM", "message": "Runtime work item completed", "severity": "INFO", "payload": {"work_id": "f812e154-35ff-4646-870e-e114e8ca4bb0", "work_type": "INTERNAL_TASK"}, "context": null, "log_id": "79b975fa-dc19-4210-9d96-f34ea4d21085", "timestamp": 1776863923.9609232, "human_timestamp": "2026-04-22 09:18:43.960"}
+
+{"event_type": "EXECUTIVE_WORK_ITEM_DEQUEUED", "source_module": "AEM", "message": "Runtime work item dequeued", "severity": "INFO", "payload": {"work_id": "46af46d7-48df-4f00-a6dc-4c1df5d19698", "work_type": "STATE_TRANSITION", "correlation_id": "e99009f5-503b-43bf-aaf4-f3e21080532a"}, "context": null, "log_id": "409a0d2c-b25b-4a7c-9848-cea23b780143", "timestamp": 1776863923.961099, "human_timestamp": "2026-04-22 09:18:43.961"}
+
+{"event_type": "EPISODE_CREATED", "source_module": "AEM", "message": "Episode created", "severity": "INFO", "payload": {"episode_id": "e99009f5-503b-43bf-aaf4-f3e21080532a"}, "context": null, "log_id": "18ece78d-5a5b-454b-bd62-8b7e4272b7f5", "timestamp": 1776863923.9612293, "human_timestamp": "2026-04-22 09:18:43.961"}
+
+{"event_type": "EXECUTIVE_STATE_TRANSITION", "source_module": "AEM", "message": "Episode state transition", "severity": "INFO", "payload": {"episode_id": "e99009f5-503b-43bf-aaf4-f3e21080532a", "old_state": null, "new_state": "RECEIVED"}, "context": null, "log_id": "8f3d2a68-1fb5-44a3-872b-54b48e92c548", "timestamp": 1776863923.9613645, "human_timestamp": "2026-04-22 09:18:43.961"}
+
+{"event_type": "EXECUTIVE_WORK_ITEM_COMPLETED", "source_module": "AEM", "message": "Runtime work item completed", "severity": "INFO", "payload": {"work_id": "46af46d7-48df-4f00-a6dc-4c1df5d19698", "work_type": "STATE_TRANSITION"}, "context": null, "log_id": "5f8fafae-0eb4-47a4-962a-eca0da805a46", "timestamp": 1776863923.961478, "human_timestamp": "2026-04-22 09:18:43.961"}
+
+{"event_type": "EXECUTIVE_WORK_ITEM_DEQUEUED", "source_module": "AEM", "message": "Runtime work item dequeued", "severity": "INFO", "payload": {"work_id": "193ba9c7-0315-4892-a656-67ad7b11ccee", "work_type": "INTERNAL_TASK", "correlation_id": "e99009f5-503b-43bf-aaf4-f3e21080532a"}, "context": null, "log_id": "48823959-b697-4309-a277-3bed15997300", "timestamp": 1776863923.9615939, "human_timestamp": "2026-04-22 09:18:43.961"}
+
+{"event_type": "GLOBAL_WORKSPACE_UPDATED", "source_module": "AEM", "message": "Global workspace updated from episode", "severity": "INFO", "payload": {"episode_id": "e99009f5-503b-43bf-aaf4-f3e21080532a", "current_state": "RECEIVED", "directive_intake_present": true}, "context": null, "log_id": "e81800a2-7b0f-48f0-ac6d-f78acbb1c190", "timestamp": 1776863923.961728, "human_timestamp": "2026-04-22 09:18:43.961"}
+
+{"event_type": "EXECUTIVE_WORK_ITEM_COMPLETED", "source_module": "AEM", "message": "Runtime work item completed", "severity": "INFO", "payload": {"work_id": "193ba9c7-0315-4892-a656-67ad7b11ccee", "work_type": "INTERNAL_TASK"}, "context": null, "log_id": "526acfbb-c409-47a8-891a-40aa1ef11897", "timestamp": 1776863923.9618044, "human_timestamp": "2026-04-22 09:18:43.961"}
+
+{"event_type": "EXECUTIVE_WORK_ITEM_DEQUEUED", "source_module": "AEM", "message": "Runtime work item dequeued", "severity": "INFO", "payload": {"work_id": "786137cd-9935-4c2a-8d4f-1ddd6a649d5e", "work_type": "INTERNAL_TASK", "correlation_id": "e99009f5-503b-43bf-aaf4-f3e21080532a"}, "context": null, "log_id": "052278c7-ecc0-44f4-8a28-5d991a4a29a9", "timestamp": 1776863923.9618807, "human_timestamp": "2026-04-22 09:18:43.961"}
+
+{"event_type": "GLOBAL_WORKSPACE_BROADCAST_STUB", "source_module": "AEM", "message": "Workspace change broadcast stub invoked", "severity": "INFO", "payload": {"episode_id": "e99009f5-503b-43bf-aaf4-f3e21080532a", "workspace_version": 1, "current_state": "RECEIVED", "directive_intake_present": true, "changed_at": 1776863923.9619467}, "context": null, "log_id": "3ffe892c-adb9-47a3-98ff-0ee648c2624c", "timestamp": 1776863923.9619708, "human_timestamp": "2026-04-22 09:18:43.961"}
+
+{"event_type": "EXECUTIVE_WORK_ITEM_COMPLETED", "source_module": "AEM", "message": "Runtime work item completed", "severity": "INFO", "payload": {"work_id": "786137cd-9935-4c2a-8d4f-1ddd6a649d5e", "work_type": "INTERNAL_TASK"}, "context": null, "log_id": "d32d3989-e1d5-4dcf-913f-b61b23221408", "timestamp": 1776863923.9620674, "human_timestamp": "2026-04-22 09:18:43.962"}
+
+{"event_type": "ENDPOINT_CONFIG_INIT", "source_module": "endpoint_config", "message": "Endpoint configuration ", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "54f6117a-fe3c-4999-8d27-6b541dde9c74", "timestamp": 1776874260.6360707, "human_timestamp": "2026-04-22 12:11:00.636"}
+
+{"event_type": "ENDPOINT_CONFIG_INIT", "source_module": "endpoint_config", "message": "Endpoint configuration ", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "20ef27a9-0765-42af-bbf9-8f28b1dc78a1", "timestamp": 1776874260.6404097, "human_timestamp": "2026-04-22 12:11:00.640"}
+
+{"event_type": "ENDPOINT_CONFIG_INIT", "source_module": "endpoint_config", "message": "Endpoint configuration ", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "b31e970d-a40a-490d-948c-67b6f74fe8c8", "timestamp": 1776874260.6422293, "human_timestamp": "2026-04-22 12:11:00.642"}
+
+{"event_type": "ENDPOINT_CONFIG_INIT", "source_module": "endpoint_config", "message": "Endpoint configuration ", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "9277702f-ccad-47af-a691-88a9fa13735d", "timestamp": 1776874260.6433074, "human_timestamp": "2026-04-22 12:11:00.643"}
+
+{"event_type": "ENDPOINT_CONFIG_INIT", "source_module": "endpoint_config", "message": "Endpoint configuration ", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "a8e9e2fd-08e0-4cfd-bb4e-f24888c00015", "timestamp": 1776874260.6455605, "human_timestamp": "2026-04-22 12:11:00.645"}
+
+{"event_type": "DIRECTIVE_GUI_INIT", "source_module": "DIRGUI", "message": "GUI module initializing", "severity": "INFO", "payload": {}, "context": null, "log_id": "ae5fcb28-a4bb-41a6-b150-7739564bb7bf", "timestamp": 1776874260.657914, "human_timestamp": "2026-04-22 12:11:00.657"}
+
+{"event_type": "NLP_INIT", "source_module": "NLP", "message": "NLP initializing", "severity": "INFO", "payload": {}, "context": null, "log_id": "9f9e9bc6-a218-41de-887f-5c002ae921ad", "timestamp": 1776874260.6585438, "human_timestamp": "2026-04-22 12:11:00.658"}
+
+{"event_type": "BEHAVIOR_INIT", "source_module": "BEHAVIOR", "message": "Behavior module initializing", "severity": "INFO", "payload": {}, "context": null, "log_id": "257d7439-97fb-4577-805a-faf7617c0d96", "timestamp": 1776874260.6589272, "human_timestamp": "2026-04-22 12:11:00.658"}
+
+{"event_type": "ROUTER_INIT", "source_module": "CC", "message": "Router CC port: 6001 ack: 6102 module_egress: 7001", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "2627c1ec-5c41-44be-adc5-53bb4acee3c8", "timestamp": 1776874260.6650305, "human_timestamp": "2026-04-22 12:11:00.665"}
+
+{"event_type": "PLANNER_INIT", "source_module": "PLANNER", "message": "PLANNER initializing", "severity": "INFO", "payload": {}, "context": null, "log_id": "f9101f0f-c09c-4365-bc64-6f68ae9f6b93", "timestamp": 1776874260.6710854, "human_timestamp": "2026-04-22 12:11:00.671"}
+
+{"event_type": "MODULE_LOOP_START", "source_module": "PLANNER", "message": "Module loop starting", "severity": "INFO", "payload": {"module_id": "PLANNER"}, "context": null, "log_id": "b34e66f6-9946-4644-9a79-926a70e9845f", "timestamp": 1776874260.6726487, "human_timestamp": "2026-04-22 12:11:00.672"}
+
+{"event_type": "ENDPOINT_INBOUND_SETUP", "source_module": "PLANNER", "message": "ModuleEndpoint PLANNER setup inbound CC ", "severity": "INFO", "payload": {}, "context": null, "log_id": "332aea47-f570-4b40-b1d0-1b2fe3f62f21", "timestamp": 1776874260.6837435, "human_timestamp": "2026-04-22 12:11:00.683"}
+
+{"event_type": "ENDPOINT_ACK_SETUP", "source_module": "PLANNER", "message": "ModuleEndpoint PLANNER setup ACK CC ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "5bcd3bb8-93b7-41b1-8920-399397919243", "timestamp": 1776874260.6858869, "human_timestamp": "2026-04-22 12:11:00.685"}
+
+{"event_type": "ENDPOINT_START", "source_module": "PLANNER", "message": "ModuleEndpoint started PLANNER", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "7a830c91-2d37-4013-ac5c-97876caa8778", "timestamp": 1776874260.6839228, "human_timestamp": "2026-04-22 12:11:00.683"}
+
+{"event_type": "ROUTER_START", "source_module": "CC", "message": "Router CC started", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "e599f2a7-d37b-4c46-9f1f-924290d81c76", "timestamp": 1776874260.6860912, "human_timestamp": "2026-04-22 12:11:00.686"}
+
+{"event_type": "PLANNER_START", "source_module": "PLANNER", "message": "PLANNER started", "severity": "INFO", "payload": {}, "context": null, "log_id": "6c712dda-88e6-46f9-9a36-0031c9380f9b", "timestamp": 1776874260.6862447, "human_timestamp": "2026-04-22 12:11:00.686"}
+
+{"event_type": "ENDPOINT_START", "source_module": "BEHAVIOR", "message": "ModuleEndpoint started BEHAVIOR", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "8d9f46a0-ed67-492c-9e08-0957c5f172f0", "timestamp": 1776874260.689911, "human_timestamp": "2026-04-22 12:11:00.689"}
+
+{"event_type": "MODULE_LOOP_START", "source_module": "BEHAVIOR", "message": "Module loop starting", "severity": "INFO", "payload": {"module_id": "BEHAVIOR"}, "context": null, "log_id": "0b80b526-925e-4c41-a64d-6cfb78bd3ed9", "timestamp": 1776874260.6946838, "human_timestamp": "2026-04-22 12:11:00.694"}
+
+{"event_type": "ENDPOINT_INBOUND_SETUP", "source_module": "BEHAVIOR", "message": "ModuleEndpoint BEHAVIOR setup inbound CC ", "severity": "INFO", "payload": {}, "context": null, "log_id": "47431ca4-35c6-408a-901a-55b8aa69eb4d", "timestamp": 1776874260.6965506, "human_timestamp": "2026-04-22 12:11:00.696"}
+
+{"event_type": "ROUTER_START_RUN", "source_module": "CC", "message": "[Router.CC] ROUTER ingress on 6001, egress on 7001, ACK on 6102", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "3f394711-42fe-470b-ab04-832cea5743e0", "timestamp": 1776874260.6981087, "human_timestamp": "2026-04-22 12:11:00.698"}
+
+{"event_type": "ENDPOINT_ACK_SETUP", "source_module": "BEHAVIOR", "message": "ModuleEndpoint BEHAVIOR setup ACK CC ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "7a62ec58-d3d4-49e1-9cbb-3fba7ba2aecd", "timestamp": 1776874260.6988199, "human_timestamp": "2026-04-22 12:11:00.698"}
+
+{"event_type": "BEHAVIOR_START", "source_module": "BEHAVIOR", "message": "Behavior module started", "severity": "INFO", "payload": {}, "context": null, "log_id": "143861ee-a770-45d1-b2a1-9ea039a20f2d", "timestamp": 1776874260.698997, "human_timestamp": "2026-04-22 12:11:00.698"}
+
+{"event_type": "AEM_INIT", "source_module": "AEM", "message": "AEM initializing", "severity": "INFO", "payload": {}, "context": null, "log_id": "5882b96e-c6e1-48c5-9a3f-b367246590ea", "timestamp": 1776874260.7717028, "human_timestamp": "2026-04-22 12:11:00.771"}
+
+{"event_type": "ENDPOINT_START", "source_module": "GUI", "message": "ModuleEndpoint started GUI", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "ea4980dc-5746-4731-82b5-1ce685f4f07c", "timestamp": 1776874261.315926, "human_timestamp": "2026-04-22 12:11:01.315"}
+
+{"event_type": "ENDPOINT_INBOUND_SETUP", "source_module": "GUI", "message": "ModuleEndpoint GUI setup inbound CC ", "severity": "INFO", "payload": {}, "context": null, "log_id": "0f6ec380-1334-4c0e-8dc5-3f3820ea4f24", "timestamp": 1776874261.3223424, "human_timestamp": "2026-04-22 12:11:01.322"}
+
+{"event_type": "ENDPOINT_ACK_SETUP", "source_module": "GUI", "message": "ModuleEndpoint GUI setup ACK CC ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "cdaae198-2be3-458e-8607-b26c2605e5e7", "timestamp": 1776874261.325338, "human_timestamp": "2026-04-22 12:11:01.325"}
+
+{"event_type": "MODULE_LOOP_START", "source_module": "NLP", "message": "Module loop starting", "severity": "INFO", "payload": {"module_id": "NLP"}, "context": null, "log_id": "93697e3d-5c81-4a94-9ba2-af7af3b8b609", "timestamp": 1776874261.9801297, "human_timestamp": "2026-04-22 12:11:01.980"}
+
+{"event_type": "EXECUTIVE_LOOP_START", "source_module": "AEM", "message": "Executive loop starting", "severity": "INFO", "payload": {"module_id": "AEM"}, "context": null, "log_id": "eacd2ca9-4471-4ba6-ba25-4deb95f3469a", "timestamp": 1776874261.9832053, "human_timestamp": "2026-04-22 12:11:01.983"}
+
+{"event_type": "ENDPOINT_INBOUND_SETUP", "source_module": "NLP", "message": "ModuleEndpoint NLP setup inbound CC ", "severity": "INFO", "payload": {}, "context": null, "log_id": "8f1ee8a8-649f-4370-ba4e-47a86c6829df", "timestamp": 1776874261.9885788, "human_timestamp": "2026-04-22 12:11:01.988"}
+
+{"event_type": "ENDPOINT_ACK_SETUP", "source_module": "NLP", "message": "ModuleEndpoint NLP setup ACK CC ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "4f13a9d0-a8d8-48a1-8367-66a669118ea5", "timestamp": 1776874261.990106, "human_timestamp": "2026-04-22 12:11:01.990"}
+
+{"event_type": "ENDPOINT_START", "source_module": "NLP", "message": "ModuleEndpoint started NLP", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "2ab42bec-0f52-4d14-b08a-206a71e268a4", "timestamp": 1776874261.9887516, "human_timestamp": "2026-04-22 12:11:01.988"}
+
+{"event_type": "NLP_START", "source_module": "NLP", "message": "NLP started", "severity": "INFO", "payload": {}, "context": null, "log_id": "374fa711-88bf-4299-9534-1e4c2b8c94b7", "timestamp": 1776874261.990387, "human_timestamp": "2026-04-22 12:11:01.990"}
+
+{"event_type": "ENDPOINT_INBOUND_SETUP", "source_module": "AEM", "message": "ModuleEndpoint AEM setup inbound CC ", "severity": "INFO", "payload": {}, "context": null, "log_id": "42c695e6-da21-4d37-b14f-97893c8014d0", "timestamp": 1776874261.9911773, "human_timestamp": "2026-04-22 12:11:01.991"}
+
+{"event_type": "ENDPOINT_ACK_SETUP", "source_module": "AEM", "message": "ModuleEndpoint AEM setup ACK CC ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "bcf39f11-f67f-4bd7-9036-b5147bd244e4", "timestamp": 1776874261.9927328, "human_timestamp": "2026-04-22 12:11:01.992"}
+
+{"event_type": "ENDPOINT_START", "source_module": "AEM", "message": "ModuleEndpoint started AEM", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "f24de922-d31d-476c-98e4-a042052ea1f9", "timestamp": 1776874261.9912848, "human_timestamp": "2026-04-22 12:11:01.991"}
+
+{"event_type": "AEM_START", "source_module": "AEM", "message": "AEM started", "severity": "INFO", "payload": {}, "context": null, "log_id": "679b4bfa-d1e8-48f6-a06a-3a7a9a5b14df", "timestamp": 1776874261.9930282, "human_timestamp": "2026-04-22 12:11:01.993"}
+
+{"event_type": "ENDPOINT_TRANSACTION_CREATED", "source_module": "GUI", "message": "ModuleEndpoint GUI channel: CC outgoing message_id=005afd62-f1d1-4692-81a6-10c3dfe18237", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "5e0d4d32-ebd7-4436-8737-895a3d160459", "timestamp": 1776874345.0576496, "human_timestamp": "2026-04-22 12:12:25.057"}
+
+{"event_type": "ENDPOINT_SENT_MESSAGE", "source_module": "GUI", "message": "ModuleEndpoint GUI sent message on channel CC to b'AEM'", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "4cf70e9b-3ba5-406a-9742-f0e3eeb56a6a", "timestamp": 1776874345.058064, "human_timestamp": "2026-04-22 12:12:25.058"}
+
+{"event_type": "ENDPOINT_RECEIVED_ACK", "source_module": "GUI", "message": "ModuleEndpoint GUI received ACK for correlation_id=005afd62-f1d1-4692-81a6-10c3dfe18237, event=AckTransitionEvent(message_id='005afd62-f1d1-4692-81a6-10c3dfe18237', old_state='AWAIT_ROUTER_ACK', new_state='AWAIT_MESSAGE_DELIVERED_ACK', reason='ROUTER_ACK', timestamp=442924.2344839, retry_count=0, details=None) ack type = ROUTER_ACK", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "dcd75f20-af89-4386-9e2d-35c0eb8d1444", "timestamp": 1776874345.0592391, "human_timestamp": "2026-04-22 12:12:25.059"}
+
+{"event_type": "ENDPOINT_CREATED_TRANSACTION", "source_module": "AEM", "message": "ModuleEndpoint AEM  Created transaction for incoming message_id=005afd62-f1d1-4692-81a6-10c3dfe18237", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "805f3281-d53d-466b-85b5-4d7c32704c53", "timestamp": 1776874345.059359, "human_timestamp": "2026-04-22 12:12:25.059"}
+
+{"event_type": "ENDPOINT_SENT_ACK", "source_module": "AEM", "message": "ModuleEndpoint AEM sent ACK to GUI", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "b24e0e7e-7acc-413c-8397-4b06246dffe7", "timestamp": 1776874345.059813, "human_timestamp": "2026-04-22 12:12:25.059"}
+
+{"event_type": "EXECUTIVE_MESSAGE_RECV", "source_module": "AEM", "message": "Inbound message received", "severity": "INFO", "payload": {"msg_type": "DIRECTIVE_SUBMITTED", "source": "GUI", "message_id": "005afd62-f1d1-4692-81a6-10c3dfe18237"}, "context": null, "log_id": "596c25b8-f632-439f-b72f-16ec4349c689", "timestamp": 1776874345.060044, "human_timestamp": "2026-04-22 12:12:25.060"}
+
+{"event_type": "ENDPOINT_TRANSACTION_CREATED", "source_module": "AEM", "message": "ModuleEndpoint AEM channel: CC outgoing message_id=4bc19440-ac68-491c-ba37-4735f646b5a2", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "efa23c74-1d9f-4f33-8534-1eb09378b04f", "timestamp": 1776874345.0606668, "human_timestamp": "2026-04-22 12:12:25.060"}
+
+{"event_type": "ENDPOINT_SENT_MESSAGE", "source_module": "AEM", "message": "ModuleEndpoint AEM sent message on channel CC to b'GUI'", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "c3a426fb-4734-4562-87ce-fa78b922274e", "timestamp": 1776874345.0609994, "human_timestamp": "2026-04-22 12:12:25.060"}
+
+{"event_type": "AEM_DIRECTIVE_SUBMITTED_HANDLER", "source_module": "AEM", "message": "DIRECTIVE_SUBMITTED handler invoked", "severity": "INFO", "payload": {"module_id": "AEM", "message_id": "005afd62-f1d1-4692-81a6-10c3dfe18237", "correlation_id": "005afd62-f1d1-4692-81a6-10c3dfe18237", "directive_source": "human", "directive_text": "Testing the priority and policy modules."}, "context": null, "log_id": "3f4a3b76-dfe2-4475-a75f-dcd33fa3502e", "timestamp": 1776874345.061482, "human_timestamp": "2026-04-22 12:12:25.061"}
+
+{"event_type": "EXECUTIVE_HANDLER_RESULT_ACCEPTED", "source_module": "AEM", "message": "Handler result accepted", "severity": "INFO", "payload": {"success": true, "status": "OK", "handled": true, "correlation_id": "005afd62-f1d1-4692-81a6-10c3dfe18237", "source_message_id": "005afd62-f1d1-4692-81a6-10c3dfe18237", "error_count": 0, "follow_on_task_count": 5}, "context": null, "log_id": "a4491b55-d674-45b9-b2d0-0bdbaa58bbcb", "timestamp": 1776874345.061682, "human_timestamp": "2026-04-22 12:12:25.061"}
+
+{"event_type": "AEM_DIRECTIVE_SUBMITTED_ACCEPTED", "source_module": "AEM", "message": "DIRECTIVE_SUBMITTED accepted by AEM", "severity": "INFO", "payload": {"module_id": "AEM", "message_id": "005afd62-f1d1-4692-81a6-10c3dfe18237", "directive_source": "human", "directive_text": "Testing the priority and policy modules."}, "context": null, "log_id": "a622c3a6-3990-4d03-b5c1-a0d643764741", "timestamp": 1776874345.061805, "human_timestamp": "2026-04-22 12:12:25.061"}
+
+{"event_type": "ENDPOINT_RECEIVED_ACK", "source_module": "GUI", "message": "ModuleEndpoint GUI received ACK for correlation_id=005afd62-f1d1-4692-81a6-10c3dfe18237, event=AckTransitionEvent(message_id='005afd62-f1d1-4692-81a6-10c3dfe18237', old_state='AWAIT_MESSAGE_DELIVERED_ACK', new_state='COMPLETED', reason='MSG_DELIVERED_ACK_SUCCESS', timestamp=442924.2371318, retry_count=0, details=None) ack type = MESSAGE_DELIVERED_ACK", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "b07d58bd-970a-4897-9b2b-9f3fe3f80cb8", "timestamp": 1776874345.0618718, "human_timestamp": "2026-04-22 12:12:25.061"}
+
+{"event_type": "AEM_SHUTDOWN", "source_module": "AEM", "message": "AEM shutting down", "severity": "INFO", "payload": {}, "context": null, "log_id": "ac52b74e-4359-49b0-9b7d-357fad2813ba", "timestamp": 1776874345.0619125, "human_timestamp": "2026-04-22 12:12:25.061"}
+
+{"event_type": "ENDPOINT_TEARDOWN", "source_module": "AEM", "message": "ModuleEndpoint AEM  teardown complete ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "01f76186-d52e-4b6a-81a0-cfe7ef6e5da8", "timestamp": 1776874345.1208513, "human_timestamp": "2026-04-22 12:12:25.120"}
+
+{"event_type": "ENDPOINT_STOP", "source_module": "AEM", "message": "ModuleEndpoint stopped AEM", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "b182d30a-fab2-41b4-9425-e2462cf3dc16", "timestamp": 1776874345.1215322, "human_timestamp": "2026-04-22 12:12:25.121"}
+
+{"event_type": "EXECUTIVE_LOOP_EXIT", "source_module": "AEM", "message": "Executive loop exited", "severity": "INFO", "payload": {"module_id": "AEM"}, "context": null, "log_id": "bf55de6d-b4df-4916-a4c5-9a76ba952f19", "timestamp": 1776874345.1217866, "human_timestamp": "2026-04-22 12:12:25.121"}
+
+{"event_type": "ENDPOINT_CONFIG_INIT", "source_module": "endpoint_config", "message": "Endpoint configuration ", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "8cdfd2b8-2ae6-4a00-b878-0af47a6677b6", "timestamp": 1776874947.3618486, "human_timestamp": "2026-04-22 12:22:27.361"}
+
+{"event_type": "BEHAVIOR_INIT", "source_module": "BEHAVIOR", "message": "Behavior module initializing", "severity": "INFO", "payload": {}, "context": null, "log_id": "2392b79c-57ba-4aae-a992-ac4c9fa6c63e", "timestamp": 1776874947.3849447, "human_timestamp": "2026-04-22 12:22:27.384"}
+
+{"event_type": "ENDPOINT_CONFIG_INIT", "source_module": "endpoint_config", "message": "Endpoint configuration ", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "f9e97a8a-8a16-4b61-918a-b58a983c133a", "timestamp": 1776874947.402026, "human_timestamp": "2026-04-22 12:22:27.402"}
+
+{"event_type": "ENDPOINT_CONFIG_INIT", "source_module": "endpoint_config", "message": "Endpoint configuration ", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "4465122e-df34-45ce-b6fc-ec07cb48c4cd", "timestamp": 1776874947.4050684, "human_timestamp": "2026-04-22 12:22:27.405"}
+
+{"event_type": "ENDPOINT_START", "source_module": "BEHAVIOR", "message": "ModuleEndpoint started BEHAVIOR", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "5f20b583-e0a4-4bad-82b7-7946385917bc", "timestamp": 1776874947.406862, "human_timestamp": "2026-04-22 12:22:27.406"}
+
+{"event_type": "MODULE_LOOP_START", "source_module": "BEHAVIOR", "message": "Module loop starting", "severity": "INFO", "payload": {"module_id": "BEHAVIOR"}, "context": null, "log_id": "2988b200-ee88-48dc-aad3-119c36ecb647", "timestamp": 1776874947.4071066, "human_timestamp": "2026-04-22 12:22:27.407"}
+
+{"event_type": "ENDPOINT_INBOUND_SETUP", "source_module": "BEHAVIOR", "message": "ModuleEndpoint BEHAVIOR setup inbound CC ", "severity": "INFO", "payload": {}, "context": null, "log_id": "ecc4480b-618f-42e7-98a7-041f8ab4dc0b", "timestamp": 1776874947.4115381, "human_timestamp": "2026-04-22 12:22:27.411"}
+
+{"event_type": "ENDPOINT_ACK_SETUP", "source_module": "BEHAVIOR", "message": "ModuleEndpoint BEHAVIOR setup ACK CC ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "33d00294-d0d8-436f-b475-ac5e9d30192f", "timestamp": 1776874947.4146316, "human_timestamp": "2026-04-22 12:22:27.414"}
+
+{"event_type": "BEHAVIOR_START", "source_module": "BEHAVIOR", "message": "Behavior module started", "severity": "INFO", "payload": {}, "context": null, "log_id": "c31e1dae-95c8-4cc8-915c-cb91673315e4", "timestamp": 1776874947.414862, "human_timestamp": "2026-04-22 12:22:27.414"}
+
+{"event_type": "ROUTER_INIT", "source_module": "CC", "message": "Router CC port: 6001 ack: 6102 module_egress: 7001", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "cf76c91b-63e2-4c7b-b217-3265f33e398b", "timestamp": 1776874947.4186459, "human_timestamp": "2026-04-22 12:22:27.418"}
+
+{"event_type": "NLP_INIT", "source_module": "NLP", "message": "NLP initializing", "severity": "INFO", "payload": {}, "context": null, "log_id": "94f10888-0243-4473-9554-b176adf74833", "timestamp": 1776874947.4296756, "human_timestamp": "2026-04-22 12:22:27.429"}
+
+{"event_type": "ROUTER_START", "source_module": "CC", "message": "Router CC started", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "42032228-e461-46f9-9836-bc568b1d28a8", "timestamp": 1776874947.4344833, "human_timestamp": "2026-04-22 12:22:27.434"}
+
+{"event_type": "PLANNER_INIT", "source_module": "PLANNER", "message": "PLANNER initializing", "severity": "INFO", "payload": {}, "context": null, "log_id": "3b26d86f-dba0-437c-a76e-72f6d149b417", "timestamp": 1776874947.439505, "human_timestamp": "2026-04-22 12:22:27.439"}
+
+{"event_type": "MODULE_LOOP_START", "source_module": "PLANNER", "message": "Module loop starting", "severity": "INFO", "payload": {"module_id": "PLANNER"}, "context": null, "log_id": "e987347b-ea38-458f-9624-fb582d3d681c", "timestamp": 1776874947.4416957, "human_timestamp": "2026-04-22 12:22:27.441"}
+
+{"event_type": "ENDPOINT_CONFIG_INIT", "source_module": "endpoint_config", "message": "Endpoint configuration ", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "93c0afc1-ba2b-4fe0-a514-4aa6664f6349", "timestamp": 1776874947.456302, "human_timestamp": "2026-04-22 12:22:27.456"}
+
+{"event_type": "ENDPOINT_START", "source_module": "PLANNER", "message": "ModuleEndpoint started PLANNER", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "a82575b1-dc85-419c-b76d-5282fce5fce7", "timestamp": 1776874947.4578876, "human_timestamp": "2026-04-22 12:22:27.457"}
+
+{"event_type": "PLANNER_START", "source_module": "PLANNER", "message": "PLANNER started", "severity": "INFO", "payload": {}, "context": null, "log_id": "a3ec8904-7ad2-40d9-9d6b-80336b12fd5f", "timestamp": 1776874947.458316, "human_timestamp": "2026-04-22 12:22:27.458"}
+
+{"event_type": "ENDPOINT_INBOUND_SETUP", "source_module": "PLANNER", "message": "ModuleEndpoint PLANNER setup inbound CC ", "severity": "INFO", "payload": {}, "context": null, "log_id": "6f8e00f7-094a-4323-97fa-4d697f4d5e3c", "timestamp": 1776874947.4618866, "human_timestamp": "2026-04-22 12:22:27.461"}
+
+{"event_type": "ENDPOINT_ACK_SETUP", "source_module": "PLANNER", "message": "ModuleEndpoint PLANNER setup ACK CC ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "a54b14ed-c7eb-46fc-9821-c4d1c6cdc98e", "timestamp": 1776874947.465487, "human_timestamp": "2026-04-22 12:22:27.465"}
+
+{"event_type": "ENDPOINT_CONFIG_INIT", "source_module": "endpoint_config", "message": "Endpoint configuration ", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "7ba8f28c-c24f-469b-88d0-c9cce585dca1", "timestamp": 1776874947.4723783, "human_timestamp": "2026-04-22 12:22:27.472"}
+
+{"event_type": "ROUTER_START_RUN", "source_module": "CC", "message": "[Router.CC] ROUTER ingress on 6001, egress on 7001, ACK on 6102", "severity": "INFO", "payload": {"note": "no payload"}, "context": null, "log_id": "f7466287-40a9-41ed-8460-29fa4dfab3cb", "timestamp": 1776874947.4765644, "human_timestamp": "2026-04-22 12:22:27.476"}
+
+{"event_type": "DIRECTIVE_GUI_INIT", "source_module": "DIRGUI", "message": "GUI module initializing", "severity": "INFO", "payload": {}, "context": null, "log_id": "a9fab130-1197-423c-98fb-a96376d4b3ee", "timestamp": 1776874947.4808578, "human_timestamp": "2026-04-22 12:22:27.480"}
+
+{"event_type": "AEM_INIT", "source_module": "AEM", "message": "AEM initializing", "severity": "INFO", "payload": {}, "context": null, "log_id": "f1e658a8-5e79-4c96-bf59-2b56f6dbc6c5", "timestamp": 1776874947.552764, "human_timestamp": "2026-04-22 12:22:27.552"}
+
+{"event_type": "ENDPOINT_START", "source_module": "GUI", "message": "ModuleEndpoint started GUI", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "209df6f0-ee78-4767-9a2d-22a48803d6ab", "timestamp": 1776874947.5711493, "human_timestamp": "2026-04-22 12:22:27.571"}
+
+{"event_type": "ENDPOINT_INBOUND_SETUP", "source_module": "GUI", "message": "ModuleEndpoint GUI setup inbound CC ", "severity": "INFO", "payload": {}, "context": null, "log_id": "452d412b-017f-47c3-8c2f-ad6b18e5b73a", "timestamp": 1776874947.5750668, "human_timestamp": "2026-04-22 12:22:27.575"}
+
+{"event_type": "ENDPOINT_ACK_SETUP", "source_module": "GUI", "message": "ModuleEndpoint GUI setup ACK CC ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "5e764878-c1d8-412c-b6c7-fb86cb5c0b84", "timestamp": 1776874947.5788531, "human_timestamp": "2026-04-22 12:22:27.578"}
+
+{"event_type": "MODULE_LOOP_START", "source_module": "NLP", "message": "Module loop starting", "severity": "INFO", "payload": {"module_id": "NLP"}, "context": null, "log_id": "55a95e8c-edf2-4d1c-a44c-09c9d89345d3", "timestamp": 1776874948.9446886, "human_timestamp": "2026-04-22 12:22:28.944"}
+
+{"event_type": "ENDPOINT_START", "source_module": "NLP", "message": "ModuleEndpoint started NLP", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "3d3486b9-6a7a-40ca-862f-1116951f995c", "timestamp": 1776874948.9566936, "human_timestamp": "2026-04-22 12:22:28.956"}
+
+{"event_type": "ENDPOINT_INBOUND_SETUP", "source_module": "NLP", "message": "ModuleEndpoint NLP setup inbound CC ", "severity": "INFO", "payload": {}, "context": null, "log_id": "bb5bbeb6-ab95-44d5-8c2b-a9fea6c56890", "timestamp": 1776874948.9569998, "human_timestamp": "2026-04-22 12:22:28.956"}
+
+{"event_type": "ENDPOINT_ACK_SETUP", "source_module": "NLP", "message": "ModuleEndpoint NLP setup ACK CC ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "a4373c26-ee48-48f9-8833-8e934829f0ae", "timestamp": 1776874948.9594553, "human_timestamp": "2026-04-22 12:22:28.959"}
+
+{"event_type": "EXECUTIVE_LOOP_START", "source_module": "AEM", "message": "Executive loop starting", "severity": "INFO", "payload": {"module_id": "AEM"}, "context": null, "log_id": "15edf2bd-4e0f-4a79-bc3d-65a39c8cfd26", "timestamp": 1776874948.9848769, "human_timestamp": "2026-04-22 12:22:28.984"}
+
+{"event_type": "ENDPOINT_INBOUND_SETUP", "source_module": "AEM", "message": "ModuleEndpoint AEM setup inbound CC ", "severity": "INFO", "payload": {}, "context": null, "log_id": "3d9a2193-8549-4328-81d7-9badafc67be8", "timestamp": 1776874948.993176, "human_timestamp": "2026-04-22 12:22:28.993"}
+
+{"event_type": "ENDPOINT_ACK_SETUP", "source_module": "AEM", "message": "ModuleEndpoint AEM setup ACK CC ", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "7bd528e5-d0b8-4a1e-8a08-5279442232e7", "timestamp": 1776874948.995195, "human_timestamp": "2026-04-22 12:22:28.995"}
+
+{"event_type": "ENDPOINT_START", "source_module": "AEM", "message": "ModuleEndpoint started AEM", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "70a1ebb4-8059-407a-841d-3f1bf4a0bc39", "timestamp": 1776874948.9933963, "human_timestamp": "2026-04-22 12:22:28.993"}
+
+{"event_type": "AEM_START", "source_module": "AEM", "message": "AEM started", "severity": "INFO", "payload": {}, "context": null, "log_id": "5314b909-eeed-4c69-8f52-ea801e215278", "timestamp": 1776874948.9955282, "human_timestamp": "2026-04-22 12:22:28.995"}
+
+{"event_type": "ENDPOINT_TRANSACTION_CREATED", "source_module": "GUI", "message": "ModuleEndpoint GUI channel: CC outgoing message_id=dc74782a-861f-46dc-b190-4373f77646d4", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "1a849864-830f-4466-81e0-dff2da2f957f", "timestamp": 1776874968.5238578, "human_timestamp": "2026-04-22 12:22:48.523"}
+
+{"event_type": "ENDPOINT_SENT_MESSAGE", "source_module": "GUI", "message": "ModuleEndpoint GUI sent message on channel CC to b'AEM'", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "598c451d-11cc-4569-8784-83c706d68f03", "timestamp": 1776874968.5241756, "human_timestamp": "2026-04-22 12:22:48.524"}
+
+{"event_type": "ENDPOINT_RECEIVED_ACK", "source_module": "GUI", "message": "ModuleEndpoint GUI received ACK for correlation_id=dc74782a-861f-46dc-b190-4373f77646d4, event=AckTransitionEvent(message_id='dc74782a-861f-46dc-b190-4373f77646d4', old_state='AWAIT_ROUTER_ACK', new_state='AWAIT_MESSAGE_DELIVERED_ACK', reason='ROUTER_ACK', timestamp=443547.7027697, retry_count=0, details=None) ack type = ROUTER_ACK", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "9e28996e-14dc-478f-b9df-3e216a04a51a", "timestamp": 1776874968.5275524, "human_timestamp": "2026-04-22 12:22:48.527"}
+
+{"event_type": "ENDPOINT_CREATED_TRANSACTION", "source_module": "AEM", "message": "ModuleEndpoint AEM  Created transaction for incoming message_id=dc74782a-861f-46dc-b190-4373f77646d4", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "df8b01ef-ec56-44c2-ad99-fc8d54d9f7cf", "timestamp": 1776874968.5276413, "human_timestamp": "2026-04-22 12:22:48.527"}
+
+{"event_type": "EXECUTIVE_MESSAGE_RECV", "source_module": "AEM", "message": "Inbound message received", "severity": "INFO", "payload": {"msg_type": "DIRECTIVE_SUBMITTED", "source": "GUI", "message_id": "dc74782a-861f-46dc-b190-4373f77646d4"}, "context": null, "log_id": "46cbc258-0c96-46cb-9a79-ef9cff3d984c", "timestamp": 1776874968.5280273, "human_timestamp": "2026-04-22 12:22:48.528"}
+
+{"event_type": "ENDPOINT_SENT_ACK", "source_module": "AEM", "message": "ModuleEndpoint AEM sent ACK to GUI", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "4506f66c-3bcc-459b-bcb8-f060e77b82ad", "timestamp": 1776874968.5289223, "human_timestamp": "2026-04-22 12:22:48.528"}
+
+{"event_type": "ENDPOINT_TRANSACTION_CREATED", "source_module": "AEM", "message": "ModuleEndpoint AEM channel: CC outgoing message_id=07f2e9f1-e7e0-4729-a8e4-e8e66353e6b4", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "e1e8f100-dcf6-43b8-80b5-62efae9602d7", "timestamp": 1776874968.5295308, "human_timestamp": "2026-04-22 12:22:48.529"}
+
+{"event_type": "ENDPOINT_SENT_MESSAGE", "source_module": "AEM", "message": "ModuleEndpoint AEM sent message on channel CC to b'GUI'", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "5b1ad13a-7982-4bc3-8d87-0a8eee8fc1cc", "timestamp": 1776874968.5304744, "human_timestamp": "2026-04-22 12:22:48.530"}
+
+{"event_type": "AEM_DIRECTIVE_SUBMITTED_HANDLER", "source_module": "AEM", "message": "DIRECTIVE_SUBMITTED handler invoked", "severity": "INFO", "payload": {"module_id": "AEM", "message_id": "dc74782a-861f-46dc-b190-4373f77646d4", "correlation_id": "dc74782a-861f-46dc-b190-4373f77646d4", "directive_source": "human", "directive_text": "Testing again."}, "context": null, "log_id": "82c52715-c5bc-4643-977f-fa2b743df725", "timestamp": 1776874968.5311804, "human_timestamp": "2026-04-22 12:22:48.531"}
+
+{"event_type": "EXECUTIVE_HANDLER_RESULT_ACCEPTED", "source_module": "AEM", "message": "Handler result accepted", "severity": "INFO", "payload": {"success": true, "status": "OK", "handled": true, "correlation_id": "dc74782a-861f-46dc-b190-4373f77646d4", "source_message_id": "dc74782a-861f-46dc-b190-4373f77646d4", "error_count": 0, "follow_on_task_count": 5}, "context": null, "log_id": "516c68c6-6b69-4352-90fc-6b07a1e58f6a", "timestamp": 1776874968.5315287, "human_timestamp": "2026-04-22 12:22:48.531"}
+
+{"event_type": "ENDPOINT_RECEIVED_ACK", "source_module": "GUI", "message": "ModuleEndpoint GUI received ACK for correlation_id=dc74782a-861f-46dc-b190-4373f77646d4, event=AckTransitionEvent(message_id='dc74782a-861f-46dc-b190-4373f77646d4', old_state='AWAIT_MESSAGE_DELIVERED_ACK', new_state='COMPLETED', reason='MSG_DELIVERED_ACK_SUCCESS', timestamp=443547.7070243, retry_count=0, details=None) ack type = MESSAGE_DELIVERED_ACK", "severity": "INFO", "payload": {"channels": ["CC"]}, "context": null, "log_id": "a76cda53-7666-4bc2-b320-42b40a38d2e6", "timestamp": 1776874968.5318022, "human_timestamp": "2026-04-22 12:22:48.531"}
+
+{"event_type": "AEM_DIRECTIVE_SUBMITTED_ACCEPTED", "source_module": "AEM", "message": "DIRECTIVE_SUBMITTED accepted by AEM", "severity": "INFO", "payload": {"module_id": "AEM", "message_id": "dc74782a-861f-46dc-b190-4373f77646d4", "directive_source": "human", "directive_text": "Testing again."}, "context": null, "log_id": "538a4c46-d6c5-4d9e-b023-d77e356e3d13", "timestamp": 1776874968.5319812, "human_timestamp": "2026-04-22 12:22:48.531"}
+
+{"event_type": "TASK_RECORD_CREATED", "source_module": "AEM", "message": "Prioritized task record created", "severity": "INFO", "payload": {"task_id": "77239f28-aea1-4262-89ad-2bd20747c389", "work_type": "INTERNAL_TASK", "priority": "NORMAL", "priority_hint": null, "sequence_number": 1, "episode_id": "dc74782a-861f-46dc-b190-4373f77646d4"}, "context": null, "log_id": "e9577797-918e-415f-b604-30b68c8bd596", "timestamp": 1776874968.532284, "human_timestamp": "2026-04-22 12:22:48.532"}
+
+{"event_type": "TASK_POLICY_EVALUATED", "source_module": "AEM", "message": "Policy evaluated prioritized task", "severity": "INFO", "payload": {"task_id": "77239f28-aea1-4262-89ad-2bd20747c389", "action": "ALLOW", "reason": "Task allowed by default policy", "eligible": true, "priority": "NORMAL", "policy_tags": ["DEFAULT_ALLOW"]}, "context": null, "log_id": "334bf898-5550-44ce-b288-3e687012d85a", "timestamp": 1776874968.532591, "human_timestamp": "2026-04-22 12:22:48.532"}
+
+{"event_type": "TASK_ENQUEUED_PRIORITY_QUEUE", "source_module": "AEM", "message": "Task enqueued in priority queue", "severity": "INFO", "payload": {"task_id": "77239f28-aea1-4262-89ad-2bd20747c389", "priority": "NORMAL", "sequence_number": 1, "work_type": "INTERNAL_TASK", "episode_id": "dc74782a-861f-46dc-b190-4373f77646d4"}, "context": null, "log_id": "562a3819-dce6-48f3-a04c-3bbb8f656c61", "timestamp": 1776874968.5328376, "human_timestamp": "2026-04-22 12:22:48.532"}
+
+{"event_type": "TASK_RECORD_CREATED", "source_module": "AEM", "message": "Prioritized task record created", "severity": "INFO", "payload": {"task_id": "81394959-be7c-451e-8d78-9bf413e2ba6f", "work_type": "INTERNAL_TASK", "priority": "NORMAL", "priority_hint": null, "sequence_number": 2, "episode_id": "dc74782a-861f-46dc-b190-4373f77646d4"}, "context": null, "log_id": "69793eeb-36a3-4acb-8aa4-0abaaf3bb5d3", "timestamp": 1776874968.5331886, "human_timestamp": "2026-04-22 12:22:48.533"}
+
+{"event_type": "TASK_POLICY_EVALUATED", "source_module": "AEM", "message": "Policy evaluated prioritized task", "severity": "INFO", "payload": {"task_id": "81394959-be7c-451e-8d78-9bf413e2ba6f", "action": "ALLOW", "reason": "Task allowed by default policy", "eligible": true, "priority": "NORMAL", "policy_tags": ["DEFAULT_ALLOW"]}, "context": null, "log_id": "177f7380-b830-4d83-a5dc-b5d9e3bdb180", "timestamp": 1776874968.5334046, "human_timestamp": "2026-04-22 12:22:48.533"}
+
+{"event_type": "TASK_ENQUEUED_PRIORITY_QUEUE", "source_module": "AEM", "message": "Task enqueued in priority queue", "severity": "INFO", "payload": {"task_id": "81394959-be7c-451e-8d78-9bf413e2ba6f", "priority": "NORMAL", "sequence_number": 2, "work_type": "INTERNAL_TASK", "episode_id": "dc74782a-861f-46dc-b190-4373f77646d4"}, "context": null, "log_id": "f77f50d9-2a3c-4fce-94ab-dcdd287c0688", "timestamp": 1776874968.5335932, "human_timestamp": "2026-04-22 12:22:48.533"}
+
+{"event_type": "TASK_RECORD_CREATED", "source_module": "AEM", "message": "Prioritized task record created", "severity": "INFO", "payload": {"task_id": "f9b00518-7c33-45d4-b30b-5219fc34e303", "work_type": "STATE_TRANSITION", "priority": "NORMAL", "priority_hint": null, "sequence_number": 3, "episode_id": "dc74782a-861f-46dc-b190-4373f77646d4"}, "context": null, "log_id": "b1da6ef2-4929-4d7c-87ef-e22997aabacc", "timestamp": 1776874968.5337727, "human_timestamp": "2026-04-22 12:22:48.533"}
+
+{"event_type": "TASK_POLICY_EVALUATED", "source_module": "AEM", "message": "Policy evaluated prioritized task", "severity": "INFO", "payload": {"task_id": "f9b00518-7c33-45d4-b30b-5219fc34e303", "action": "ALLOW", "reason": "Task allowed by default policy", "eligible": true, "priority": "NORMAL", "policy_tags": ["DEFAULT_ALLOW"]}, "context": null, "log_id": "427024e6-b4b2-497f-8340-8cc351d195cd", "timestamp": 1776874968.533936, "human_timestamp": "2026-04-22 12:22:48.533"}
+
+{"event_type": "TASK_ENQUEUED_PRIORITY_QUEUE", "source_module": "AEM", "message": "Task enqueued in priority queue", "severity": "INFO", "payload": {"task_id": "f9b00518-7c33-45d4-b30b-5219fc34e303", "priority": "NORMAL", "sequence_number": 3, "work_type": "STATE_TRANSITION", "episode_id": "dc74782a-861f-46dc-b190-4373f77646d4"}, "context": null, "log_id": "a63b438c-4df7-499d-8019-9ae4571a6cf6", "timestamp": 1776874968.534025, "human_timestamp": "2026-04-22 12:22:48.534"}
+
+{"event_type": "TASK_RECORD_CREATED", "source_module": "AEM", "message": "Prioritized task record created", "severity": "INFO", "payload": {"task_id": "b1134811-d322-40ad-9f7e-b9ada7aeaa9a", "work_type": "INTERNAL_TASK", "priority": "NORMAL", "priority_hint": null, "sequence_number": 4, "episode_id": "dc74782a-861f-46dc-b190-4373f77646d4"}, "context": null, "log_id": "2041b9c5-3648-4041-826f-b679dc723f96", "timestamp": 1776874968.5341003, "human_timestamp": "2026-04-22 12:22:48.534"}
+
+{"event_type": "TASK_POLICY_EVALUATED", "source_module": "AEM", "message": "Policy evaluated prioritized task", "severity": "INFO", "payload": {"task_id": "b1134811-d322-40ad-9f7e-b9ada7aeaa9a", "action": "ALLOW", "reason": "Task allowed by default policy", "eligible": true, "priority": "NORMAL", "policy_tags": ["DEFAULT_ALLOW"]}, "context": null, "log_id": "c52c9920-73b8-499c-8738-53d6cb6d3a1b", "timestamp": 1776874968.534177, "human_timestamp": "2026-04-22 12:22:48.534"}
+
+{"event_type": "TASK_ENQUEUED_PRIORITY_QUEUE", "source_module": "AEM", "message": "Task enqueued in priority queue", "severity": "INFO", "payload": {"task_id": "b1134811-d322-40ad-9f7e-b9ada7aeaa9a", "priority": "NORMAL", "sequence_number": 4, "work_type": "INTERNAL_TASK", "episode_id": "dc74782a-861f-46dc-b190-4373f77646d4"}, "context": null, "log_id": "39121abf-fdfc-475c-aea0-1926b6436d9f", "timestamp": 1776874968.5342555, "human_timestamp": "2026-04-22 12:22:48.534"}
+
+{"event_type": "TASK_RECORD_CREATED", "source_module": "AEM", "message": "Prioritized task record created", "severity": "INFO", "payload": {"task_id": "3bfbbf1c-fc16-409a-8d6f-6dbc5e6e7687", "work_type": "INTERNAL_TASK", "priority": "LOW", "priority_hint": null, "sequence_number": 5, "episode_id": "dc74782a-861f-46dc-b190-4373f77646d4"}, "context": null, "log_id": "4b286663-03b3-4317-af95-86e1460de141", "timestamp": 1776874968.5343273, "human_timestamp": "2026-04-22 12:22:48.534"}
+
+{"event_type": "TASK_POLICY_EVALUATED", "source_module": "AEM", "message": "Policy evaluated prioritized task", "severity": "INFO", "payload": {"task_id": "3bfbbf1c-fc16-409a-8d6f-6dbc5e6e7687", "action": "ALLOW", "reason": "Task 'BROADCAST_WORKSPACE_CHANGE' forced to LOW priority by policy", "eligible": true, "priority": "LOW", "policy_tags": ["FORCE_LOW_PRIORITY"]}, "context": null, "log_id": "ea2ada26-2832-4c8e-a92a-a6ec4c2c3d7e", "timestamp": 1776874968.534396, "human_timestamp": "2026-04-22 12:22:48.534"}
+
+{"event_type": "TASK_ENQUEUED_PRIORITY_QUEUE", "source_module": "AEM", "message": "Task enqueued in priority queue", "severity": "INFO", "payload": {"task_id": "3bfbbf1c-fc16-409a-8d6f-6dbc5e6e7687", "priority": "LOW", "sequence_number": 5, "work_type": "INTERNAL_TASK", "episode_id": "dc74782a-861f-46dc-b190-4373f77646d4"}, "context": null, "log_id": "f7a026d6-41e5-4e3f-98c7-0ad7e108ea0e", "timestamp": 1776874968.5344627, "human_timestamp": "2026-04-22 12:22:48.534"}
+

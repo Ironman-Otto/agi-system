@@ -1,3 +1,6 @@
+# File: src/core/modules/common/handler_result.py
+# Purpose: Standard handler return contract and internal task definition.
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -42,4 +45,4 @@ class HandlerResult:
     source_message_id: Optional[str] = None
     errors: List[HandlerError] = field(default_factory=list)
     logs: List[StructuredLogEntry] = field(default_factory=list)
-    follow_on_tasks: List[InternalTask] = field(default_factory=list)
+    follow_on_tasks: List[Any] = field(default_factory=list)

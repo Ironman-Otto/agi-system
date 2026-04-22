@@ -1,3 +1,6 @@
+# File: src/core/modules/common/runtime_context.py
+# Purpose: Context object passed into AEM message handlers.
+
 from __future__ import annotations
 
 import queue
@@ -8,8 +11,8 @@ from typing import Any, Dict, Optional
 from src.core.cmb.module_endpoint import ModuleEndpoint
 from src.core.logging.log_manager import Logger
 from src.core.messages.cognitive_message import CognitiveMessage
-from src.core.modules.common.runtime_work_items import RuntimeWorkItem
 from src.core.modules.common.runtime_episode import EpisodeStore
+from src.core.modules.common.runtime_work_items import RuntimeWorkItem
 
 
 @dataclass
@@ -18,6 +21,7 @@ class ExecutiveLoopContext:
     endpoint: ModuleEndpoint
     logger: Logger
     runtime_queue: "queue.Queue[RuntimeWorkItem]"
+    episode_store: EpisodeStore
     started_at: float = field(default_factory=time.time)
     db_conn: Any = None
     config: Dict[str, Any] = field(default_factory=dict)
