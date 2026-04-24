@@ -4,6 +4,7 @@
 
 from __future__ import annotations
 
+import queue
 from queue import PriorityQueue
 import threading
 import time
@@ -27,6 +28,12 @@ from src.core.modules.aem.task_registry import TaskRegistry
 from src.core.modules.common.policy_decision import PolicyAction
 from src.core.modules.common.prioritized_task_record import TaskLifecycleStatus
 
+from src.core.modules.common.policy_decision import PolicyAction
+from src.core.modules.common.prioritized_task_record import (
+    PrioritizedTaskRecord,
+    TaskLifecycleStatus,
+)
+from src.core.modules.common.task_execution_result import TaskExecutionStatus
 
 class ExecutiveModuleLoop:
     def __init__(
@@ -100,9 +107,9 @@ class ExecutiveModuleLoop:
             while not self._stop_evt.is_set():
                 did_work = False
 
-                """ processed = self._drain_runtime_queue(limit=self.max_queue_items_per_cycle)
+                processed = self._drain_runtime_queue(limit=self.max_queue_items_per_cycle)
                 if processed > 0:
-                    did_work = True """
+                    did_work = True
 
                 msg = self.endpoint.recv(timeout=self.poll_interval)
                 if msg is not None:
@@ -259,54 +266,27 @@ class ExecutiveModuleLoop:
         )
         return work_id
 
+    # -----------------------------------------------------------------------------
+    # 2. REPLACE _drain_runtime_queue WITH THIS VERSION
+    # -----------------------------------------------------------------------------
+
+
     def _drain_runtime_queue(self, limit: int) -> int:
         processed = 0
         while processed < limit:
             try:
-                item = self.runtime_queue.get_nowait()
+                priority_rank, sequence_number, record = self.runtime_queue.get_nowait()
             except queue.Empty:
                 break
 
-            self.logger.info(
-                event_type="EXECUTIVE_WORK_ITEM_DEQUEUED",
-                message="Runtime work item dequeued",
-                payload={
-                    "work_id": item.work_id,
-                    "work_type": item.work_type,
-                    "correlation_id": item.correlation_id,
-                },
-            )
-
             try:
-                item.status = RuntimeTaskStatus.IN_PROGRESS
-                self._process_work_item(item)
-                item.status = RuntimeTaskStatus.COMPLETED
-                self.logger.info(
-                    event_type="EXECUTIVE_WORK_ITEM_COMPLETED",
-                    message="Runtime work item completed",
-                    payload={
-                        "work_id": item.work_id,
-                        "work_type": item.work_type,
-                    },
-                )
-            except Exception as e:
-                item.status = RuntimeTaskStatus.FAILED
-                self.logger.info(
-                    event_type="EXECUTIVE_WORK_ITEM_ERROR",
-                    message="Runtime work item failed",
-                    payload={
-                        "work_id": item.work_id,
-                        "work_type": item.work_type,
-                        "exception_type": type(e).__name__,
-                        "exception": str(e),
-                    },
-                )
+                self._process_prioritized_task_record(record)
             finally:
                 processed += 1
                 self.runtime_queue.task_done()
 
         return processed
-
+    
     def _process_work_item(self, item: RuntimeWorkItem) -> None:
         if item.work_type == WorkItemType.INTERNAL_TASK:
             self.task_executor.execute_internal_task(item.task, self.logger)
@@ -451,4 +431,163 @@ class ExecutiveModuleLoop:
             },
         )
         return record.task_id
+
+    # -----------------------------------------------------------------------------
+    # 3. ADD THIS NEW METHOD INSIDE ExecutiveModuleLoop
+    # -----------------------------------------------------------------------------    
+    def _set_task_status(self, record: PrioritizedTaskRecord, status: TaskLifecycleStatus) -> None:
+        record.status = status
+        self.task_registry.update_status(record.task_id, status)
+        self.logger.info(
+            event_type="TASK_LIFECYCLE_UPDATED",
+            message="Task lifecycle status updated",
+            payload={
+                "task_id": record.task_id,
+                "status": status,
+                "priority": record.priority,
+                "sequence_number": record.sequence_number,
+                "episode_id": record.episode_id,
+            },
+        )
         
+    # -----------------------------------------------------------------------------
+    # 4. ADD THIS NEW METHOD INSIDE ExecutiveModuleLoop
+    # -----------------------------------------------------------------------------
+
+    def _process_prioritized_task_record(self, record: PrioritizedTaskRecord) -> None:
+        self.logger.info(
+            event_type="TASK_DEQUEUED_PRIORITY_QUEUE",
+            message="Task dequeued from priority queue",
+            payload={
+                "task_id": record.task_id,
+                "work_type": record.work_type,
+                "priority": record.priority,
+                "sequence_number": record.sequence_number,
+                "episode_id": record.episode_id,
+            },
+        )
+        self._set_task_status(record, TaskLifecycleStatus.DEQUEUED)
+
+        decision = self.policy_manager.evaluate(record)
+        record.eligible = decision.eligible
+
+        if decision.adjusted_priority is not None:
+            record.priority = decision.adjusted_priority
+
+        record.policy_tags.extend(decision.policy_tags)
+        record.policy_decisions.append(f"EXECUTION_POLICY: {decision.reason}")
+
+        self.logger.info(
+            event_type="TASK_EXECUTION_POLICY_EVALUATED",
+            message="Execution-time policy evaluated task",
+            payload={
+                "task_id": record.task_id,
+                "action": decision.action,
+                "reason": decision.reason,
+                "eligible": decision.eligible,
+                "priority": record.priority,
+                "policy_tags": decision.policy_tags,
+            },
+        )
+
+        if decision.action == PolicyAction.DENY:
+            self._set_task_status(record, TaskLifecycleStatus.DENIED)
+            self.logger.info(
+                event_type="TASK_EXECUTION_DENIED_BY_POLICY",
+                message="Task execution denied by policy",
+                payload={
+                    "task_id": record.task_id,
+                    "reason": decision.reason,
+                },
+            )
+            return
+
+        if decision.action == PolicyAction.DEFER:
+            self._set_task_status(record, TaskLifecycleStatus.DEFERRED)
+            self.logger.info(
+                event_type="TASK_EXECUTION_DEFERRED_BY_POLICY",
+                message="Task execution deferred by policy",
+                payload={
+                    "task_id": record.task_id,
+                    "reason": decision.reason,
+                },
+            )
+            return
+
+        self._set_task_status(record, TaskLifecycleStatus.RUNNING)
+
+        try:
+            if record.work_type == WorkItemType.STATE_TRANSITION:
+                self._process_state_transition_record(record)
+                self._set_task_status(record, TaskLifecycleStatus.COMPLETED)
+                return
+
+            result = self.task_executor.execute(record, self.logger)
+
+            self.logger.info(
+                event_type="TASK_EXECUTION_RESULT",
+                message="Task execution result returned",
+                payload={
+                    "task_id": record.task_id,
+                    "status": result.status,
+                    "message": result.message,
+                    "details": result.details,
+                    "error_code": result.error_code,
+                    "retryable": result.retryable,
+                    "generated_task_count": len(result.generated_tasks),
+                },
+            )
+
+            if result.status == TaskExecutionStatus.SUCCESS:
+                self._set_task_status(record, TaskLifecycleStatus.COMPLETED)
+                return
+
+            if result.status == TaskExecutionStatus.DEFERRED:
+                self._set_task_status(record, TaskLifecycleStatus.DEFERRED)
+                return
+
+            self._set_task_status(record, TaskLifecycleStatus.FAILED)
+
+        except Exception as e:
+            self._set_task_status(record, TaskLifecycleStatus.FAILED)
+            self.logger.info(
+                event_type="TASK_EXECUTION_EXCEPTION",
+                message="Exception while executing task record",
+                payload={
+                    "task_id": record.task_id,
+                    "exception_type": type(e).__name__,
+                    "exception": str(e),
+                },
+            )
+
+        
+    # -----------------------------------------------------------------------------
+    # 5. ADD THIS NEW METHOD INSIDE ExecutiveModuleLoop
+    # -----------------------------------------------------------------------------
+
+
+    def _process_state_transition_record(self, record: PrioritizedTaskRecord) -> None:
+        task = record.task
+        episode = self.episode_store.ensure(task.episode_id)
+
+        if episode.created_at and episode.current_state is None:
+            self.logger.info(
+                event_type="EPISODE_CREATED",
+                message="Episode created",
+                payload={
+                    "task_id": record.task_id,
+                    "episode_id": task.episode_id,
+                },
+            )
+
+        old_state, new_state = self.state_transition_manager.apply_transition(episode, task.new_state)
+        self.logger.info(
+            event_type="EXECUTIVE_STATE_TRANSITION",
+            message="Episode state transition",
+            payload={
+                "task_id": record.task_id,
+                "episode_id": task.episode_id,
+                "old_state": old_state,
+                "new_state": new_state,
+            },
+        )
