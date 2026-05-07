@@ -28,6 +28,8 @@ from src.core.modules.aem.policy_manager import PolicyManager
 from src.core.modules.aem.priority_manager import PriorityManager
 from src.core.modules.aem.task_registry import TaskRegistry
 
+from src.core.modules.aem.task_handler_loader import load_task_handlers
+from src.core.modules.aem.task_registry_singleton import task_registry as task_handler_registry
 
 MODULE_ID = "AEM"
 
@@ -67,6 +69,7 @@ def main() -> None:
     endpoint = build_endpoint(MODULE_ID, channels, logger)
 
     register_handlers()
+    load_task_handlers()
 
     episode_store = EpisodeStore()
     episode_manager = EpisodeManager(episode_store)
@@ -77,6 +80,8 @@ def main() -> None:
         episode_manager=episode_manager,
         directive_intake_unit=directive_intake_unit,
         workspace_coordinator=workspace_coordinator,
+        task_handler_registry=task_handler_registry,
+        module_id=MODULE_ID,
     )
 
     priority_manager = PriorityManager()

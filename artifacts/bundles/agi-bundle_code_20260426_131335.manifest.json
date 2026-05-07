@@ -1,0 +1,1784 @@
+{
+    "file_count":  295,
+    "bundle_type":  "code",
+    "created":  "2026-04-26T13:13:35.5565655-04:00",
+    "git":  {
+                "available":  true,
+                "commit":  "8edb9e03174e5250980435b9d2595628b71b02a1",
+                "branch":  "main"
+            },
+    "files":  [
+                  {
+                      "path":  "docs/architecture/architecture_normalized/ack state machine_docx.txt",
+                      "size":  4584,
+                      "sha256":  "F03EBDE7CCAE5DD574EF2947DC3E104AD715181D091A76C2C3BF77263A6B1EC6",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/AGI Architecture_docx.txt",
+                      "size":  111978,
+                      "sha256":  "43D51D1C8590251F4BC4CB52DD0441C643AEE682D0033565B81409183AA994E8",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/AGI Summary Paper_docx.txt",
+                      "size":  4097,
+                      "sha256":  "EFCE2DB98754D4C5812342B02B5FB88D95FBA829BC0DF9595EEDBF3BB703F32C",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Ack State Machine (cmb)_docx.txt",
+                      "size":  8406,
+                      "sha256":  "2B1D5ABE3AB63E84E36CE701696DDF54A7B6339275DCCECAB1F74F3DA956220E",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Agent Loop And Behavior Matrix (v1)_docx.txt",
+                      "size":  6273,
+                      "sha256":  "091D218048BC5A406E684FFFE67F304E343BE004BB9F18CDD4CA38DEBA36A959",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Cognitive Executive (aem) (v1)_docx.txt",
+                      "size":  7241,
+                      "sha256":  "2F9A348446DE4BA9CBB8B93819A518FE530672024B59D0D1A9D946CD5067D6ED",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Directive And Intent Specification_docx.txt",
+                      "size":  6144,
+                      "sha256":  "56A0E10B71004A5871D23D58FF9D4876A834E8E75570ECC521EEECFB3F462978",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Executive Message Contracts (v1)_docx.txt",
+                      "size":  5552,
+                      "sha256":  "A2A1E90BF5D2028427FAA0BDE9E28AEFD1FF78DA5D924D2E0927714B63C5CEEF",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Intent Object Schema_docx.txt",
+                      "size":  5388,
+                      "sha256":  "03448ED18FF679A170F3834541E820D9F9ACB97E00527A69B4ADB4779E35FE9C",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Llm-based Intent Extraction Interface_docx.txt",
+                      "size":  5515,
+                      "sha256":  "5EB5339EC4E2159105BDFF4C40C587CF9649A6F0E1EB6B8326BF749446BC1C97",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Objective Taxonomy And Priority Model (v1)_docx.txt",
+                      "size":  7966,
+                      "sha256":  "08DA0E8FC58431A6D3A16F3D2F0413CAAAFACDD5F7C1B1FD7CDFFF9CE985410C",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Question Generation And Curiosity Subsystem (v1)_docx.txt",
+                      "size":  10129,
+                      "sha256":  "A892906EB4255950EB74C22718E47F79D2CE53D6BD55C03A5B95DF072EE23957",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Question Template Schema (v1)_docx.txt",
+                      "size":  8416,
+                      "sha256":  "3E44AD088839EC7A29F81CDF6DBAF8745756E5EC3939875330CF9552B66C3C31",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Reflection And Self-assessment Layer (v1)_docx.txt",
+                      "size":  6397,
+                      "sha256":  "0DFEFD706A26068B8DADE9C9FA9FDC73FF49C28E755B42DC40DD736816140F2F",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Section 10 Error Handling And Recovery_docx.txt",
+                      "size":  8104,
+                      "sha256":  "47B91F398DAD04FA209C7E3E5C6B2B8E12F2D7EBBB88BB2DD48231B27F975BCD",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Section 11 Learning And Behavior Extraction_docx.txt",
+                      "size":  7242,
+                      "sha256":  "2A2C58AFF06617D71EDB41935D183E4064AFABF17DF3C0BB7906D3B75901A2FB",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Section 3 Conceptual Model Of Work_docx.txt",
+                      "size":  10123,
+                      "sha256":  "3900695A3EEC17D6EBB1CBD4DBC03148DB4F121CCF34089EB61B259E62E933D8",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Section 4 Event Model_docx.txt",
+                      "size":  8246,
+                      "sha256":  "3483D4B462EA7768EA5039ACF805C02A763FBB86EA974B40410F028376303D4D",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Section 5 Decision And Behavior Model_docx.txt",
+                      "size":  6094,
+                      "sha256":  "F1AA301EF73CE3FEBA33DBC43BB3FE29DA184EC647EAA6839EB118C277D13EF4",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Section 6 Execution Model_docx.txt",
+                      "size":  6523,
+                      "sha256":  "7F72001ADAE54885B969BA40312AD67F94E4D920BBEE90A4D099024651FD6534",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Section 7 Identity And Traceability Model_docx.txt",
+                      "size":  7436,
+                      "sha256":  "8C2EAD47CAEBFD22091683106EC7CE3DCEDB810B3C5C367C70E4DB96CF637458",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Section 8 Communication Architecture (cmb)_docx.txt",
+                      "size":  8585,
+                      "sha256":  "8C3EEB8D07FB891374BD9ECB1009A2D0DF0A878B9946A239FDF45215C41FFDFF",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Section 9 Persistence And Replay Architecture_docx.txt",
+                      "size":  7033,
+                      "sha256":  "F28E04A98339F5C9E734EA651A52C537EAAED025C8E0FB2D9CDDFA4CAAB112DF",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – System Architecture Skeleton \u0026 Introduction_docx.txt",
+                      "size":  4135,
+                      "sha256":  "AB8824B4341DE1345979F0EE3957DE7CDC941F622B6674D8E05F65062F0B9DBE",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Architecture – Termination Metrics And Inquiry Budgets (v1)_docx.txt",
+                      "size":  6638,
+                      "sha256":  "326041DC6FE3BB2C6BE5F4D1F603E2F0E273F7751A4B66BEF6DE3FD9D2E6AD1A",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_agent_loop_and_behavior_matrix_v_1_md.txt",
+                      "size":  6803,
+                      "sha256":  "A40A3E9E821C34CECEA26F4DAD6239468FDF699DD376E2E1F78C37CB493E965D",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_analysis.json",
+                      "size":  18851,
+                      "sha256":  "8BB6F3E13CB5836878024188E7328C9628FCB804D2DC9B8E5A3C01DBE6A97A1E",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_cognitive_executive_aem_v_1_md.txt",
+                      "size":  7851,
+                      "sha256":  "BB1A2E3B5705A474BF6C9AE956B64C9F52F62822625F601290491D0A21F6F0BC",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/ARCHITECTURE_DATA_STRUCTURES_docx.txt",
+                      "size":  18902,
+                      "sha256":  "39C38EDD7B7B90AB8FE26972DA01CBE2B6C5FE13DB90F015A772053ED9AE1815",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/ARCHITECTURE_DATA_STRUCTURES_md.txt",
+                      "size":  19424,
+                      "sha256":  "58D2817A2A7496CF80916ACAED4ED5F612EDCC859764ECCC622A950D03A4F42D",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_directive_and_intent_specification_md.txt",
+                      "size":  6475,
+                      "sha256":  "1BA8B744CFD15D9F88C68A03D24710191D50001940B0CFEB8E44995833CC2056",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_executive_message_contracts_v_1_md.txt",
+                      "size":  6252,
+                      "sha256":  "DD003B9643503A496AC446EB86A4AC1677D576A805567FB7D79FCD0FCEB9B96D",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_full_bundle_v1.txt",
+                      "size":  822948,
+                      "sha256":  "0DA0583BBC7AC199891566BCCFA7EDBD5ADC9F7DA4368FF4531B23F118B8E336",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_index.json",
+                      "size":  13152,
+                      "sha256":  "755FA77E2B9766B37A2B63724612BF4B1840B8E7FEF7646E7105D4E4705E5AED",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_intent_object_schema_md.txt",
+                      "size":  5809,
+                      "sha256":  "9BAE3F7FA237D31B96FA99F5996D368EFDA0FD13395DBA68F03699ACB555DD89",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_llm_based_intent_extraction_interface_md.txt",
+                      "size":  5921,
+                      "sha256":  "0F14FAD331EA33CA6547BC7E64D89F6218A9BEAD39B605FD9B01B899DBEB697B",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_master_outline.md",
+                      "size":  39828,
+                      "sha256":  "48D74CAE1E9669F07117EBCDFDB3100D3836FFB0A99F5DC156FDD454396239E7",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_md.txt",
+                      "size":  6101,
+                      "sha256":  "A8850903E5CF66CD9B882535595F61A03EE2AD30E256828883F8CD9C4B4FDB04",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_module_authority_map.md",
+                      "size":  4529,
+                      "sha256":  "7EA2F42E75971A138B382FD8382F9623937927242F736DF8B73D3E2AC9D473B9",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_module_clustering.md",
+                      "size":  4125,
+                      "sha256":  "844AF0688EFD606484F98ECDB20A36FC35C8EE36B5857756177CD1DCA043FC54",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_objective_taxonomy_and_priority_model_v_1_md.txt",
+                      "size":  8526,
+                      "sha256":  "274C7C7E154AFE2ADE8F492C4CE1E67C9AAF3E137B5BEB527088EFC2BD8E2C87",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_question_generation_and_curiosity_subsystem_v_1_md.txt",
+                      "size":  10844,
+                      "sha256":  "47704A3E12391FF26D0631B0D4705015DFDF8F934A6309B0ECEE800E33DABEE9",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_question_template_schema_v_1_md.txt",
+                      "size":  9155,
+                      "sha256":  "D83068E27E4E8960C098DFB5EBE890C20060F471F7DEACF127E79C0B4B124BB3",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_reflection_and_self_assessment_layer_v_1_md.txt",
+                      "size":  6949,
+                      "sha256":  "4CBC4C9CE33780B6F16465B1364FC966EF0A830FC669F064DC90F97C173D71AC",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/architecture_termination_metrics_and_inquiry_budgets_v_1_md.txt",
+                      "size":  7174,
+                      "sha256":  "62B01519EA74148143EC7C8937564DE8A2567BE40DF82DB1F74C950B3F812C54",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Asp Agi Architecture – Executive Outline_docx.txt",
+                      "size":  4725,
+                      "sha256":  "9C655C07F46BA5ED1DF8D9F620E11D2103DFB8449DFBBFF468F4950AFC36CD11",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/ASP Architecture Draft 1_docx.txt",
+                      "size":  13603,
+                      "sha256":  "929315A6CB1B10F4FA82AFF10FF25902F26A882B4D603CFCFEED48E9BFDBFA48",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/ASP Architecture Summary Canvas - AA Overview_docx.txt",
+                      "size":  6164,
+                      "sha256":  "0560092D1A36298FB5FCA9E1E23CC50D773D5E2EADAC32C9ED10222DCD02E977",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/ASP Architecture_pptx.txt",
+                      "size":  3981,
+                      "sha256":  "806B673ED7AF133EF7268AD9DA52D855721D094E4306F6B71CAA7237D3144582",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Cmb Ack Vocabulary Specification_docx.txt",
+                      "size":  3899,
+                      "sha256":  "7A7C6474B76AB785DE1A9CD9695D7E4B41C18800B65C6B38749F3EB708FFF19C",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Cmb Architecture – Documentation Invariants And Design Notes_docx.txt",
+                      "size":  5037,
+                      "sha256":  "ACB25B3C47823DCD5BBE8C188249CC01EF7696F23DF769FDC3023CEF970B8987",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Cmb Architecture outlineVersion 2_docx.txt",
+                      "size":  5927,
+                      "sha256":  "4375B939816480518081B79CE92ED12F5C8E22C8835C4D6A89DDF2E551AA6E27",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/CMB_ACK_Protocol_v1.0.md",
+                      "size":  6570,
+                      "sha256":  "1C31D9BA7B8E61E624EA1CB1F68C14FE0C2127F5D2D6EACFA250317682E25226",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/cmb_architecture_specification_v3_docx.txt",
+                      "size":  47027,
+                      "sha256":  "4D93FD54D2A30443A9970926F75668327E523A81A63857411B9B7DB0B167C851",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/cmb_architecture_v1_docx.txt",
+                      "size":  11213,
+                      "sha256":  "43730AB61BEDB202B12C30BEF1AE28EE523A08D51C97A2AAB5A69B78189760A0",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/cmb_architecture_v2_docx.txt",
+                      "size":  27867,
+                      "sha256":  "2AE5C6098F5A83250F926B6C75AE2D85E1FC3036069726DD9ED2EC0F886D2083",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/cmb_architecture_v3_docx.txt",
+                      "size":  45292,
+                      "sha256":  "25F5DDE06FF309D21C5E00965C1FB474912D0F343F2174562B959F9EC9C649F2",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/cmb_architecture_v3_pdf.txt",
+                      "size":  54656,
+                      "sha256":  "F8223AD83AB59F08A5694A03AA7ACD6BDB0DDC49B053C9D9370368B17F1D9E47",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/cmb_comments_v1_docx.txt",
+                      "size":  47150,
+                      "sha256":  "95E14AD7E93256F6E4525B5629007CE5627B36CC9F13C3D631BC57EEAA413772",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/cmb_core_architecture_v1.0.md",
+                      "size":  8826,
+                      "sha256":  "F223AF17EBB2FCBB74CD3333D53C7B68350A3E62261F75210D596909ECEA1D44",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/cmb_core_architecture_v1.1.md",
+                      "size":  6544,
+                      "sha256":  "58D8C860F6F8E203CE9BBD90BDADE34F131B54CF10C801A6D1121C24D861A784",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/cmb_message_lifecycle_specification_md.txt",
+                      "size":  5255,
+                      "sha256":  "B5CB95B8980305AB0B99EC2E7D53912EAF9EC9551D7C5D355CE4147860AC1100",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/CMB_Roadmap_v1_docx.txt",
+                      "size":  6484,
+                      "sha256":  "699EF5F48DD8289FE9A6F0D2F69A6F85827003EF30DF9D11C3449F42AEA4D738",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/diagrams/Directive_Processing_Flow.csv",
+                      "size":  841,
+                      "sha256":  "98F66C5C1C92BB46B307ABD592297A08429009DAC2C4E066E4434160AA9135E9",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/diagrams/executive_module.py",
+                      "size":  1263,
+                      "sha256":  "A7348928B25E405D6D298F8E1E694F53386F0562A9A5D86B1E2428686C10948A",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/diagrams/SW_Innate_gounding_architecture.txt",
+                      "size":  526,
+                      "sha256":  "821560E4101D26AA866CCE40BAEBEF026BB617F205F3D41AEE03287DFE127D23",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/diagrams/SW_NLP_process.txt",
+                      "size":  258,
+                      "sha256":  "6420EB5B29E210CFD6D7EE12A6E8BCED1810BD1DFBE483A14024B03CD639569E",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/diagrams/SW_Questioning.txt",
+                      "size":  2097,
+                      "sha256":  "400DD6482B722691D634D43E60179221FDCD5C40E8FFB37CD1A1042FD3440651",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/diagrams_manifest.json",
+                      "size":  8735,
+                      "sha256":  "FF5DEB2FCD421B11321685BF22CC5C81D94A2DBEC328C2A458F5563727CB33F6",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/extraction_failures.json",
+                      "size":  54,
+                      "sha256":  "2D44F2778B093FBCB3F9C6321E4084D4A2E22EAABE650397D06B8A566C3B3040",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/L_Series_pptx.txt",
+                      "size":  396,
+                      "sha256":  "F66A97919C5BC6CDE633453EE16FBF14F310018EB27624EA85EB0A2C2532FCCA",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/Message_Schema_Contracts_v1.0.md",
+                      "size":  7660,
+                      "sha256":  "09A6FA466838DE2374AB60D0D41F86077868CF9558068CC0EA651988A413A98F",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/architecture_normalized/terminology_conflicts_report.md",
+                      "size":  40725,
+                      "sha256":  "1F905C8F9F095492259EFF642B40EA4CE82B7A3F9809F6CAC1B7B65DAE993E3B",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/cmb/CMB_ACK_Protocol_v1.0.md",
+                      "size":  6570,
+                      "sha256":  "1C31D9BA7B8E61E624EA1CB1F68C14FE0C2127F5D2D6EACFA250317682E25226",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/cmb/cmb_core_architecture_v1.1.md",
+                      "size":  6544,
+                      "sha256":  "58D8C860F6F8E203CE9BBD90BDADE34F131B54CF10C801A6D1121C24D861A784",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/cmb/CMB_Transport_State_Machine_Spec_v1.0.md",
+                      "size":  13879,
+                      "sha256":  "736826E5EC2C84E2C20014A4526F17E8F7DBD789016A33867E91EF263149AE1B",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/cmb/Message_Schema_Contracts_v1.0.md",
+                      "size":  7660,
+                      "sha256":  "09A6FA466838DE2374AB60D0D41F86077868CF9558068CC0EA651988A413A98F",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/glossary/architecture_glossary_canonical.md",
+                      "size":  5602,
+                      "sha256":  "2838E1D27EBC7BDBED11FE013B1FC76BB033C2BF83E366BBFB1140AE4252ABFA",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/architecture/README.md",
+                      "size":  99,
+                      "sha256":  "1E405E13A46C6104CCF5837A195DB2ACB290462121B4EFC1FB2DB0C176AEBB87",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/overview/architecture_cas_framework_definition.md",
+                      "size":  27968,
+                      "sha256":  "371FA661755C282359F9778BC121CB4B13D68A57050EAE8A443FFD357EC11E77",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/overview/README.md",
+                      "size":  96,
+                      "sha256":  "88FCD4C6FCAFA9B55424FA22AABF6B69A3DF747CBA269FCF6317D32EBD37CBC7",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/use_cases/factory_qc/README.md",
+                      "size":  115,
+                      "sha256":  "13EADBF4DB948E2153B5CC74D4F4D62F578C144E97C46C71DA47F9549B3C850D",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "docs/use_cases/README.md",
+                      "size":  69,
+                      "sha256":  "0C317CD35DEFFA5BE0D896EFB30385E2010B9972F67EA9969BF29C879BBE190A",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "notebooks/README.md",
+                      "size":  84,
+                      "sha256":  "9ECEF07E1DABE4FFE2AC493F051C80094505399A916AD5895AFA312F0468BCD4",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "pyproject.toml",
+                      "size":  467,
+                      "sha256":  "DE4475B1B05DEE89312CCE6BA1F8648C40D45C6F5358C7FF013ACF78EEFF4552",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "README.md",
+                      "size":  107,
+                      "sha256":  "D13F6EF1B2D902CA8C09F50256F3CB4A08BE709C9D4A8D30915220D289D1364A",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "requirements.txt",
+                      "size":  235,
+                      "sha256":  "EB9AAE4E4855A8F56C6EFF7FD7058E7E0D2779BB6C4544D92C4B942E0E48E8F9",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "setup.py",
+                      "size":  233,
+                      "sha256":  "BAA2527F7220B233ACEE701E4B4D4A64405E46F7F69C8FCDFC4EC24AF580E62E",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/agi_system.egg-info/dependency_links.txt",
+                      "size":  1,
+                      "sha256":  "01BA4719C80B6FE911B091A7C05124B64EEECE964E09C058EF8F9805DACA546B",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/agi_system.egg-info/SOURCES.txt",
+                      "size":  1270,
+                      "sha256":  "3FFC5441811ABAD0A99CC800A0E0BFD0F87BFE948D353977F618CE7F9688A3AD",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/agi_system.egg-info/top_level.txt",
+                      "size":  16,
+                      "sha256":  "1361F48A869C81630FAAEEBC6B3ECDEA5A5950782D5352294A22EBE009F9A323",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/adapters/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/adapters/llm/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/adapters/llm/llm_adapter_http.py",
+                      "size":  841,
+                      "sha256":  "94118FC1D4E5B6179CA686BA225E248C80B75906F58F6A18BEDE0B65E07D879A",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/adapters/llm/llm_adapter_openai.py",
+                      "size":  1188,
+                      "sha256":  "44F7F9F41E99A741A9DCA573BF5FD9DE88723AB95A7664DE410AFBE6934D6DF6",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/adapters/llm/llm_prompt.py",
+                      "size":  645,
+                      "sha256":  "D0B776FB6A5C7BDF3472C3C236F098B2B9F98017C0950EA48166AE8719A11B51",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/agent/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/agent/agent_loop.py",
+                      "size":  2366,
+                      "sha256":  "0DC53B052B8DAA13790D9E212BF565D3F75F7EB66A31C5F044DF5E427869275A",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/agent/behavior_registry.py",
+                      "size":  891,
+                      "sha256":  "ACE01FF56EA0C71E8170AB70E9DE158A33FEA88F17B679048B61ED9636B76AC6",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/agent/llm_consultant_stub.py",
+                      "size":  859,
+                      "sha256":  "FB28141DA18171EAA135811D69B0553E7E0AB63FC2C149D0CF56016B8B7D7BD5",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/agent/skill_executor.py",
+                      "size":  373,
+                      "sha256":  "392470B49A3AFF3AB71600463D7542E39A95C0F080A654FD080E957F18BA7997",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/agent/skills/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/agent/skills/create_docx.py",
+                      "size":  859,
+                      "sha256":  "ED8228EBDCC2177950576BCF371090CADC83AC464C1418DE529C1D61BB33B3C9",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/architecture/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/architecture/agi_system_dataclasses.py",
+                      "size":  20387,
+                      "sha256":  "B6A045BA09E47260CF0D4BA605669BE062A8B6D4ACD232699144D1FC0306C61F",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/cmb/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/cmb/channel_registry.py",
+                      "size":  7980,
+                      "sha256":  "500F90A75FE0029BC8315C5E5ED4B711910B31E689BC0B71E101CF50D0910790",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/cmb/cmb_channel_config.py",
+                      "size":  3751,
+                      "sha256":  "F3ED144CA3E36F9F7888A2E343827E7DFF8D402234ED4B2FE8643D2462876D8A",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/cmb/cmb_channel_router_port.py",
+                      "size":  1587,
+                      "sha256":  "ABCCD66177B18F1206C3C34B23FF28ED6AF06C050596E112237AE13003B934CC",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/cmb/cmb_exceptions.py",
+                      "size":  375,
+                      "sha256":  "D10427A1299E4C1E283121BEC854F77D288734FA26A6DCBB003A5CB9F98DE161",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/cmb/cmb_router.py",
+                      "size":  8430,
+                      "sha256":  "7F61F4435F9AB2E90299B41D241A35AFB43941A0C488FC5A9947A08D1F1A556F",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/cmb/cmb_router_entry.py",
+                      "size":  502,
+                      "sha256":  "40E4B1464D8809CA233CEC487159D681683FC6269937D72508AE869772B536E9",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/cmb/endpoint_config.py",
+                      "size":  3162,
+                      "sha256":  "CB1116F98831F47D863AA0213E200C8462A37CB90B9CB246FFAC896E3CEA1D2E",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/cmb/module_endpoint.py",
+                      "size":  17623,
+                      "sha256":  "C7CC1F33E29360DEA9FA582091F46A2368590D2610BA1534F30A62F6DF1DC0F7",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/cmb/transaction_record.py",
+                      "size":  3902,
+                      "sha256":  "5FAB2D4E0B87A4B36137EC36DBB90AB71ED3F3229F6C02C2D1B22FC20468BA76",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/cmb/transaction_registry.py",
+                      "size":  5956,
+                      "sha256":  "8100C6CD84468E64B8D059019F6BB9FEFE0FC8DEDE31DE0F9F329A199B0B8E45",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/cmb/transport_state_machine.py",
+                      "size":  6129,
+                      "sha256":  "9EA2A48EC9DC889A78111B381AAE0FFAC6CFD0BD667127B154D828E58933ADD1",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/cmb/utils.py",
+                      "size":  534,
+                      "sha256":  "D2B600549648FD12F62A9541A9FBAD03E4B79AFCEF1AF727700A5D784C9D11DF",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/gui/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/gui/directive_gui.py",
+                      "size":  7196,
+                      "sha256":  "4601EE1A0BB5E8BB041A67F9DB1A71BA849E94CBD2A761B0B53DA344685C64F6",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/intent/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/intent/intent_extractor.py",
+                      "size":  1866,
+                      "sha256":  "ECAD04B68A25EAA09E7835D1444AF0A2E3CF7AB1D78D3FFB7BA26A269D4B6287",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/intent/interfaces.py",
+                      "size":  391,
+                      "sha256":  "2F983A2EEBC6CDC07D54441FF086298E7395D37996A706E4715E1F010764DB56",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/intent/llm_adapter_base.py",
+                      "size":  426,
+                      "sha256":  "6A6BD8E1F7813CAC35DD3E2ACED93256E394D6EFFDE0A9344AE7882469E61D9C",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/intent/llm_adapter_mock.py",
+                      "size":  2450,
+                      "sha256":  "1346257241FAB59A28C36C8FA57D4BE12591B7EE49EE77AAFD1BE047CA4F4225",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/intent/llm_adapter_openai.py",
+                      "size":  2136,
+                      "sha256":  "AEE0ABD158094D7A47D3E85F3A8AE8B1C2FE7A9092722F23F07E4A89DD06E336",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/intent/llm_adapter_openai_intent.py",
+                      "size":  6983,
+                      "sha256":  "0EF4ACB9BAB4FEA41008AB87FD9C7066D3FC81796E74824CF22EA6EC3FD2903A",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/intent/logging.py",
+                      "size":  875,
+                      "sha256":  "34C4401E9E89A7F571F648189F6727D549AA823D352E3CF5CF1F829FDBD1C2C7",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/intent/models.py",
+                      "size":  2281,
+                      "sha256":  "B9D6C45B8BA585572BF2F2031AE3F9196E56296197F931BE99108DF47B658463",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/intent/router.py",
+                      "size":  726,
+                      "sha256":  "8747A7C9D6748604A03D0FDA7E455BE215292EA37A406715DAA567ED10E67825",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/intent/schema.py",
+                      "size":  2204,
+                      "sha256":  "FEF927D9454FB98C0E08197F421FA2CE93F506C47A1109EEC17109527C2458D4",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/logging/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/logging/console_debug_log_sink.py",
+                      "size":  106,
+                      "sha256":  "35264A94A0561F2DA9B22E525C226DA37E8B7179BD2A33D6998CC92FAE6CD5FF",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/logging/debug_flag.py",
+                      "size":  17,
+                      "sha256":  "8480E4B1043E4056386EE4975EF57BF9492116F6EB2EC828B252E6334EE4F2DA",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/logging/execution_context.py",
+                      "size":  863,
+                      "sha256":  "C509A99158ED0FC4F0BA845CAE4FBDB0CAE928970A90618B0FF1E701039F27F4",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/logging/file_log_sink.py",
+                      "size":  2231,
+                      "sha256":  "0AE78915078446DA850A8E938A8ED230E410B1CCEEE36724F315D290E4D585DB",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/logging/gui_log_sink.py",
+                      "size":  668,
+                      "sha256":  "C5ECB9560217EC776FE4E952A4E0E4DCF627F322089810F429DA4E02075CEF3A",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/logging/log_entry.py",
+                      "size":  1657,
+                      "sha256":  "272F380064406E214FE8B38E67C19E51CD7008C35B00513C7B123D80A6C25032",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/logging/log_manager.py",
+                      "size":  2356,
+                      "sha256":  "E03DDC4C7D7007E88EEFF6B3C1864F5C6AB01D04E8B1B1E0539A23B296BD7F82",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/logging/log_severity.py",
+                      "size":  597,
+                      "sha256":  "9F1841BE57E71A46190102D38F20FE385C28CF8636C21B1C8D754C1C25C30E39",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/logging/logging_wrapper.py",
+                      "size":  2132,
+                      "sha256":  "71AB4D129B48DAD2BD47B0587A6D8F2AD600B0F75C111BF6ED2B068E4F5F4B6F",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/memory/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/memory/global_blackboard/global_blackboard.py",
+                      "size":  5703,
+                      "sha256":  "139882541EE9A50027D0D67C664B17120BE4A9F45F6A7C9A77EC07636CC68660",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/memory/global_blackboard/handler_loader.py",
+                      "size":  494,
+                      "sha256":  "D573280376940A5F903798AD50B5270A872A49EABD60F50F5B1B437594485848",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/memory/global_blackboard/handler_registry.py",
+                      "size":  2672,
+                      "sha256":  "CC21869F85B7CCE46C2A977459A1C276F1EC26EB2F7976E9FAF5B80A884540F5",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/memory/global_blackboard/registry_singleton.py",
+                      "size":  184,
+                      "sha256":  "B1C0EDE81ED50241AD53DB74A3E7E9EB84CEF33904BC6528D1E2AC5972D12F99",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/messages/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/messages/ack_message.py",
+                      "size":  2859,
+                      "sha256":  "73361CB6EE10E6B43FD433FAC428D620D094266A8B56E95DCDA6D6A2E718DD73",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/messages/cognitive_message.py",
+                      "size":  4083,
+                      "sha256":  "8606C98B9CB5C0605D23D99EBAC1BD7A9854A0F91822875F4069220DB59A3272",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/messages/message_module.py",
+                      "size":  1349,
+                      "sha256":  "177155478C184D039B8A230117A33EFD7A7F8B5D92106F0B999EC90FB971CC58",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/aem.py",
+                      "size":  4160,
+                      "sha256":  "F2E666B7A7126CFB1F7428F9C15D72BCB6B2CAA9BC2B1A686007B29888AA153D",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/directive_intake_unit.py",
+                      "size":  1025,
+                      "sha256":  "AFE03C5C2390703C831058D1DCD99E700B418AC7DB93F213B31ACC310E977FC2",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/episode_manager.py",
+                      "size":  628,
+                      "sha256":  "4331002BB662DDBF52340466A8F09C9C55304AFF87DA7ECC8422E511D3416749",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/handler_loader.py",
+                      "size":  494,
+                      "sha256":  "D573280376940A5F903798AD50B5270A872A49EABD60F50F5B1B437594485848",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/handler_registry.py",
+                      "size":  2726,
+                      "sha256":  "D02B1167D73E07D4FED3CC1FD201324853DECDB9785D4C602114EBC555917A92",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/instruction_decoder.py",
+                      "size":  1965,
+                      "sha256":  "FEE03C62DCB0C811D1EE9782B2199D51BE6D0888B1A8FA42109C23C8BA40F762",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/message_dispatcher.py",
+                      "size":  2457,
+                      "sha256":  "0B288AF5501865EBD64893C7B1942F8CFD1A8D1413138FDD8529CC84BDA37E69",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/message_handlers/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/message_handlers/handle_directive_submitted.py",
+                      "size":  3763,
+                      "sha256":  "2009AD9179D8D4A8A1C28F72BC641BB2CC2AD1C3DEF478D72C8934DEBDBD4F6D",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/message_handlers/handle_intent_result.py",
+                      "size":  1792,
+                      "sha256":  "14EF8FE14C7B3C8740E0AB0AE6A29FB6FD2AFCCD5A0043877304431741B7D8A7",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/policy_manager.py",
+                      "size":  2817,
+                      "sha256":  "82EE2529B6646FF3F0DE08E956AFC0D411DD4904B1D629CC6188A6C73FDBB3AD",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/priority_manager.py",
+                      "size":  4028,
+                      "sha256":  "B4465DE0FF22032C25B9BA5E172AE1EA0077DB5779CB7E49FE34D11FFDA8944D",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/registry_singleton.py",
+                      "size":  171,
+                      "sha256":  "A22B55C8ADCEE3D571482BD002FA7E1FEB268465BB308BCFBEAABCB9D41938AB",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/state_transition_manager.py",
+                      "size":  1161,
+                      "sha256":  "7E93B3517C29FA391768EC8BB58AF0C76F0F8BA2E34A6D9EA1EFBD4B59345CF6",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/task_executor.py",
+                      "size":  7599,
+                      "sha256":  "B2B7E5D1D0D028BD91676A5398AEB24F1464A34A5BC970FB2F60439EC181AD29",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/task_handler_registry.py",
+                      "size":  1068,
+                      "sha256":  "8B664829A9E149ADE1BA187C45D3B9AE00DF118EE7DC7D0E33F6A85A5C83088E",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/task_registry.py",
+                      "size":  948,
+                      "sha256":  "8CECED257DF48F2EBAA888CFCB5370BFA52B0652FAB422B4F530B44822F90AF5",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/aem/workspace_coordinator.py",
+                      "size":  1523,
+                      "sha256":  "1BE3A37AABBAE0CCBFDD58ED52F97A009E27DDF800FF753471FFC7D23DDCF4B2",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/behavior/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/behavior/behavior_module.py",
+                      "size":  3042,
+                      "sha256":  "8878DD55525A234036BF06CB0AE9BCE3810140B4DC6916CE9ACD8177B3860BE2",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/common.py",
+                      "size":  858,
+                      "sha256":  "70994FF1AC702363C00490FAEE06ED33042A0A47EBF96DA2F2C6374C31CE6B2C",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/common/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/common/directive_intake_record.py",
+                      "size":  586,
+                      "sha256":  "2EE7CF5660B7B907071FF62F6E4476ED2FDC3FB6E21309704345FFAC82B41E28",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/common/executive_module_loop.py",
+                      "size":  22710,
+                      "sha256":  "24273EC4261D89C0B11690EEA1A853ADA7828A763D0CAFE425D094B931A47942",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/common/handler_result.py",
+                      "size":  1224,
+                      "sha256":  "421749B1BFE14BA62E4CF46D2529D8E4205ED479E4464AFAC5D687ED8AD3156D",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/common/policy_decision.py",
+                      "size":  666,
+                      "sha256":  "4423FCD2D01026F59175C0D72A941C9456BF98582F0397E30D35D85BC3DDDA32",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/common/prioritized_task_record.py",
+                      "size":  1768,
+                      "sha256":  "A9A7D49CBAE7B7A8F4426347D6765F8064C264023EDC7A53C8CD8D9845B08894",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/common/runtime_context.py",
+                      "size":  970,
+                      "sha256":  "064DFBE71D9957A9253678E8CDC7DE605D2E9B34EA36364634C6076682C519EF",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/common/runtime_episode.py",
+                      "size":  1226,
+                      "sha256":  "AD72391D5EF302533A23009C08579833EA5F04374D4507F6AE6973537DD74C94",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/common/runtime_work_items.py",
+                      "size":  846,
+                      "sha256":  "B5BEBF1D09074390B9F8CE29F880E03BF89EA94AD5610DA788280283C7C64D15",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/common/state_transition_task.py",
+                      "size":  338,
+                      "sha256":  "171C9783CA564661C8B89265C417CD5D5A694A7BC6A29023F21CE8486F34598F",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/common/task_execution_result.py",
+                      "size":  680,
+                      "sha256":  "901445C85A575521DA4E5F22D1FDDCEDCEDA2AADB29FC8AB679EC32FBE7245F7",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/common_module_loop.py",
+                      "size":  4044,
+                      "sha256":  "9795EDC001E3CBF43FDEE709D4778D583014E221DBD8F597234C63806C12EB5C",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/nlp/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/nlp/handler_loader.py",
+                      "size":  488,
+                      "sha256":  "304DBBD82A2E1B4EAC9A6C78F4F9B51AE71228387FEB15FE1DE857827633A2BE",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/nlp/handler_registry.py",
+                      "size":  2299,
+                      "sha256":  "75539A79FC3873B6E746BB3904315533296B170DE9C83D27BF3140064149D55E",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/nlp/message_handlers/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/nlp/message_handlers/directive_submit_handler.py",
+                      "size":  3138,
+                      "sha256":  "F2EEE1DD40394E4DA11DA90EFB769F57F00081382DD8C607DD9F7704EF2B7708",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/nlp/nlp_module.py",
+                      "size":  5686,
+                      "sha256":  "C98C6B4255A0F834543CDC2621657FA096870C59922A4E79E09972E5F9133B2C",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/nlp/registry_singleton.py",
+                      "size":  171,
+                      "sha256":  "50463837AB6FCF787890FFDFF71FBD228559FBAC9D34E9D8D9F07BBD1A7D8CB7",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/perception/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/perception/perception_module.py",
+                      "size":  1626,
+                      "sha256":  "2AA0421710449301AFD796703E5A6DD5875C6F96F480141D0E7E9F5F39293AC1",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/planner/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/planner/actions/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/planner/actions/basic_actions.py",
+                      "size":  18777,
+                      "sha256":  "62AC73689F013DC296001B26EDE33CBA09548AE1D7DCEFFF27A2F66609D9AAA2",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/planner/handler_loader.py",
+                      "size":  494,
+                      "sha256":  "D573280376940A5F903798AD50B5270A872A49EABD60F50F5B1B437594485848",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/planner/handler_registry.py",
+                      "size":  2299,
+                      "sha256":  "75539A79FC3873B6E746BB3904315533296B170DE9C83D27BF3140064149D55E",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/planner/message_handlers/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/planner/planner.py",
+                      "size":  1073,
+                      "sha256":  "BA8134F17455E425FEE988B049C7096BD5F22EE96A7AC0BB90E3F0D6FDF29983",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/planner/planner_module.py",
+                      "size":  5907,
+                      "sha256":  "C75067B821EA301D5E097E3F93617F030871DA47931278A6AB3A5C34AEEB537B",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/planner/registry_singleton.py",
+                      "size":  171,
+                      "sha256":  "50463837AB6FCF787890FFDFF71FBD228559FBAC9D34E9D8D9F07BBD1A7D8CB7",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/planner/rule_engine/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/planner/rule_engine/actions_registry.py",
+                      "size":  1035,
+                      "sha256":  "7EAFA575814E7B1DB51E955DACCD10028B6307976871C73BB293039F37B91D82",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/planner/rule_engine/conditions.py",
+                      "size":  1182,
+                      "sha256":  "FD82806299DC2DA8E4731CA14A9B4E34816E2D1DD0181332C067F4B1F53AD9E1",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/planner/rule_engine/engine.py",
+                      "size":  1182,
+                      "sha256":  "34F14F4BC56B6325AB2C6FC56428CA42C49B0F3BF3E2CC2532C44A96017C2FFD",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/modules/planner/rule_engine/repository.py",
+                      "size":  1131,
+                      "sha256":  "780AE1E6BF97E847A480EAA5759249F9E9455AD3E47745207967018A184A4403",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/policy/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/policy/model_selection/enums.py",
+                      "size":  310,
+                      "sha256":  "D5CE07F60BB496B850D9C9E54B188C6A743645D090C0DA3497F7378A7BA85D33",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/policy/model_selection/models.py",
+                      "size":  629,
+                      "sha256":  "23AE3C89A6510508B55C96B5E2C38BEB0419CC92B53DBE17226C9BACCC1A023F",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/policy/model_selection/policy.py",
+                      "size":  1455,
+                      "sha256":  "7F78F606BCE584D280E1A34A7A0E8EA9E5736D3F69402565C46FFCF4607F51F8",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/core/utils/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/factory_qc/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/factory_qc/adapters/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/factory_qc/cli/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/factory_qc/config/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/factory_qc/docs/deep-research-report.md",
+                      "size":  17200,
+                      "sha256":  "7BF275228CCFCD8AF948D920E0B83EC8139E2C74623F5D89BA6688A36EAD8D48",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/factory_qc/docs/product_incident_log_correlation_engine_ilce_12_week_build_plan.md",
+                      "size":  3865,
+                      "sha256":  "3CE27FFDD81920846B7DE22188B63E510F61B122122FFDF0C62330F0DD9D449F",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/factory_qc/docs/product_incident_log_correlation_engine_ilce_system_description.md",
+                      "size":  4557,
+                      "sha256":  "76A79C4530942E16798A5C551D85FCA6831FB248F3A4B505934E5AD9A1970368",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/factory_qc/domain/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/factory_qc/services/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/legacy_code/aem.py",
+                      "size":  5766,
+                      "sha256":  "E0F01D7618419F976FF929C6B748933671C3120FDBCFD64CE0609CC65700D541",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/legacy_code/cmb_router_legacy_3.py",
+                      "size":  5996,
+                      "sha256":  "8DE98179CF1FF504677DE0811852FC73AECB7F417817264DE13692A3CB5743FB",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/legacy_code/cmb_router_legacy_pubsub.py",
+                      "size":  5195,
+                      "sha256":  "691C3E5B3AB3C344C457B1E76EE01E82D664AC2576944B1A3CD8B59EF7ED7A1F",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/legacy_code/cmb_router_legecy_router_ack.py",
+                      "size":  7419,
+                      "sha256":  "8C3A4D153C3706AFF9CD08AE9CE981305761E69725DE5C117047F3BBB958FAE2",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/legacy_code/executive_module.py",
+                      "size":  6714,
+                      "sha256":  "7FDEE216E793B820B89DA46FB10E741A92C10CC690C220581D4191420B8A26C4",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/legacy_code/executive_module_legacy.py",
+                      "size":  7053,
+                      "sha256":  "985AE32ABD29CD0037EBBAE903F9961B3F8C47A1652F6353D2732AAFFA9BE80B",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/legacy_code/executive_stub.py",
+                      "size":  1662,
+                      "sha256":  "6E87E9981CA29ED3C4C974B80A52260AEE3B220E4CEB68EF40B1D64046F24B7D",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/legacy_code/planner_module.py",
+                      "size":  4512,
+                      "sha256":  "99793CE7254B65356353AB71D96DCF8B77913E138D5B5A9CDA5BA51A2DC94262",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/legacy_code/planner_module_legacy.py",
+                      "size":  4890,
+                      "sha256":  "72AF9BB2D54753078CF749F37162197E8EFFF1210800D80105F9940451A64540",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/templates/handler_loader.py",
+                      "size":  494,
+                      "sha256":  "D573280376940A5F903798AD50B5270A872A49EABD60F50F5B1B437594485848",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/templates/handler_registry.py",
+                      "size":  2726,
+                      "sha256":  "D02B1167D73E07D4FED3CC1FD201324853DECDB9785D4C602114EBC555917A92",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/templates/message_handler_template.py",
+                      "size":  3467,
+                      "sha256":  "B80673CD107D63AE99131CDCBF9D1054BB92DB04EE9A28C187653E36FA74DDAF",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/templates/module_common_template.py",
+                      "size":  5703,
+                      "sha256":  "88F9C1990FAE23A760013220FD1348D61A46BED2A8BD62AD0F978AD9B65E187C",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "src/templates/registry_singleton.py",
+                      "size":  171,
+                      "sha256":  "A22B55C8ADCEE3D571482BD002FA7E1FEB268465BB308BCFBEAABCB9D41938AB",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/agent/run_agent_demo.py",
+                      "size":  1298,
+                      "sha256":  "5EE537F36B1282116595189331E994FF85E9E642ECD3748F78423446D436742F",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/cmb_demo_01/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/cmb_demo_01/gui_cmb_demo.py",
+                      "size":  7375,
+                      "sha256":  "878D6EDE55AAA30C2F4015E3FD48CBBE08EB9D036EDFEFF3C53F3251E4063BA3",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/cmb_demo_01/org_gui_cmb_demo.py",
+                      "size":  3679,
+                      "sha256":  "00CD4EEA2EC5F17E12C39F4368644866BD98E3BC38067A0A83AFB67CFF209D94",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/cmb_demo_01/run_cmb_demo.py",
+                      "size":  3378,
+                      "sha256":  "8FFC481F06A8015BDD0C03B5901DB8D207A2B95F81BDFBA70EE19E8A64C005FD",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/cmb_demo_01/streamlit_gui.py",
+                      "size":  2348,
+                      "sha256":  "75BF966B9044BAA00A7D7DC219B6E791BF8810E0B17B0B6E9265B0A620678BBC",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/cmb_demo_02/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/cmb_demo_02/client.py",
+                      "size":  245,
+                      "sha256":  "84AA3D7D639F164D336BD53DBA8B5D3D098F4F3556A2D729A6A111D6EC6195BA",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/cmb_demo_02/dealer.py",
+                      "size":  649,
+                      "sha256":  "D648C57134F3E86DE9B3B67C6080F5ACAB1CAA5425D0189F104FBAEC4776E0D6",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/cmb_demo_02/publisher.py",
+                      "size":  483,
+                      "sha256":  "E3BEC36FB8B3FC2701A8A993D385BFC9866D30768EB30CFFA0866AB522C900C1",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/cmb_demo_02/router.py",
+                      "size":  513,
+                      "sha256":  "FFEE888F2D9ED00F52E08A90A9F79984952F4D56A87036E226D20520535D2792",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/cmb_demo_02/server.py",
+                      "size":  286,
+                      "sha256":  "E53C00FD1CFBA2D1118DB9063B4CDAEFC75F6F2FCF219FA808C20E58EA1784C6",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/cmb_demo_02/subscriber.py",
+                      "size":  468,
+                      "sha256":  "829EE0FA8D417174B50EF1B4DEB7B6C6E2627EA37F7E2C8D4295E1AA10F4E32B",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/cmb_demo_03/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/cmb_demo_03/simulated_threading_demo_cmb.py",
+                      "size":  1615,
+                      "sha256":  "2C65F313CCF02069569FED89B7CB0BCDA70FA0CE01D699306539B0535710CA8C",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/executive/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/gui_dir_demo/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/gui_dir_demo/gui.py",
+                      "size":  5901,
+                      "sha256":  "0C90B7E1E9E57B6FD6F3BCAB185F03252AE65856863D033765C6A093C735278B",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/intent/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/intent/run_intent_demo.py",
+                      "size":  1341,
+                      "sha256":  "E1B8F5DBBA921F81E1242BDD2F5CCC2ADB312C0C92D5398C75A7333FAE383C66",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/intent/test_intent_extractor.py",
+                      "size":  502,
+                      "sha256":  "C7DC3491F6B90E3732887C0771EB94FBF61F23874D913D5684D98E0F68C6D59C",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/intent/test_intent_models.py",
+                      "size":  698,
+                      "sha256":  "520DFB0F04134E92ADC7261303BB049A4182B8FB7CB5E2CAA3701813996115B4",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/intent/test_intent_router.py",
+                      "size":  768,
+                      "sha256":  "9503E2407CE600CE2C16CEE7C9850BCD0A057BE77756112CDDA321508798E516",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/nlp/handler_loader.py",
+                      "size":  401,
+                      "sha256":  "E0C870438B9C421AEEE5DCBE44F849860414123D777006208643ED3D8C6EB03F",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/nlp/handler_registry.py",
+                      "size":  2299,
+                      "sha256":  "75539A79FC3873B6E746BB3904315533296B170DE9C83D27BF3140064149D55E",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/nlp/main.py",
+                      "size":  1027,
+                      "sha256":  "4E38AF26DFA250330A8F2C8DE40F6CC534679E8AA3C2C4BDB0984CB97860A963",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/nlp/message_handlers/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/nlp/message_handlers/default_handler.py",
+                      "size":  279,
+                      "sha256":  "C5FC15D99946D19A6E9F263CF00CFEBDBB69F0CF090A82BD022F12A8CFB9244E",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/nlp/message_handlers/intent_result_handler.py",
+                      "size":  277,
+                      "sha256":  "F2CDFE65061D657E2EF8670E0E9EB5B43857008C98B461570F912B691A92BDD7",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/nlp/message_handlers/ping_handler.py",
+                      "size":  268,
+                      "sha256":  "48FEC102B44B7DFBB514FDBF6A6F39323E9C12EC0308AAFDCE20D84821A9B928",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/nlp/message_types.py",
+                      "size":  391,
+                      "sha256":  "6EE2DD504CC767112F0A2E2343E301637ECE114ACFAB2924558209848A810113",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/nlp/registry_singleton.py",
+                      "size":  150,
+                      "sha256":  "076CF1A25F2EDAEBCBC329E6FFF6511B89240EC017075CF852831F9399EA6D63",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/questioning/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/reflection/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/run_directive_demo/gui/__init__.py",
+                      "size":  0,
+                      "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/run_directive_demo/gui/directive_gui.py",
+                      "size":  6464,
+                      "sha256":  "9A8540FB17DA22C953DBB733978E500C2677A9152D75778036F2C7072DCEFCA0",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/run_directive_demo/gui/directive_gui_2.py",
+                      "size":  6593,
+                      "sha256":  "11961DEF2691DA1DD1B8258E414D254E2BAD42DA2C75C2239462D3AB299811E7",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "test_cases/run_directive_demo/run_directive_demo.py",
+                      "size":  2944,
+                      "sha256":  "A70A9DD21905C81588441BF734A731646AB730A0AABA6E8131D8BA345D7DAB86",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/agi_bundle.py",
+                      "size":  199847,
+                      "sha256":  "5E97F0861470891704FA67843950F9A3A3C7117001325463966D464B21EDF0A1",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/agi_demo_test_bundle.py",
+                      "size":  52102,
+                      "sha256":  "44BC263354085ED3D337C9FA5EB7A546DCACEDE67A010CFFDF2115E9B4AF21B8",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/arch_ingest/build_arch_index.py",
+                      "size":  1248,
+                      "sha256":  "220183654791843712BB03A0ED7D09277732C59A52E9998962FC5370A071C63C",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/arch_ingest/bundle_architecture.ps1",
+                      "size":  1962,
+                      "sha256":  "362BD05CBE4197B6D1909408EF9490F6D4EEFFC1151C390339124AC6754D798F",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/arch_ingest/cluster_architecture_modules.py",
+                      "size":  3121,
+                      "sha256":  "B3D3DBCDFECFB95626F0032D8FDB2108F498633FBB078D91A1FBB73F8EA79876",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/arch_ingest/detect_terminology_conflicts.py",
+                      "size":  2118,
+                      "sha256":  "2DFC3FC8B782E34CE754C2DF39A9FC888F0BC2AB8C6467B940B3285DDED28259",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/arch_ingest/extract_all_documents.py",
+                      "size":  3510,
+                      "sha256":  "C06658724EC32434D09BCC314BA4C9BE18A448B68CA5758CFD95D45B3455F6B1",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/arch_ingest/generate_master_outline.py",
+                      "size":  2803,
+                      "sha256":  "8AE61D002A239BD04DC97F08D1B83F12E633D4B169D3124482C9B1D543897842",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/arch_ingest/generate_module_authority_map.py",
+                      "size":  2382,
+                      "sha256":  "96017AC71867C29C0D1C30F4B7D54DFAAF0C5A3901469B6BA96D9AC3CD409211",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/bundle_cmb_transport.ps1",
+                      "size":  1859,
+                      "sha256":  "D9CB12290EF69AE96E29D156F7931570A01AB8008432DF8C4F388E6A2F3DBFB1",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/concat_repo_bundle.ps1",
+                      "size":  12796,
+                      "sha256":  "D5B0C0FBB5F17512E0A1219410B41FBD059A02C610316D949D57956A74537DAB",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/docx_to_text.py",
+                      "size":  481,
+                      "sha256":  "DC35A3EE9DF27C722A25FF8D107F4794143497130BF9A0DBD33DF8A95F138038",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/drift_scanner.py",
+                      "size":  1449,
+                      "sha256":  "0FD650AAFF63B117368E48CEDF2DC0520CBF71085E88A183EFCE525719C6F9C8",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/filelayout.txt",
+                      "size":  10552,
+                      "sha256":  "982F8DFA5F2A5B48FF1AF28E25926EF8271D3BE4BEBDEDCCAD0D4959A2CC29B8",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/generate_filelayout.ps1",
+                      "size":  3888,
+                      "sha256":  "785D774C757C7A2EEA14CCCBCC1367EA37934A27EEF7E146EB3BDFF499E83E17",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/README.md",
+                      "size":  54,
+                      "sha256":  "1A0EEBD7B9C51FB33CC5159812CD4DC4BEC2E3B1EF50BFB1A5A2F4D41A17AC18",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/repo_bundle.ps1",
+                      "size":  17474,
+                      "sha256":  "D2E81350889FE46048660F5A0412FC695CA4F09D5B4C52543C790D5E38A1E7BA",
+                      "included_in_text":  true
+                  },
+                  {
+                      "path":  "tools/test_openai.py",
+                      "size":  174,
+                      "sha256":  "D0241E125F497075CC99D285884A377D192986A4E1BA788DA8C1903ACEA9A054",
+                      "included_in_text":  true
+                  }
+              ],
+    "version":  "v0.1.0",
+    "schema":  "agi.bundle.v3"
+}
