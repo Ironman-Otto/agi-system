@@ -1,11 +1,13 @@
 # File: src/core/modules/common/task_execution_context.py
-# Purpose: Context object passed into AEM task handlers during task execution.
+# Placement: Replace the current TaskExecutionContext with this version.
+# Purpose: Add endpoint access so task handlers can send CMB messages.
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any
 
+from src.core.cmb.module_endpoint import ModuleEndpoint
 from src.core.logging.log_manager import Logger
 from src.core.modules.aem.directive_intake_unit import DirectiveIntakeUnit
 from src.core.modules.aem.episode_manager import EpisodeManager
@@ -21,5 +23,6 @@ class TaskExecutionContext:
     episode_manager: EpisodeManager
     directive_intake_unit: DirectiveIntakeUnit
     workspace_coordinator: WorkspaceCoordinator
+    endpoint: ModuleEndpoint | None = None
     enqueue_callback: Any = None
     config: dict[str, Any] | None = None

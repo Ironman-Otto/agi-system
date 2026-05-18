@@ -1,5 +1,6 @@
 # File: src/core/modules/aem/state_transition_manager.py
-# Purpose: Validates and applies legal episode state transitions.
+# Placement: Replace the current StateTransitionManager with this version.
+# Purpose: Add Phase 7 NLP-related episode states.
 
 from __future__ import annotations
 
@@ -14,7 +15,9 @@ class StateTransitionManager:
             None: {"RECEIVED"},
             "RECEIVED": {"DIRECTIVE_INTAKE_RECORDED", "STAGED_FOR_NLP"},
             "DIRECTIVE_INTAKE_RECORDED": {"STAGED_FOR_NLP"},
-            "STAGED_FOR_NLP": set(),
+            "STAGED_FOR_NLP": {"NLP_REQUEST_SENT"},
+            "NLP_REQUEST_SENT": {"INTENT_EXTRACTED"},
+            "INTENT_EXTRACTED": set(),
         }
 
     def can_transition(self, old_state: Optional[str], new_state: str) -> bool:

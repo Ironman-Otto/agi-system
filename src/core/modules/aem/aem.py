@@ -82,6 +82,7 @@ def main() -> None:
         workspace_coordinator=workspace_coordinator,
         task_handler_registry=task_handler_registry,
         module_id=MODULE_ID,
+        endpoint=endpoint,
     )
 
     priority_manager = PriorityManager()

@@ -3,8 +3,28 @@ from pathlib import Path
 from typing import Optional
 import threading
 from datetime import datetime, timezone
+import inspect
 
 from src.core.logging.log_entry import LogEntry
+
+def get_caller_info(skip: int = 4) -> dict:
+    try:
+        frame = inspect.currentframe()
+        for _ in range(skip):
+            if frame is None:
+                return {}
+            frame = frame.f_back
+
+        if frame is None:
+            return {}
+
+        return {
+            "function": frame.f_code.co_name,
+            "line": frame.f_lineno,
+            "file": frame.f_code.co_filename,
+        }
+    except Exception:
+        return {}
 
 
 class FileLogSink:
@@ -25,7 +45,7 @@ class FileLogSink:
         # Open file in append mode, line-buffered
         self._file = open(self._path, "a", encoding="utf-8")
 
-    
+        
     def to_human(self,ts: float) -> str:
         return datetime.fromtimestamp(ts, tz=timezone.utc)\
             .astimezone()\
@@ -37,7 +57,9 @@ class FileLogSink:
 
         This method must not raise exceptions outward.
         """
+    
         try:
+            caller_info = get_caller_info()
             record = {
                 "event_type": entry.event_type,
                 "source_module": entry.source_module,
@@ -52,6 +74,9 @@ class FileLogSink:
                 "log_id": entry.log_id,
                 "timestamp": entry.timestamp,
                 "human_timestamp": self.to_human(entry.timestamp),
+                "function": caller_info["function"],
+                "line": caller_info["line"],
+                "file": caller_info["file"],
             }
             with self._lock:
                 self._file.write(json.dumps(record) + "\n\n")

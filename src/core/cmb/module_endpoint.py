@@ -386,7 +386,8 @@ class ModuleEndpoint:
                     event_type="ENDPOINT_SENT_MESSAGE",
                     message=f"ModuleEndpoint {self.cfg.module_id} sent message on channel {ch_name} to {dest!r}",
                     payload={
-                        "channels": list(self.cfg.channels.keys())
+                        "channels": list(self.cfg.channels.keys()),
+                                         "message_id": message_id,
                     }
                 )
                 

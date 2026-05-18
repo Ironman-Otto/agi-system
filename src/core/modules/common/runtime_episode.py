@@ -1,5 +1,6 @@
 # File: src/core/modules/common/runtime_episode.py
-# Purpose: Episode record and in-memory episode store.
+# Placement: Replace or update the current EpisodeRecord to include intent_result.
+# Purpose: Add NLP intent-result storage to episode memory.
 
 from __future__ import annotations
 
@@ -8,6 +9,7 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, Optional
 
 from src.core.modules.common.directive_intake_record import DirectiveIntakeRecord
+from src.core.modules.common.intent_result_record import IntentResultRecord
 
 
 @dataclass
@@ -16,6 +18,7 @@ class EpisodeRecord:
     created_at: float = field(default_factory=time.time)
     current_state: Optional[str] = None
     directive_intake: Optional[DirectiveIntakeRecord] = None
+    intent_result: Optional[IntentResultRecord] = None
     data: Dict[str, Any] = field(default_factory=dict)
 
 

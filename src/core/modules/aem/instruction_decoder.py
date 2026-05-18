@@ -1,5 +1,6 @@
 # File: src/core/modules/aem/instruction_decoder.py
-# Purpose: Maps inbound messages to generic AEM task sets.
+# Placement: Replace the current InstructionDecoder with this version.
+# Purpose: Extend DIRECTIVE_SUBMITTED decoding to include NLP intent extraction tasks.
 
 from __future__ import annotations
 
@@ -50,10 +51,33 @@ class InstructionDecoder:
                 },
             ),
             InternalTask(
+                task_name="PREPARE_NLP_INTENT_REQUEST",
+                payload={
+                    "episode_id": episode_id,
+                    "message_id": source_message_id,
+                },
+            ),
+            StateTransitionTask(
+                episode_id=episode_id,
+                new_state="STAGED_FOR_NLP",
+            ),
+            InternalTask(
+                task_name="SEND_NLP_INTENT_REQUEST",
+                payload={
+                    "episode_id": episode_id,
+                    "message_id": source_message_id,
+                },
+            ),
+            StateTransitionTask(
+                episode_id=episode_id,
+                new_state="NLP_REQUEST_SENT",
+            ),
+            InternalTask(
                 task_name="BROADCAST_WORKSPACE_CHANGE",
                 payload={
                     "episode_id": episode_id,
                     "message_id": source_message_id,
+                    "priority_hint": "LOW",
                 },
             ),
         ]

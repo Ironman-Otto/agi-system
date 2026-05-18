@@ -43,31 +43,21 @@ class HandlerRegistry:
             return fn
         return self._handlers.get(("*", None))
 
-    def dispatch(self, message: Any, ctx: dict) -> Any:
-        
+    def dispatch(self, message: Any, ctx: Any):
         msg_type = getattr(message, "msg_type", None)
         msg_version = getattr(message, "msg_version", None)
-
-        if debug_flag == True:
-             print(f"\nDispatching message of type '{msg_type}' ctx: {ctx}\n")
 
         if not isinstance(msg_type, str) or not msg_type:
             return DispatchResult(False, reason="Message missing valid msg_type")
 
         fn = self.resolve(msg_type, msg_version)
-
         if fn is None:
-            return DispatchResult(False, reason=f"No handler for msg_type='{msg_type}' version='{msg_version}'")
-        
-        if debug_flag == True:
-            print(f"\nCalling message of type '{msg_type}' ctx: {ctx}\n")
-        
-        handler_result = fn(message, ctx)
-        if handler_result is not None:
-            return handler_result 
+            return DispatchResult(
+                False,
+                reason=f"No handler for msg_type='{msg_type}' version='{msg_version}'"
+            )
 
-        return DispatchResult(True, handler_name=getattr(fn, "__name__", "<handler>"))
-
+        return fn(message, ctx)
     def list_handlers(self) -> Dict[str, str]:
         out: Dict[str, str] = {}
         for (t, v), fn in self._handlers.items():

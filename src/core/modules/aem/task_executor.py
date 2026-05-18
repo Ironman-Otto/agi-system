@@ -1,9 +1,10 @@
 # File: src/core/modules/aem/task_executor.py
 # Placement: Replace the current TaskExecutor with this version.
-# Purpose: Dispatch internal task execution through TaskHandlerRegistry instead of hardcoded if/elif blocks.
+# Purpose: Pass ModuleEndpoint into TaskExecutionContext so task handlers can send CMB messages.
 
 from __future__ import annotations
 
+from src.core.cmb.module_endpoint import ModuleEndpoint
 from src.core.modules.aem.directive_intake_unit import DirectiveIntakeUnit
 from src.core.modules.aem.episode_manager import EpisodeManager
 from src.core.modules.aem.task_handler_registry import TaskHandlerRegistry
@@ -27,6 +28,7 @@ class TaskExecutor:
         workspace_coordinator: WorkspaceCoordinator,
         task_handler_registry: TaskHandlerRegistry,
         module_id: str = "AEM",
+        endpoint: ModuleEndpoint | None = None,
         enqueue_callback=None,
     ):
         self.episode_manager = episode_manager
@@ -34,6 +36,7 @@ class TaskExecutor:
         self.workspace_coordinator = workspace_coordinator
         self.task_handler_registry = task_handler_registry
         self.module_id = module_id
+        self.endpoint = endpoint
         self.enqueue_callback = enqueue_callback
 
     def execute(self, record: PrioritizedTaskRecord, logger) -> TaskExecutionResult:
@@ -95,6 +98,7 @@ class TaskExecutor:
             episode_manager=self.episode_manager,
             directive_intake_unit=self.directive_intake_unit,
             workspace_coordinator=self.workspace_coordinator,
+            endpoint=self.endpoint,
             enqueue_callback=self.enqueue_callback,
             config={},
         )
