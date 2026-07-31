@@ -1,0 +1,3358 @@
+========================================================================================
+STRUCTURED LOG MESSAGE TRACE REPORT
+========================================================================================
+Input file:                 c:\dev\agi-system\logs\system.jsonl
+Parsed log entries:         296
+Unique message IDs:         10
+Entries missing message ID: 273
+Possible duplicate groups:  0
+Parse issues:               0
+
+========================================================================================
+MESSAGES SORTED BY MESSAGE ID
+========================================================================================
+
+Message ID: 062b4276-829e-4da0-ac7c-8afb9623cb33
+Occurrences: 4
+----------------------------------------------------------------------------------------
+  Entry 1
+    Line:          147
+    Timestamp:     1785499776.2042263
+    Human time:    2026-07-31 08:09:36.204
+    Event type:    ENDPOINT_SENT_MESSAGE
+    Message type:  <missing>
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        e96d2740-ab5b-4d15-8a3a-992db09ec52e
+    Message:       ModuleEndpoint NLP sent message on channel CC to b'AEM'
+
+  Entry 2
+    Line:          153
+    Timestamp:     1785499776.205526
+    Human time:    2026-07-31 08:09:36.205
+    Event type:    EXECUTIVE_MESSAGE_RECV
+    Message type:  INTENT_EXTRACTED
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b3b012fa-6063-4962-899f-2f443cf0c6ab
+    Message:       Inbound message received
+
+  Entry 3
+    Line:          156
+    Timestamp:     1785499776.206341
+    Human time:    2026-07-31 08:09:36.206
+    Event type:    AEM_INTENT_EXTRACTED_HANDLER
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        48c42bcc-449c-44fa-b2b5-5f6e4b2fc094
+    Message:       INTENT_EXTRACTED handler invoked
+
+  Entry 4
+    Line:          158
+    Timestamp:     1785499776.2065551
+    Human time:    2026-07-31 08:09:36.206
+    Event type:    AEM_INTENT_EXTRACTED_ACCEPTED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        1004ccb3-9b08-41ff-b213-e03abcebfa22
+    Message:       INTENT_EXTRACTED accepted by AEM
+
+========================================================================================
+
+Message ID: 55c8a73b-261c-4cbd-ab05-d8e8621fa068
+Occurrences: 3
+----------------------------------------------------------------------------------------
+  Entry 1
+    Line:          121
+    Timestamp:     1785499776.1524875
+    Human time:    2026-07-31 08:09:36.152
+    Event type:    NLP_INTENT_REQUEST_SENT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        NLP
+    Severity:      INFO
+    Log ID:        bd307ad6-bc4c-4b7b-928e-e5523479bd25
+    Message:       EXTRACT_INTENT message sent to NLP
+
+  Entry 2
+    Line:          138
+    Timestamp:     1785499776.2013733
+    Human time:    2026-07-31 08:09:36.201
+    Event type:    ENDPOINT_SENT_MESSAGE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f3d39a86-a65a-45d4-9805-db6dd2a1eec7
+    Message:       ModuleEndpoint AEM sent message on channel CC to b'NLP'
+
+  Entry 3
+    Line:          143
+    Timestamp:     1785499776.2032242
+    Human time:    2026-07-31 08:09:36.203
+    Event type:    MODULE_MESSAGE_RECV
+    Message type:  EXTRACT_INTENT
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        d8344dd4-f9d2-4230-98cb-c1023aa57b37
+    Message:       Message received
+
+========================================================================================
+
+Message ID: 656292d1-7a81-4823-b679-e676eb337159
+Occurrences: 1
+----------------------------------------------------------------------------------------
+  Entry 1
+    Line:          154
+    Timestamp:     1785499776.2056618
+    Human time:    2026-07-31 08:09:36.205
+    Event type:    ENDPOINT_SENT_MESSAGE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        347f86f1-24c8-45c4-9011-e48e737bb491
+    Message:       ModuleEndpoint AEM sent message on channel CC to b'NLP'
+
+========================================================================================
+
+Message ID: 802a5ac0-f421-4134-b4ad-2dbf0637546a
+Occurrences: 4
+----------------------------------------------------------------------------------------
+  Entry 1
+    Line:          38
+    Timestamp:     1785499776.138109
+    Human time:    2026-07-31 08:09:36.138
+    Event type:    ENDPOINT_SENT_MESSAGE
+    Message type:  <missing>
+    Source:        GUI
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        7ee54acf-9752-4720-9315-d6433e4b37bc
+    Message:       ModuleEndpoint GUI sent message on channel CC to b'AEM'
+
+  Entry 2
+    Line:          41
+    Timestamp:     1785499776.1393647
+    Human time:    2026-07-31 08:09:36.139
+    Event type:    EXECUTIVE_MESSAGE_RECV
+    Message type:  DIRECTIVE_SUBMITTED
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        69c1aaf4-9b36-4ac8-a025-f4045a99c309
+    Message:       Inbound message received
+
+  Entry 3
+    Line:          45
+    Timestamp:     1785499776.1404865
+    Human time:    2026-07-31 08:09:36.140
+    Event type:    AEM_DIRECTIVE_SUBMITTED_HANDLER
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        91c642ad-6dfb-4ddb-925e-e6ef6e7a78af
+    Message:       DIRECTIVE_SUBMITTED handler invoked
+
+  Entry 4
+    Line:          48
+    Timestamp:     1785499776.1462266
+    Human time:    2026-07-31 08:09:36.146
+    Event type:    AEM_DIRECTIVE_SUBMITTED_ACCEPTED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        1ecd337a-d966-4787-a2ba-c2a590ac91eb
+    Message:       DIRECTIVE_SUBMITTED accepted by AEM
+
+========================================================================================
+
+Message ID: 93418e8b-37f8-4c65-99c4-8d2ccf59278d
+Occurrences: 3
+----------------------------------------------------------------------------------------
+  Entry 1
+    Line:          220
+    Timestamp:     1785499776.211742
+    Human time:    2026-07-31 08:09:36.211
+    Event type:    PLANNER_REQUEST_SENT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        PLANNER
+    Severity:      INFO
+    Log ID:        a98ac945-63e5-433f-8c79-23161220a4df
+    Message:       GENERATE_PLAN message sent to PLANNER
+
+  Entry 2
+    Line:          237
+    Timestamp:     1785499776.2780755
+    Human time:    2026-07-31 08:09:36.278
+    Event type:    ENDPOINT_SENT_MESSAGE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b5b08e01-9d7c-4b54-a6dc-7107a5c4c02a
+    Message:       ModuleEndpoint AEM sent message on channel CC to b'PLANNER'
+
+  Entry 3
+    Line:          242
+    Timestamp:     1785499776.2792642
+    Human time:    2026-07-31 08:09:36.279
+    Event type:    MODULE_MESSAGE_RECV
+    Message type:  GENERATE_PLAN
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        d70beaa1-8e3e-4318-bb42-9f6742ba8148
+    Message:       Message received
+
+========================================================================================
+
+Message ID: 9c4a6874-1e3f-4f6e-8d03-8f15cdc7b066
+Occurrences: 1
+----------------------------------------------------------------------------------------
+  Entry 1
+    Line:          44
+    Timestamp:     1785499776.1401834
+    Human time:    2026-07-31 08:09:36.140
+    Event type:    ENDPOINT_SENT_MESSAGE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        5b7c353f-ac73-40ab-b531-a9bfc9d2432b
+    Message:       ModuleEndpoint AEM sent message on channel CC to b'GUI'
+
+========================================================================================
+
+Message ID: b12c5db3-4196-469c-bf85-f5a1344b8d2e
+Occurrences: 1
+----------------------------------------------------------------------------------------
+  Entry 1
+    Line:          145
+    Timestamp:     1785499776.2038314
+    Human time:    2026-07-31 08:09:36.203
+    Event type:    ENDPOINT_SENT_MESSAGE
+    Message type:  <missing>
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        9de7dfa6-6af2-4a8b-a495-ae3557ce6567
+    Message:       ModuleEndpoint NLP sent message on channel CC to b'AEM'
+
+========================================================================================
+
+Message ID: c51e2228-9232-4c9a-a573-256473dbbbe5
+Occurrences: 1
+----------------------------------------------------------------------------------------
+  Entry 1
+    Line:          245
+    Timestamp:     1785499776.279938
+    Human time:    2026-07-31 08:09:36.279
+    Event type:    ENDPOINT_SENT_MESSAGE
+    Message type:  <missing>
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        519948e3-737b-4f01-8dbe-d8fa48174d70
+    Message:       ModuleEndpoint PLANNER sent message on channel CC to b'AEM'
+
+========================================================================================
+
+Message ID: fa11950b-126f-4809-a163-da9298eb1011
+Occurrences: 4
+----------------------------------------------------------------------------------------
+  Entry 1
+    Line:          247
+    Timestamp:     1785499776.2802935
+    Human time:    2026-07-31 08:09:36.280
+    Event type:    ENDPOINT_SENT_MESSAGE
+    Message type:  <missing>
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        4611df1d-a6dd-449a-9978-9cdbefcf3926
+    Message:       ModuleEndpoint PLANNER sent message on channel CC to b'AEM'
+
+  Entry 2
+    Line:          252
+    Timestamp:     1785499776.2813804
+    Human time:    2026-07-31 08:09:36.281
+    Event type:    EXECUTIVE_MESSAGE_RECV
+    Message type:  PLAN_GENERATED
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        298c9336-170a-4f8c-a2ef-00534e78bf60
+    Message:       Inbound message received
+
+  Entry 3
+    Line:          255
+    Timestamp:     1785499776.2904992
+    Human time:    2026-07-31 08:09:36.290
+    Event type:    AEM_PLAN_GENERATED_HANDLER
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        7ddbcc30-0635-4e98-94ab-eae92e14530a
+    Message:       PLAN_GENERATED handler invoked
+
+  Entry 4
+    Line:          257
+    Timestamp:     1785499776.2907293
+    Human time:    2026-07-31 08:09:36.290
+    Event type:    AEM_PLAN_GENERATED_ACCEPTED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        ba7cc659-c52c-4318-af6e-067d2027438a
+    Message:       PLAN_GENERATED accepted by AEM
+
+========================================================================================
+
+Message ID: fd28ea36-55c0-4b31-bab9-402ca9dda386
+Occurrences: 1
+----------------------------------------------------------------------------------------
+  Entry 1
+    Line:          253
+    Timestamp:     1785499776.281578
+    Human time:    2026-07-31 08:09:36.281
+    Event type:    ENDPOINT_SENT_MESSAGE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        0f34697b-51bd-4dd1-8ced-9ed35d6810de
+    Message:       ModuleEndpoint AEM sent message on channel CC to b'PLANNER'
+
+========================================================================================
+
+========================================================================================
+ENTRIES MISSING MESSAGE ID
+========================================================================================
+
+    Line:          1
+    Timestamp:     1785499708.9507565
+    Human time:    2026-07-31 08:08:28.950
+    Event type:    ENDPOINT_CONFIG_INIT
+    Message type:  <missing>
+    Source:        endpoint_config
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        d2fcaa02-a31a-441d-8da1-60e9a4d0b72b
+    Message:       Endpoint configuration
+
+    Line:          2
+    Timestamp:     1785499708.9512153
+    Human time:    2026-07-31 08:08:28.951
+    Event type:    ENDPOINT_CONFIG_INIT
+    Message type:  <missing>
+    Source:        endpoint_config
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        e88093d7-951a-4cb9-a91b-db8b39ab889a
+    Message:       Endpoint configuration
+
+    Line:          3
+    Timestamp:     1785499708.9516146
+    Human time:    2026-07-31 08:08:28.951
+    Event type:    ENDPOINT_CONFIG_INIT
+    Message type:  <missing>
+    Source:        endpoint_config
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        bb6008a0-9509-42ad-8618-d32bd764a29b
+    Message:       Endpoint configuration
+
+    Line:          4
+    Timestamp:     1785499708.9518907
+    Human time:    2026-07-31 08:08:28.951
+    Event type:    ENDPOINT_CONFIG_INIT
+    Message type:  <missing>
+    Source:        endpoint_config
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        5e73901e-e56e-43c3-99ac-c1ccf8d95de0
+    Message:       Endpoint configuration
+
+    Line:          5
+    Timestamp:     1785499708.95447
+    Human time:    2026-07-31 08:08:28.954
+    Event type:    ENDPOINT_CONFIG_INIT
+    Message type:  <missing>
+    Source:        endpoint_config
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        8dd48956-afe8-4c67-9a92-a2a2aa8f9f79
+    Message:       Endpoint configuration
+
+    Line:          6
+    Timestamp:     1785499708.981926
+    Human time:    2026-07-31 08:08:28.981
+    Event type:    BEHAVIOR_INIT
+    Message type:  <missing>
+    Source:        BEHAVIOR
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        55ee6f81-e677-4dfd-b7bc-58994aa905a3
+    Message:       Behavior module initializing
+
+    Line:          7
+    Timestamp:     1785499708.9842875
+    Human time:    2026-07-31 08:08:28.984
+    Event type:    NLP_INIT
+    Message type:  <missing>
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f0e3b721-1d75-4937-93ac-cb4eb2458c63
+    Message:       NLP initializing
+
+    Line:          8
+    Timestamp:     1785499708.99186
+    Human time:    2026-07-31 08:08:28.991
+    Event type:    DIRECTIVE_GUI_INIT
+    Message type:  <missing>
+    Source:        DIRGUI
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        77438327-c1ac-4101-85fa-b54168aaf039
+    Message:       GUI module initializing
+
+    Line:          9
+    Timestamp:     1785499709.0016272
+    Human time:    2026-07-31 08:08:29.001
+    Event type:    ENDPOINT_START
+    Message type:  <missing>
+    Source:        BEHAVIOR
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        1edf6b0a-5971-48b3-9071-89a53dc5a7e9
+    Message:       ModuleEndpoint started BEHAVIOR
+
+    Line:          10
+    Timestamp:     1785499709.0027018
+    Human time:    2026-07-31 08:08:29.002
+    Event type:    ROUTER_INIT
+    Message type:  <missing>
+    Source:        CC
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b400d0f2-c206-4a0e-9857-4245bee8b21c
+    Message:       Router CC port: 6001 ack: 6102 module_egress: 7001
+
+    Line:          11
+    Timestamp:     1785499709.0212018
+    Human time:    2026-07-31 08:08:29.021
+    Event type:    MODULE_LOOP_START
+    Message type:  <missing>
+    Source:        BEHAVIOR
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        5e987e7d-5492-418a-82e1-62e8fa5bb38a
+    Message:       Module loop starting
+
+    Line:          12
+    Timestamp:     1785499709.0225415
+    Human time:    2026-07-31 08:08:29.022
+    Event type:    ENDPOINT_INBOUND_SETUP
+    Message type:  <missing>
+    Source:        BEHAVIOR
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        d61a92c0-ece3-4484-bc26-8cf6d923e614
+    Message:       ModuleEndpoint BEHAVIOR setup inbound CC
+
+    Line:          13
+    Timestamp:     1785499709.030759
+    Human time:    2026-07-31 08:08:29.030
+    Event type:    ENDPOINT_ACK_SETUP
+    Message type:  <missing>
+    Source:        BEHAVIOR
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        e62f9719-a439-4922-9f63-abfc72f554ba
+    Message:       ModuleEndpoint BEHAVIOR setup ACK CC
+
+    Line:          14
+    Timestamp:     1785499709.0313437
+    Human time:    2026-07-31 08:08:29.031
+    Event type:    BEHAVIOR_START
+    Message type:  <missing>
+    Source:        BEHAVIOR
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        5ca349ae-67a4-4eb4-8c9d-c1d313ec1001
+    Message:       Behavior module started
+
+    Line:          15
+    Timestamp:     1785499709.031596
+    Human time:    2026-07-31 08:08:29.031
+    Event type:    ROUTER_START
+    Message type:  <missing>
+    Source:        CC
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        9aaf46f6-9874-4ecc-b928-4d2ccb34f8f4
+    Message:       Router CC started
+
+    Line:          16
+    Timestamp:     1785499709.0583699
+    Human time:    2026-07-31 08:08:29.058
+    Event type:    PLANNER_INIT
+    Message type:  <missing>
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        9446dd10-701e-401b-9452-cc00a720de3c
+    Message:       PLANNER initializing
+
+    Line:          17
+    Timestamp:     1785499709.0849097
+    Human time:    2026-07-31 08:08:29.084
+    Event type:    MODULE_LOOP_START
+    Message type:  <missing>
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        21184d87-a241-4c68-83e6-e5bd61c31d1d
+    Message:       Module loop starting
+
+    Line:          18
+    Timestamp:     1785499709.0877085
+    Human time:    2026-07-31 08:08:29.087
+    Event type:    AEM_INIT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        c5703997-e196-47d8-95e0-c34e448873c2
+    Message:       AEM initializing
+
+    Line:          19
+    Timestamp:     1785499709.1149695
+    Human time:    2026-07-31 08:08:29.114
+    Event type:    ENDPOINT_START
+    Message type:  <missing>
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        a65f59a0-d5fa-410c-b3ca-46703e7fca50
+    Message:       ModuleEndpoint started PLANNER
+
+    Line:          20
+    Timestamp:     1785499709.1360853
+    Human time:    2026-07-31 08:08:29.136
+    Event type:    PLANNER_START
+    Message type:  <missing>
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        fd3c010f-52a1-4324-ae66-63d398daa47e
+    Message:       PLANNER started
+
+    Line:          21
+    Timestamp:     1785499709.1451526
+    Human time:    2026-07-31 08:08:29.145
+    Event type:    ENDPOINT_INBOUND_SETUP
+    Message type:  <missing>
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b8b7862f-4e72-492e-86ac-260d64a1d6a8
+    Message:       ModuleEndpoint PLANNER setup inbound CC
+
+    Line:          22
+    Timestamp:     1785499709.14899
+    Human time:    2026-07-31 08:08:29.148
+    Event type:    ROUTER_START_RUN
+    Message type:  <missing>
+    Source:        CC
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        5e2430db-0625-4fd3-8cf9-cef518b8ffda
+    Message:       [Router.CC] ROUTER ingress on 6001, egress on 7001, ACK on 6102
+
+    Line:          23
+    Timestamp:     1785499709.1526835
+    Human time:    2026-07-31 08:08:29.152
+    Event type:    ENDPOINT_ACK_SETUP
+    Message type:  <missing>
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        d0c0f719-79f9-4a8d-90e1-04c4cf10c344
+    Message:       ModuleEndpoint PLANNER setup ACK CC
+
+    Line:          24
+    Timestamp:     1785499709.2641468
+    Human time:    2026-07-31 08:08:29.264
+    Event type:    ENDPOINT_START
+    Message type:  <missing>
+    Source:        GUI
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        82b60801-24ec-4117-a074-373e19fedb71
+    Message:       ModuleEndpoint started GUI
+
+    Line:          25
+    Timestamp:     1785499709.2681227
+    Human time:    2026-07-31 08:08:29.268
+    Event type:    ENDPOINT_INBOUND_SETUP
+    Message type:  <missing>
+    Source:        GUI
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        6170ce3b-2890-4b75-a29a-18d838a245db
+    Message:       ModuleEndpoint GUI setup inbound CC
+
+    Line:          26
+    Timestamp:     1785499709.2712905
+    Human time:    2026-07-31 08:08:29.271
+    Event type:    ENDPOINT_ACK_SETUP
+    Message type:  <missing>
+    Source:        GUI
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        3696e65f-0440-4e0d-bb7b-ce40b755da63
+    Message:       ModuleEndpoint GUI setup ACK CC
+
+    Line:          27
+    Timestamp:     1785499712.2021244
+    Human time:    2026-07-31 08:08:32.202
+    Event type:    MODULE_LOOP_START
+    Message type:  <missing>
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        d9046597-0182-4b08-b2fc-57dc0d062a72
+    Message:       Module loop starting
+
+    Line:          28
+    Timestamp:     1785499712.2117395
+    Human time:    2026-07-31 08:08:32.211
+    Event type:    ENDPOINT_START
+    Message type:  <missing>
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        878733a4-e4c3-4620-85b0-9225983244ab
+    Message:       ModuleEndpoint started NLP
+
+    Line:          29
+    Timestamp:     1785499712.2293937
+    Human time:    2026-07-31 08:08:32.229
+    Event type:    NLP_START
+    Message type:  <missing>
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        bc33648d-265f-4f97-bc2a-e4a8e65dea43
+    Message:       NLP started
+
+    Line:          30
+    Timestamp:     1785499712.244157
+    Human time:    2026-07-31 08:08:32.244
+    Event type:    EXECUTIVE_LOOP_START
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        e677263a-657d-4204-b40c-e41793090aef
+    Message:       Executive loop starting
+
+    Line:          31
+    Timestamp:     1785499712.2523506
+    Human time:    2026-07-31 08:08:32.252
+    Event type:    ENDPOINT_INBOUND_SETUP
+    Message type:  <missing>
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f75cf5b0-28a2-4f27-82d9-f92a117fa3b3
+    Message:       ModuleEndpoint NLP setup inbound CC
+
+    Line:          32
+    Timestamp:     1785499712.2599602
+    Human time:    2026-07-31 08:08:32.259
+    Event type:    ENDPOINT_ACK_SETUP
+    Message type:  <missing>
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        a90c8686-dd67-4980-af44-bc61fa900ee4
+    Message:       ModuleEndpoint NLP setup ACK CC
+
+    Line:          33
+    Timestamp:     1785499712.2706263
+    Human time:    2026-07-31 08:08:32.270
+    Event type:    ENDPOINT_START
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        01ee341d-1395-499a-a92f-33b0be249e63
+    Message:       ModuleEndpoint started AEM
+
+    Line:          35
+    Timestamp:     1785499712.2784727
+    Human time:    2026-07-31 08:08:32.278
+    Event type:    ENDPOINT_INBOUND_SETUP
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        73be35c6-00b7-4279-8163-13e2dfc7835d
+    Message:       ModuleEndpoint AEM setup inbound CC
+
+    Line:          34
+    Timestamp:     1785499712.2789416
+    Human time:    2026-07-31 08:08:32.278
+    Event type:    AEM_START
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f01ca059-e3ec-49d0-9ccf-7b7cd18494ce
+    Message:       AEM started
+
+    Line:          36
+    Timestamp:     1785499712.2874362
+    Human time:    2026-07-31 08:08:32.287
+    Event type:    ENDPOINT_ACK_SETUP
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        d75fb47a-55b4-446b-8a38-db54f810f1db
+    Message:       ModuleEndpoint AEM setup ACK CC
+
+    Line:          37
+    Timestamp:     1785499776.1377316
+    Human time:    2026-07-31 08:09:36.137
+    Event type:    ENDPOINT_TRANSACTION_CREATED
+    Message type:  <missing>
+    Source:        GUI
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        2b431c7d-099a-45b1-aaa7-c0d0c8f1e961
+    Message:       ModuleEndpoint GUI channel: CC outgoing message_id=802a5ac0-f421-4134-b4ad-2dbf0637546a
+
+    Line:          39
+    Timestamp:     1785499776.1391084
+    Human time:    2026-07-31 08:09:36.139
+    Event type:    ENDPOINT_RECEIVED_ACK
+    Message type:  <missing>
+    Source:        GUI
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        29fd6862-3864-4577-a3e0-1872ef2076d7
+    Message:       ModuleEndpoint GUI received ACK for correlation_id=802a5ac0-f421-4134-b4ad-2dbf0637546a, event=AckTransitionEvent(message_id='802a5ac0-f421-4134-b4ad-2dbf0637546a', old_state='AWAIT_ROUTER_ACK', new_state='AWAIT_MESSAGE_DELIVERED_ACK', reason='ROUTER_ACK', timestamp=154155.9878259, retry_count=0, details=None) ack type = ROUTER_ACK
+
+    Line:          40
+    Timestamp:     1785499776.1391742
+    Human time:    2026-07-31 08:09:36.139
+    Event type:    ENDPOINT_CREATED_TRANSACTION
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        269b0c52-32b4-41bc-ac26-ee7124535655
+    Message:       ModuleEndpoint AEM  Created transaction for incoming message_id=802a5ac0-f421-4134-b4ad-2dbf0637546a
+
+    Line:          42
+    Timestamp:     1785499776.139732
+    Human time:    2026-07-31 08:09:36.139
+    Event type:    ENDPOINT_SENT_ACK
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f18a26aa-7d49-4ddf-8f17-daddeede403e
+    Message:       ModuleEndpoint AEM sent ACK to GUI
+
+    Line:          43
+    Timestamp:     1785499776.1399243
+    Human time:    2026-07-31 08:09:36.139
+    Event type:    ENDPOINT_TRANSACTION_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        1a589292-d1fd-4352-bb7e-422f13b6435f
+    Message:       ModuleEndpoint AEM channel: CC outgoing message_id=9c4a6874-1e3f-4f6e-8d03-8f15cdc7b066
+
+    Line:          47
+    Timestamp:     1785499776.1405916
+    Human time:    2026-07-31 08:09:36.140
+    Event type:    EXECUTIVE_HANDLER_RESULT_ACCEPTED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        0e4d727a-d4a1-4a5c-b00d-ed43a9c62c7d
+    Message:       Handler result accepted
+
+    Line:          46
+    Timestamp:     1785499776.140814
+    Human time:    2026-07-31 08:09:36.140
+    Event type:    ENDPOINT_RECEIVED_ACK
+    Message type:  <missing>
+    Source:        GUI
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        452b53a6-2f29-470b-8af0-cc0349bc9416
+    Message:       ModuleEndpoint GUI received ACK for correlation_id=802a5ac0-f421-4134-b4ad-2dbf0637546a, event=AckTransitionEvent(message_id='802a5ac0-f421-4134-b4ad-2dbf0637546a', old_state='AWAIT_MESSAGE_DELIVERED_ACK', new_state='COMPLETED', reason='MSG_DELIVERED_ACK_SUCCESS', timestamp=154155.9895582, retry_count=0, details=None) ack type = MESSAGE_DELIVERED_ACK
+
+    Line:          49
+    Timestamp:     1785499776.1465719
+    Human time:    2026-07-31 08:09:36.146
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        3796e5e0-0e02-4c76-9caf-b294db61170d
+    Message:       Prioritized task record created
+
+    Line:          50
+    Timestamp:     1785499776.1466908
+    Human time:    2026-07-31 08:09:36.146
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        ad2dfe1b-4ae1-450e-b5a8-70e05982e3f3
+    Message:       Policy evaluated prioritized task
+
+    Line:          51
+    Timestamp:     1785499776.1467974
+    Human time:    2026-07-31 08:09:36.146
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        7fa67f6e-4632-425f-bc3e-4b401bd090ca
+    Message:       Task enqueued in priority queue
+
+    Line:          52
+    Timestamp:     1785499776.1469102
+    Human time:    2026-07-31 08:09:36.146
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        c3015d08-c7e8-4b56-b908-f6037d43cd16
+    Message:       Prioritized task record created
+
+    Line:          53
+    Timestamp:     1785499776.1469996
+    Human time:    2026-07-31 08:09:36.146
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        32c680b1-9cfd-441b-8801-132d14f74bd0
+    Message:       Policy evaluated prioritized task
+
+    Line:          54
+    Timestamp:     1785499776.1470876
+    Human time:    2026-07-31 08:09:36.147
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        2e20a231-1308-4781-b742-562c26499922
+    Message:       Task enqueued in priority queue
+
+    Line:          55
+    Timestamp:     1785499776.147176
+    Human time:    2026-07-31 08:09:36.147
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        717d9097-bc38-4f49-81e5-cfa585b29317
+    Message:       Prioritized task record created
+
+    Line:          56
+    Timestamp:     1785499776.1473145
+    Human time:    2026-07-31 08:09:36.147
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        3355d734-2094-4b0d-b6c5-d80e74d43e6c
+    Message:       Policy evaluated prioritized task
+
+    Line:          57
+    Timestamp:     1785499776.1474028
+    Human time:    2026-07-31 08:09:36.147
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        290475b3-30dd-40a3-b8f2-cb226bc961b6
+    Message:       Task enqueued in priority queue
+
+    Line:          58
+    Timestamp:     1785499776.147491
+    Human time:    2026-07-31 08:09:36.147
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        5e8f87b4-d9a0-45a0-a0b1-35da68a57495
+    Message:       Prioritized task record created
+
+    Line:          59
+    Timestamp:     1785499776.147567
+    Human time:    2026-07-31 08:09:36.147
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        bb084e0f-ffbe-4dc2-b354-93ec1e8fdaef
+    Message:       Policy evaluated prioritized task
+
+    Line:          60
+    Timestamp:     1785499776.147648
+    Human time:    2026-07-31 08:09:36.147
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        71799d11-4304-4e4e-88e3-9526b926ef14
+    Message:       Task enqueued in priority queue
+
+    Line:          61
+    Timestamp:     1785499776.1477914
+    Human time:    2026-07-31 08:09:36.147
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        0ca63fee-3aaf-47b4-b307-e62f8c7ccade
+    Message:       Prioritized task record created
+
+    Line:          62
+    Timestamp:     1785499776.1479158
+    Human time:    2026-07-31 08:09:36.147
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        c60d0fa5-bb28-4846-b83f-9cc3a89b6ec4
+    Message:       Policy evaluated prioritized task
+
+    Line:          63
+    Timestamp:     1785499776.1479995
+    Human time:    2026-07-31 08:09:36.147
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b72814aa-ab57-4e67-80f1-b61ac8806cbd
+    Message:       Task enqueued in priority queue
+
+    Line:          64
+    Timestamp:     1785499776.148081
+    Human time:    2026-07-31 08:09:36.148
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        eac0f805-5921-45c0-b70d-6273499bb79c
+    Message:       Prioritized task record created
+
+    Line:          65
+    Timestamp:     1785499776.1481516
+    Human time:    2026-07-31 08:09:36.148
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        359c3685-4c5a-49ea-a829-b9dd321e4a10
+    Message:       Policy evaluated prioritized task
+
+    Line:          66
+    Timestamp:     1785499776.1482282
+    Human time:    2026-07-31 08:09:36.148
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        37f7dd28-8b52-452c-a10e-857b33ab3ba8
+    Message:       Task enqueued in priority queue
+
+    Line:          67
+    Timestamp:     1785499776.1483064
+    Human time:    2026-07-31 08:09:36.148
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        26e019a3-7259-4870-89c4-4172cd3d5cb2
+    Message:       Prioritized task record created
+
+    Line:          68
+    Timestamp:     1785499776.1483748
+    Human time:    2026-07-31 08:09:36.148
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        3b8c3ea0-8b46-4be8-a5d7-6cf4b45715a4
+    Message:       Policy evaluated prioritized task
+
+    Line:          69
+    Timestamp:     1785499776.148444
+    Human time:    2026-07-31 08:09:36.148
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        01cd6f31-a617-4e7d-bac8-14809faed75f
+    Message:       Task enqueued in priority queue
+
+    Line:          70
+    Timestamp:     1785499776.1485195
+    Human time:    2026-07-31 08:09:36.148
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        de9934a8-5b0b-4540-adbc-42f4bd9442a7
+    Message:       Prioritized task record created
+
+    Line:          71
+    Timestamp:     1785499776.1485906
+    Human time:    2026-07-31 08:09:36.148
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        5be83afc-efb5-4e42-86a8-5169c00eb3e7
+    Message:       Policy evaluated prioritized task
+
+    Line:          72
+    Timestamp:     1785499776.148663
+    Human time:    2026-07-31 08:09:36.148
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        0bddbd73-84eb-4866-8236-bdfb70badf5d
+    Message:       Task enqueued in priority queue
+
+    Line:          73
+    Timestamp:     1785499776.1487474
+    Human time:    2026-07-31 08:09:36.148
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        c2562aca-e276-4ffb-ab60-8905c6b22f38
+    Message:       Prioritized task record created
+
+    Line:          74
+    Timestamp:     1785499776.1488163
+    Human time:    2026-07-31 08:09:36.148
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b00530a3-e3d4-45ea-9bed-134a0b900964
+    Message:       Policy evaluated prioritized task
+
+    Line:          75
+    Timestamp:     1785499776.1488848
+    Human time:    2026-07-31 08:09:36.148
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        06105643-2822-4d93-ab5d-3f1a226db8d0
+    Message:       Task enqueued in priority queue
+
+    Line:          76
+    Timestamp:     1785499776.1490033
+    Human time:    2026-07-31 08:09:36.149
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        9de24db1-be1e-4799-bf57-5011bc20a0de
+    Message:       Task dequeued from priority queue
+
+    Line:          77
+    Timestamp:     1785499776.1490777
+    Human time:    2026-07-31 08:09:36.149
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        81692eea-0c5c-44d0-ae33-3edc09206da9
+    Message:       Task lifecycle status updated
+
+    Line:          78
+    Timestamp:     1785499776.149146
+    Human time:    2026-07-31 08:09:36.149
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        396f92c4-40be-4f1a-ab68-96c31008d545
+    Message:       Execution-time policy evaluated task
+
+    Line:          79
+    Timestamp:     1785499776.1492171
+    Human time:    2026-07-31 08:09:36.149
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        fadc3e9f-10d8-4bb7-9b08-a6265b50da8b
+    Message:       Task lifecycle status updated
+
+    Line:          80
+    Timestamp:     1785499776.1492982
+    Human time:    2026-07-31 08:09:36.149
+    Event type:    EXECUTIVE_INTERNAL_TASK_STUB
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b6ab162a-89a6-46d4-b4bd-dd18ef310b12
+    Message:       Internal task stub invoked
+
+    Line:          81
+    Timestamp:     1785499776.1494162
+    Human time:    2026-07-31 08:09:36.149
+    Event type:    TASK_EXECUTION_RESULT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        664564f1-53ae-4136-8079-4aad65ada640
+    Message:       Task execution result returned
+
+    Line:          82
+    Timestamp:     1785499776.149499
+    Human time:    2026-07-31 08:09:36.149
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        94150da1-8a5d-44a2-9a0a-faca6a8389af
+    Message:       Task lifecycle status updated
+
+    Line:          83
+    Timestamp:     1785499776.149573
+    Human time:    2026-07-31 08:09:36.149
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        48463b47-5e02-409f-b01a-acb3db92227a
+    Message:       Task dequeued from priority queue
+
+    Line:          84
+    Timestamp:     1785499776.1496363
+    Human time:    2026-07-31 08:09:36.149
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        521fbd5f-a03b-450f-a4b6-38666d0b1e5d
+    Message:       Task lifecycle status updated
+
+    Line:          85
+    Timestamp:     1785499776.149704
+    Human time:    2026-07-31 08:09:36.149
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        a23ca1b2-fa74-4597-8734-1ce1d9faa7c3
+    Message:       Execution-time policy evaluated task
+
+    Line:          86
+    Timestamp:     1785499776.1497734
+    Human time:    2026-07-31 08:09:36.149
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        57c15d34-057a-46d1-87ef-cea18e456f5c
+    Message:       Task lifecycle status updated
+
+    Line:          87
+    Timestamp:     1785499776.149889
+    Human time:    2026-07-31 08:09:36.149
+    Event type:    DIRECTIVE_INTAKE_RECORDED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        c1cd1d7d-4f27-42ca-a6de-7da2aadc7a00
+    Message:       Directive intake record created and attached to episode
+
+    Line:          88
+    Timestamp:     1785499776.1499755
+    Human time:    2026-07-31 08:09:36.149
+    Event type:    TASK_EXECUTION_RESULT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        cac749da-de44-4174-b39b-2c44ead51d53
+    Message:       Task execution result returned
+
+    Line:          89
+    Timestamp:     1785499776.1500454
+    Human time:    2026-07-31 08:09:36.150
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        0c9c3a1e-8758-4e7a-8237-326a418666bb
+    Message:       Task lifecycle status updated
+
+    Line:          90
+    Timestamp:     1785499776.1501234
+    Human time:    2026-07-31 08:09:36.150
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        17f9ee06-23c7-4747-b791-d7b726e60496
+    Message:       Task dequeued from priority queue
+
+    Line:          91
+    Timestamp:     1785499776.1501946
+    Human time:    2026-07-31 08:09:36.150
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        3b951d2c-cc09-4fa7-8fb4-0d3dcb07a4e3
+    Message:       Task lifecycle status updated
+
+    Line:          92
+    Timestamp:     1785499776.1502657
+    Human time:    2026-07-31 08:09:36.150
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        c0abde2d-6998-4cfe-9687-780eca8a844a
+    Message:       Execution-time policy evaluated task
+
+    Line:          93
+    Timestamp:     1785499776.15033
+    Human time:    2026-07-31 08:09:36.150
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        2aa983a7-6ec8-4735-8645-32dc4be31639
+    Message:       Task lifecycle status updated
+
+    Line:          94
+    Timestamp:     1785499776.1503925
+    Human time:    2026-07-31 08:09:36.150
+    Event type:    EPISODE_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        4822c3dd-5e71-4a87-9283-f3ad44c13fe6
+    Message:       Episode created
+
+    Line:          95
+    Timestamp:     1785499776.1504593
+    Human time:    2026-07-31 08:09:36.150
+    Event type:    EXECUTIVE_STATE_TRANSITION
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        036287f2-967b-4c2b-8c67-e9521b079add
+    Message:       Episode state transition
+
+    Line:          96
+    Timestamp:     1785499776.150522
+    Human time:    2026-07-31 08:09:36.150
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        a82d9cae-83bd-40e2-bfed-0d0ff69c4d76
+    Message:       Task lifecycle status updated
+
+    Line:          97
+    Timestamp:     1785499776.1505983
+    Human time:    2026-07-31 08:09:36.150
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        efb538ec-046b-4eed-94a3-04c7fc9ce567
+    Message:       Task dequeued from priority queue
+
+    Line:          98
+    Timestamp:     1785499776.150663
+    Human time:    2026-07-31 08:09:36.150
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        6a288902-cb10-42d5-a15b-1e484593a6c3
+    Message:       Task lifecycle status updated
+
+    Line:          99
+    Timestamp:     1785499776.1507268
+    Human time:    2026-07-31 08:09:36.150
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        79abab10-d8ff-4f84-b78c-983b335a838c
+    Message:       Execution-time policy evaluated task
+
+    Line:          100
+    Timestamp:     1785499776.150792
+    Human time:    2026-07-31 08:09:36.150
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        fc232a91-9228-4849-8e0c-c580e4b3bd3d
+    Message:       Task lifecycle status updated
+
+    Line:          101
+    Timestamp:     1785499776.1508691
+    Human time:    2026-07-31 08:09:36.150
+    Event type:    GLOBAL_WORKSPACE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        743d4d6d-cb15-4422-969b-4d1ab985fdee
+    Message:       Global workspace updated from episode
+
+    Line:          102
+    Timestamp:     1785499776.1509428
+    Human time:    2026-07-31 08:09:36.150
+    Event type:    TASK_EXECUTION_RESULT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        6e59c248-6f95-46bd-ba8d-03916c2a706e
+    Message:       Task execution result returned
+
+    Line:          103
+    Timestamp:     1785499776.1510124
+    Human time:    2026-07-31 08:09:36.151
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        fa0437d2-2ebd-41be-9912-837c6f2bfb9e
+    Message:       Task lifecycle status updated
+
+    Line:          104
+    Timestamp:     1785499776.1510794
+    Human time:    2026-07-31 08:09:36.151
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        44311c72-8ed5-490e-ac59-9b5f802b3926
+    Message:       Task dequeued from priority queue
+
+    Line:          105
+    Timestamp:     1785499776.1511383
+    Human time:    2026-07-31 08:09:36.151
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        390479bb-d7c5-439d-a8d7-ed0c43002a48
+    Message:       Task lifecycle status updated
+
+    Line:          106
+    Timestamp:     1785499776.15121
+    Human time:    2026-07-31 08:09:36.151
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        2a70851e-5f2b-4d2a-bd12-2d6b485a4a92
+    Message:       Execution-time policy evaluated task
+
+    Line:          107
+    Timestamp:     1785499776.151275
+    Human time:    2026-07-31 08:09:36.151
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b6b1619d-08c6-4955-9357-c314f9755c1c
+    Message:       Task lifecycle status updated
+
+    Line:          108
+    Timestamp:     1785499776.151344
+    Human time:    2026-07-31 08:09:36.151
+    Event type:    NLP_INTENT_REQUEST_PREPARED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        91a9adac-7477-4f1b-8106-625287441871
+    Message:       NLP intent request prepared from directive intake
+
+    Line:          109
+    Timestamp:     1785499776.151415
+    Human time:    2026-07-31 08:09:36.151
+    Event type:    TASK_EXECUTION_RESULT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        20c28206-9a22-4db3-ba66-b96c8f353186
+    Message:       Task execution result returned
+
+    Line:          110
+    Timestamp:     1785499776.151501
+    Human time:    2026-07-31 08:09:36.151
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        be271517-883c-4150-9866-8d568e042e67
+    Message:       Task lifecycle status updated
+
+    Line:          111
+    Timestamp:     1785499776.1515815
+    Human time:    2026-07-31 08:09:36.151
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        dcfc3c0a-6388-4185-a53d-a582b4a73266
+    Message:       Task dequeued from priority queue
+
+    Line:          112
+    Timestamp:     1785499776.151671
+    Human time:    2026-07-31 08:09:36.151
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        be605281-0d2a-4a9d-b9c2-a8263f45d2dd
+    Message:       Task lifecycle status updated
+
+    Line:          113
+    Timestamp:     1785499776.1517494
+    Human time:    2026-07-31 08:09:36.151
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        d96876f9-aff5-4a2b-8231-d8acb830e1fb
+    Message:       Execution-time policy evaluated task
+
+    Line:          114
+    Timestamp:     1785499776.1518214
+    Human time:    2026-07-31 08:09:36.151
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        c24e2f8a-b39d-46ad-9a27-ab4517987f28
+    Message:       Task lifecycle status updated
+
+    Line:          115
+    Timestamp:     1785499776.151921
+    Human time:    2026-07-31 08:09:36.151
+    Event type:    EXECUTIVE_STATE_TRANSITION
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        6dcc47cc-70cc-48bc-9e85-d53e9138829b
+    Message:       Episode state transition
+
+    Line:          116
+    Timestamp:     1785499776.1520145
+    Human time:    2026-07-31 08:09:36.152
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        3b2d688c-7a9f-4b55-82bf-edb967ccddf2
+    Message:       Task lifecycle status updated
+
+    Line:          117
+    Timestamp:     1785499776.1520963
+    Human time:    2026-07-31 08:09:36.152
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        0820473e-5abc-4ecf-86dc-96a183f92cd3
+    Message:       Task dequeued from priority queue
+
+    Line:          118
+    Timestamp:     1785499776.1521773
+    Human time:    2026-07-31 08:09:36.152
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        d1e144cc-c1e0-4d05-961d-2dd6e2c67086
+    Message:       Task lifecycle status updated
+
+    Line:          119
+    Timestamp:     1785499776.152283
+    Human time:    2026-07-31 08:09:36.152
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f3fab4d9-17bc-4d9e-ab23-48fe5e2e3f61
+    Message:       Execution-time policy evaluated task
+
+    Line:          120
+    Timestamp:     1785499776.1523519
+    Human time:    2026-07-31 08:09:36.152
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        39d12ab4-fb9f-4bf7-98e9-4c5ae56ed751
+    Message:       Task lifecycle status updated
+
+    Line:          122
+    Timestamp:     1785499776.1525683
+    Human time:    2026-07-31 08:09:36.152
+    Event type:    TASK_EXECUTION_RESULT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        79ea034a-b110-400e-b2d4-30682d4c5cc2
+    Message:       Task execution result returned
+
+    Line:          123
+    Timestamp:     1785499776.1526384
+    Human time:    2026-07-31 08:09:36.152
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        2bd1dc12-ddac-4fca-a0d6-055acc4b9b6b
+    Message:       Task lifecycle status updated
+
+    Line:          124
+    Timestamp:     1785499776.152703
+    Human time:    2026-07-31 08:09:36.152
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        ac8a8d68-9cc4-4d01-ab32-ee70e436399c
+    Message:       Task dequeued from priority queue
+
+    Line:          125
+    Timestamp:     1785499776.152762
+    Human time:    2026-07-31 08:09:36.152
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        2eed5879-fb31-42db-8b9d-61b832959951
+    Message:       Task lifecycle status updated
+
+    Line:          126
+    Timestamp:     1785499776.1528242
+    Human time:    2026-07-31 08:09:36.152
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        09218735-d211-44fd-8f26-273af19a4349
+    Message:       Execution-time policy evaluated task
+
+    Line:          127
+    Timestamp:     1785499776.152891
+    Human time:    2026-07-31 08:09:36.152
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        847bf925-c745-47fa-be78-8c64911c379a
+    Message:       Task lifecycle status updated
+
+    Line:          128
+    Timestamp:     1785499776.1529598
+    Human time:    2026-07-31 08:09:36.152
+    Event type:    EXECUTIVE_STATE_TRANSITION
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        6ea890c3-1fef-4be9-8101-af0a9565d639
+    Message:       Episode state transition
+
+    Line:          129
+    Timestamp:     1785499776.153022
+    Human time:    2026-07-31 08:09:36.153
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        2738a49e-b6a0-4d99-b535-2ba711b1abef
+    Message:       Task lifecycle status updated
+
+    Line:          130
+    Timestamp:     1785499776.1530874
+    Human time:    2026-07-31 08:09:36.153
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        dfa90d48-dd79-42c2-aaf9-fed965c3ff22
+    Message:       Task dequeued from priority queue
+
+    Line:          131
+    Timestamp:     1785499776.1531472
+    Human time:    2026-07-31 08:09:36.153
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        952f5f47-f1a8-4389-85d1-008acd526ce9
+    Message:       Task lifecycle status updated
+
+    Line:          132
+    Timestamp:     1785499776.1532137
+    Human time:    2026-07-31 08:09:36.153
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        44a7e1a2-f478-4914-9623-bd5375176db0
+    Message:       Execution-time policy evaluated task
+
+    Line:          133
+    Timestamp:     1785499776.1532793
+    Human time:    2026-07-31 08:09:36.153
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        1c7f1eee-fa21-45ae-9aa7-5bd8b6f0e341
+    Message:       Task lifecycle status updated
+
+    Line:          134
+    Timestamp:     1785499776.1533504
+    Human time:    2026-07-31 08:09:36.153
+    Event type:    GLOBAL_WORKSPACE_BROADCAST_STUB
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        dc37fa1d-c1f2-468d-b9e3-dd33120b6a0e
+    Message:       Workspace change broadcast stub invoked
+
+    Line:          135
+    Timestamp:     1785499776.1534193
+    Human time:    2026-07-31 08:09:36.153
+    Event type:    TASK_EXECUTION_RESULT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        1500a4c6-1dbc-45ea-97c8-9a30e68a1435
+    Message:       Task execution result returned
+
+    Line:          136
+    Timestamp:     1785499776.153483
+    Human time:    2026-07-31 08:09:36.153
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        689624d4-2400-409a-9f8f-1282d450bba9
+    Message:       Task lifecycle status updated
+
+    Line:          137
+    Timestamp:     1785499776.200982
+    Human time:    2026-07-31 08:09:36.200
+    Event type:    ENDPOINT_TRANSACTION_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        9ed9d0f2-ea1c-4fa4-8d84-0aa016f9bca7
+    Message:       ModuleEndpoint AEM channel: CC outgoing message_id=55c8a73b-261c-4cbd-ab05-d8e8621fa068
+
+    Line:          139
+    Timestamp:     1785499776.202448
+    Human time:    2026-07-31 08:09:36.202
+    Event type:    ENDPOINT_RECEIVED_ACK
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f3af20cd-3ebb-4848-903d-8b776ae1309d
+    Message:       ModuleEndpoint AEM received ACK for correlation_id=55c8a73b-261c-4cbd-ab05-d8e8621fa068, event=AckTransitionEvent(message_id='55c8a73b-261c-4cbd-ab05-d8e8621fa068', old_state='AWAIT_ROUTER_ACK', new_state='AWAIT_MESSAGE_DELIVERED_ACK', reason='ROUTER_ACK', timestamp=154156.0511806, retry_count=0, details=None) ack type = ROUTER_ACK
+
+    Line:          140
+    Timestamp:     1785499776.2025504
+    Human time:    2026-07-31 08:09:36.202
+    Event type:    ENDPOINT_CREATED_TRANSACTION
+    Message type:  <missing>
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        5145b1ac-6ed2-4397-a347-67a379e1d4bd
+    Message:       ModuleEndpoint NLP  Created transaction for incoming message_id=55c8a73b-261c-4cbd-ab05-d8e8621fa068
+
+    Line:          141
+    Timestamp:     1785499776.2028503
+    Human time:    2026-07-31 08:09:36.202
+    Event type:    ENDPOINT_SENT_ACK
+    Message type:  <missing>
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b97f39e5-bde8-4ac6-b259-8f95050aa42b
+    Message:       ModuleEndpoint NLP sent ACK to AEM
+
+    Line:          142
+    Timestamp:     1785499776.2030523
+    Human time:    2026-07-31 08:09:36.203
+    Event type:    ENDPOINT_TRANSACTION_CREATED
+    Message type:  <missing>
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        9ff1340b-6a1e-4c0b-802c-09dd10c9524d
+    Message:       ModuleEndpoint NLP channel: CC outgoing message_id=b12c5db3-4196-469c-bf85-f5a1344b8d2e
+
+    Line:          144
+    Timestamp:     1785499776.203527
+    Human time:    2026-07-31 08:09:36.203
+    Event type:    NLP_INTENT_EXTRACTED_STUB
+    Message type:  <missing>
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f4b7c524-7a8e-450f-8e6c-fc23f999a3a7
+    Message:       Stub intent extracted and INTENT_EXTRACTED sent to AEM
+
+    Line:          146
+    Timestamp:     1785499776.204041
+    Human time:    2026-07-31 08:09:36.204
+    Event type:    ENDPOINT_TRANSACTION_CREATED
+    Message type:  <missing>
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        98630d84-5a9c-47fa-8563-21112481d62a
+    Message:       ModuleEndpoint NLP channel: CC outgoing message_id=062b4276-829e-4da0-ac7c-8afb9623cb33
+
+    Line:          148
+    Timestamp:     1785499776.2045581
+    Human time:    2026-07-31 08:09:36.204
+    Event type:    ENDPOINT_RECEIVED_ACK
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        a8a9c691-b415-4541-9e1f-a8d5d86d929d
+    Message:       ModuleEndpoint AEM received ACK for correlation_id=55c8a73b-261c-4cbd-ab05-d8e8621fa068, event=AckTransitionEvent(message_id='55c8a73b-261c-4cbd-ab05-d8e8621fa068', old_state='AWAIT_MESSAGE_DELIVERED_ACK', new_state='COMPLETED', reason='MSG_DELIVERED_ACK_SUCCESS', timestamp=154156.053286, retry_count=0, details=None) ack type = MESSAGE_DELIVERED_ACK
+
+    Line:          149
+    Timestamp:     1785499776.2049398
+    Human time:    2026-07-31 08:09:36.204
+    Event type:    ENDPOINT_CREATED_TRANSACTION
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        8e7d1032-5fb3-4963-be9d-1a25d43df1f4
+    Message:       ModuleEndpoint AEM  Created transaction for incoming message_id=062b4276-829e-4da0-ac7c-8afb9623cb33
+
+    Line:          150
+    Timestamp:     1785499776.2050388
+    Human time:    2026-07-31 08:09:36.205
+    Event type:    ENDPOINT_RECEIVED_ACK
+    Message type:  <missing>
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        293562bb-c5fa-42f9-a0d8-15394dbfa060
+    Message:       ModuleEndpoint NLP received ACK for correlation_id=062b4276-829e-4da0-ac7c-8afb9623cb33, event=AckTransitionEvent(message_id='062b4276-829e-4da0-ac7c-8afb9623cb33', old_state='AWAIT_ROUTER_ACK', new_state='AWAIT_MESSAGE_DELIVERED_ACK', reason='ROUTER_ACK', timestamp=154156.0537614, retry_count=0, details=None) ack type = ROUTER_ACK
+
+    Line:          151
+    Timestamp:     1785499776.2051697
+    Human time:    2026-07-31 08:09:36.205
+    Event type:    ENDPOINT_SENT_ACK
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        c808a5d7-c35f-4d55-b94c-2e78e1220a89
+    Message:       ModuleEndpoint AEM sent ACK to NLP
+
+    Line:          152
+    Timestamp:     1785499776.2053537
+    Human time:    2026-07-31 08:09:36.205
+    Event type:    ENDPOINT_TRANSACTION_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        29997d87-bbc8-4780-a7e6-4f2cdc93276b
+    Message:       ModuleEndpoint AEM channel: CC outgoing message_id=656292d1-7a81-4823-b679-e676eb337159
+
+    Line:          155
+    Timestamp:     1785499776.206232
+    Human time:    2026-07-31 08:09:36.206
+    Event type:    ENDPOINT_RECEIVED_ACK
+    Message type:  <missing>
+    Source:        NLP
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        6c75228c-929d-4a6d-8efb-55b28b0cb0a8
+    Message:       ModuleEndpoint NLP received ACK for correlation_id=062b4276-829e-4da0-ac7c-8afb9623cb33, event=AckTransitionEvent(message_id='062b4276-829e-4da0-ac7c-8afb9623cb33', old_state='AWAIT_MESSAGE_DELIVERED_ACK', new_state='COMPLETED', reason='MSG_DELIVERED_ACK_SUCCESS', timestamp=154156.0549625, retry_count=0, details=None) ack type = MESSAGE_DELIVERED_ACK
+
+    Line:          157
+    Timestamp:     1785499776.2064722
+    Human time:    2026-07-31 08:09:36.206
+    Event type:    EXECUTIVE_HANDLER_RESULT_ACCEPTED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        69764065-6c8c-46a7-bb7c-7fcd4c971d9c
+    Message:       Handler result accepted
+
+    Line:          159
+    Timestamp:     1785499776.206653
+    Human time:    2026-07-31 08:09:36.206
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        bc0e3d11-c01a-488a-a2b9-c0965a823dde
+    Message:       Prioritized task record created
+
+    Line:          160
+    Timestamp:     1785499776.2068245
+    Human time:    2026-07-31 08:09:36.206
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        28827be3-ed25-4adc-a76c-52d34d140eb3
+    Message:       Policy evaluated prioritized task
+
+    Line:          161
+    Timestamp:     1785499776.2069511
+    Human time:    2026-07-31 08:09:36.206
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f993ba3f-e338-44a3-aa73-fc0186fd04f2
+    Message:       Task enqueued in priority queue
+
+    Line:          162
+    Timestamp:     1785499776.207084
+    Human time:    2026-07-31 08:09:36.207
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b9d32117-a094-4098-a165-68c48bff4da5
+    Message:       Prioritized task record created
+
+    Line:          163
+    Timestamp:     1785499776.2071993
+    Human time:    2026-07-31 08:09:36.207
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        8d8fdee7-3f51-4cdf-a64c-5488380367cb
+    Message:       Policy evaluated prioritized task
+
+    Line:          164
+    Timestamp:     1785499776.207361
+    Human time:    2026-07-31 08:09:36.207
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        547ea627-702a-4b1d-959e-c01bc1fb2134
+    Message:       Task enqueued in priority queue
+
+    Line:          165
+    Timestamp:     1785499776.207497
+    Human time:    2026-07-31 08:09:36.207
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        50f444e2-f8b5-41fa-90b9-b51335108802
+    Message:       Prioritized task record created
+
+    Line:          166
+    Timestamp:     1785499776.2076788
+    Human time:    2026-07-31 08:09:36.207
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        3e0688d8-c6e7-41c8-a330-614478914827
+    Message:       Policy evaluated prioritized task
+
+    Line:          167
+    Timestamp:     1785499776.2078354
+    Human time:    2026-07-31 08:09:36.207
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        4b1d3d33-ac71-49a1-8a48-2cececd7e11c
+    Message:       Task enqueued in priority queue
+
+    Line:          168
+    Timestamp:     1785499776.2080185
+    Human time:    2026-07-31 08:09:36.208
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b33cc7e5-d16b-4d1a-b34e-da33c4903da7
+    Message:       Prioritized task record created
+
+    Line:          169
+    Timestamp:     1785499776.2080927
+    Human time:    2026-07-31 08:09:36.208
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        ef7ae9b5-a573-46cd-bc81-1de24db8f078
+    Message:       Policy evaluated prioritized task
+
+    Line:          170
+    Timestamp:     1785499776.2081642
+    Human time:    2026-07-31 08:09:36.208
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f4a63a76-8ffa-4c76-a173-5b5be2ce04e0
+    Message:       Task enqueued in priority queue
+
+    Line:          171
+    Timestamp:     1785499776.2083118
+    Human time:    2026-07-31 08:09:36.208
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        1aea3c2a-cc7d-40f7-b973-d51a3c2ab07c
+    Message:       Prioritized task record created
+
+    Line:          172
+    Timestamp:     1785499776.2084334
+    Human time:    2026-07-31 08:09:36.208
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        6b161527-2db5-4c56-9845-7dfbd8a512bf
+    Message:       Policy evaluated prioritized task
+
+    Line:          173
+    Timestamp:     1785499776.2085195
+    Human time:    2026-07-31 08:09:36.208
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        0078192d-794e-4561-8f61-22d651dfa326
+    Message:       Task enqueued in priority queue
+
+    Line:          174
+    Timestamp:     1785499776.2085943
+    Human time:    2026-07-31 08:09:36.208
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        2d8bf2d1-a8ee-4686-8766-c9012a0fbdb6
+    Message:       Prioritized task record created
+
+    Line:          175
+    Timestamp:     1785499776.208659
+    Human time:    2026-07-31 08:09:36.208
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        aa1424ce-4b53-4b7b-ab18-ffbd1e6545c4
+    Message:       Policy evaluated prioritized task
+
+    Line:          176
+    Timestamp:     1785499776.2087286
+    Human time:    2026-07-31 08:09:36.208
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        1dc9645b-c37a-49db-bfca-ba28a23e8ab6
+    Message:       Task enqueued in priority queue
+
+    Line:          177
+    Timestamp:     1785499776.2088006
+    Human time:    2026-07-31 08:09:36.208
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        0e28c634-ce11-4ec4-a0c0-c4dca7fe2b40
+    Message:       Prioritized task record created
+
+    Line:          178
+    Timestamp:     1785499776.2088652
+    Human time:    2026-07-31 08:09:36.208
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        9f7fc200-a226-4b98-a0c8-5b6e9a737f2c
+    Message:       Policy evaluated prioritized task
+
+    Line:          179
+    Timestamp:     1785499776.208929
+    Human time:    2026-07-31 08:09:36.208
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        026cac6d-974b-476f-bfd8-75f9254c85de
+    Message:       Task enqueued in priority queue
+
+    Line:          180
+    Timestamp:     1785499776.2090025
+    Human time:    2026-07-31 08:09:36.209
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        7ca1bf9f-f673-402f-87dc-ead87d20f5d3
+    Message:       Prioritized task record created
+
+    Line:          181
+    Timestamp:     1785499776.2090695
+    Human time:    2026-07-31 08:09:36.209
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        802301c9-93a5-46f6-ac9b-8fed44aedecd
+    Message:       Policy evaluated prioritized task
+
+    Line:          182
+    Timestamp:     1785499776.209136
+    Human time:    2026-07-31 08:09:36.209
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        a9617c05-de96-47f8-9d37-a620f5005e8c
+    Message:       Task enqueued in priority queue
+
+    Line:          183
+    Timestamp:     1785499776.209205
+    Human time:    2026-07-31 08:09:36.209
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f56f805d-1d8d-4cd8-9f4e-07364756f2a9
+    Message:       Task dequeued from priority queue
+
+    Line:          184
+    Timestamp:     1785499776.209265
+    Human time:    2026-07-31 08:09:36.209
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        81415ff2-28c6-41ae-b1f5-f37058e9e0bb
+    Message:       Task lifecycle status updated
+
+    Line:          185
+    Timestamp:     1785499776.2093282
+    Human time:    2026-07-31 08:09:36.209
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        94b1de9f-7d5f-47ef-b766-7af1e77b24fe
+    Message:       Execution-time policy evaluated task
+
+    Line:          186
+    Timestamp:     1785499776.2093923
+    Human time:    2026-07-31 08:09:36.209
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f06776ab-9442-4185-905a-2d78f3e3a022
+    Message:       Task lifecycle status updated
+
+    Line:          187
+    Timestamp:     1785499776.2094736
+    Human time:    2026-07-31 08:09:36.209
+    Event type:    INTENT_RESULT_ATTACHED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        4794db37-5bc7-4bb7-bdc7-8f84924e17af
+    Message:       Intent result attached to episode
+
+    Line:          188
+    Timestamp:     1785499776.2095397
+    Human time:    2026-07-31 08:09:36.209
+    Event type:    TASK_EXECUTION_RESULT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        24f773ad-9b70-4c17-9ad2-165f3a96b0d6
+    Message:       Task execution result returned
+
+    Line:          189
+    Timestamp:     1785499776.2096024
+    Human time:    2026-07-31 08:09:36.209
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        56b33f62-3976-40d7-a8da-2579d502dcbe
+    Message:       Task lifecycle status updated
+
+    Line:          190
+    Timestamp:     1785499776.2096667
+    Human time:    2026-07-31 08:09:36.209
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        00cd3081-4abc-4bea-9d6b-3ad7d91ed7e3
+    Message:       Task dequeued from priority queue
+
+    Line:          191
+    Timestamp:     1785499776.209728
+    Human time:    2026-07-31 08:09:36.209
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        48c39b37-6710-4600-86f3-5cc8a77ecdfb
+    Message:       Task lifecycle status updated
+
+    Line:          192
+    Timestamp:     1785499776.2098246
+    Human time:    2026-07-31 08:09:36.209
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        a6b42d8f-f91c-4f66-95b6-4d4a7da94893
+    Message:       Execution-time policy evaluated task
+
+    Line:          193
+    Timestamp:     1785499776.2098942
+    Human time:    2026-07-31 08:09:36.209
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        17e334c6-2f22-46fe-98a9-00856b0c33c1
+    Message:       Task lifecycle status updated
+
+    Line:          194
+    Timestamp:     1785499776.2099562
+    Human time:    2026-07-31 08:09:36.209
+    Event type:    EXECUTIVE_STATE_TRANSITION
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        8ea8ae95-f8d3-4bc1-9632-3880a256ac18
+    Message:       Episode state transition
+
+    Line:          195
+    Timestamp:     1785499776.210014
+    Human time:    2026-07-31 08:09:36.210
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        d0aca1e7-545f-48cc-889e-d0f3562a777c
+    Message:       Task lifecycle status updated
+
+    Line:          196
+    Timestamp:     1785499776.2100782
+    Human time:    2026-07-31 08:09:36.210
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        d6ab20c3-1ba3-424b-b30b-0cf53b889137
+    Message:       Task dequeued from priority queue
+
+    Line:          197
+    Timestamp:     1785499776.2101383
+    Human time:    2026-07-31 08:09:36.210
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        44c7886d-cc74-49c0-91e4-fd9d33835483
+    Message:       Task lifecycle status updated
+
+    Line:          198
+    Timestamp:     1785499776.210223
+    Human time:    2026-07-31 08:09:36.210
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        d69fa6ec-63b1-4b8d-a50b-191ab03287bd
+    Message:       Execution-time policy evaluated task
+
+    Line:          199
+    Timestamp:     1785499776.21029
+    Human time:    2026-07-31 08:09:36.210
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        cc9fe330-c916-44bc-a070-75307307e414
+    Message:       Task lifecycle status updated
+
+    Line:          200
+    Timestamp:     1785499776.210368
+    Human time:    2026-07-31 08:09:36.210
+    Event type:    GLOBAL_WORKSPACE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        285a83ba-f950-4999-9283-cf2b83fb6b3b
+    Message:       Global workspace updated from episode
+
+    Line:          201
+    Timestamp:     1785499776.2104409
+    Human time:    2026-07-31 08:09:36.210
+    Event type:    TASK_EXECUTION_RESULT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        495204d1-8fc7-4055-9b41-9a05dbf5103b
+    Message:       Task execution result returned
+
+    Line:          202
+    Timestamp:     1785499776.2105105
+    Human time:    2026-07-31 08:09:36.210
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        d5b8681f-f42c-4517-aebb-484ca10c166d
+    Message:       Task lifecycle status updated
+
+    Line:          203
+    Timestamp:     1785499776.2105796
+    Human time:    2026-07-31 08:09:36.210
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        55b33f5d-a659-4511-a93d-af592937d5a5
+    Message:       Task dequeued from priority queue
+
+    Line:          204
+    Timestamp:     1785499776.2106748
+    Human time:    2026-07-31 08:09:36.210
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        542e55d5-0006-4121-99a4-288e58b067a6
+    Message:       Task lifecycle status updated
+
+    Line:          205
+    Timestamp:     1785499776.2107415
+    Human time:    2026-07-31 08:09:36.210
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        7d1b4a50-fec2-46a7-8420-6c0b0ae238e8
+    Message:       Execution-time policy evaluated task
+
+    Line:          206
+    Timestamp:     1785499776.2108045
+    Human time:    2026-07-31 08:09:36.210
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        584afe7d-632c-4ba2-8929-2b5f592603ed
+    Message:       Task lifecycle status updated
+
+    Line:          207
+    Timestamp:     1785499776.2108717
+    Human time:    2026-07-31 08:09:36.210
+    Event type:    PLANNER_REQUEST_PREPARED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        80d275de-a607-4699-b626-37ca5f6739c3
+    Message:       Planner request prepared from intent result
+
+    Line:          208
+    Timestamp:     1785499776.2109354
+    Human time:    2026-07-31 08:09:36.210
+    Event type:    TASK_EXECUTION_RESULT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        dde6e233-8f40-46ec-9d6d-a417328cbaa7
+    Message:       Task execution result returned
+
+    Line:          209
+    Timestamp:     1785499776.2109973
+    Human time:    2026-07-31 08:09:36.210
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        0c6fdbc1-1657-4c30-8169-7557d865caed
+    Message:       Task lifecycle status updated
+
+    Line:          210
+    Timestamp:     1785499776.2110589
+    Human time:    2026-07-31 08:09:36.211
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b3b331d4-d708-4711-9a56-e0ad31330fe7
+    Message:       Task dequeued from priority queue
+
+    Line:          211
+    Timestamp:     1785499776.2111194
+    Human time:    2026-07-31 08:09:36.211
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        afb7682a-adec-42ff-9c98-7e368c9fb847
+    Message:       Task lifecycle status updated
+
+    Line:          212
+    Timestamp:     1785499776.2111802
+    Human time:    2026-07-31 08:09:36.211
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        4432b5bc-cda5-4ae0-bbb9-0c8b74dff020
+    Message:       Execution-time policy evaluated task
+
+    Line:          213
+    Timestamp:     1785499776.2112403
+    Human time:    2026-07-31 08:09:36.211
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        c2224a7b-2f79-4b37-8a0d-b010d128ff8d
+    Message:       Task lifecycle status updated
+
+    Line:          214
+    Timestamp:     1785499776.2112994
+    Human time:    2026-07-31 08:09:36.211
+    Event type:    EXECUTIVE_STATE_TRANSITION
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        e629e28c-4a27-4ef5-b7f8-19358ffcdfe1
+    Message:       Episode state transition
+
+    Line:          215
+    Timestamp:     1785499776.2113566
+    Human time:    2026-07-31 08:09:36.211
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        141c6040-5de2-4df4-a9ba-87fc10ddf8ce
+    Message:       Task lifecycle status updated
+
+    Line:          216
+    Timestamp:     1785499776.21142
+    Human time:    2026-07-31 08:09:36.211
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        621f9051-bb64-4732-8a07-7c274c24d409
+    Message:       Task dequeued from priority queue
+
+    Line:          217
+    Timestamp:     1785499776.2114782
+    Human time:    2026-07-31 08:09:36.211
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        fce1e3af-573a-411f-9f4a-fa946d1bab2a
+    Message:       Task lifecycle status updated
+
+    Line:          218
+    Timestamp:     1785499776.211537
+    Human time:    2026-07-31 08:09:36.211
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        6537297f-b63d-4567-93c5-70ff76f8351f
+    Message:       Execution-time policy evaluated task
+
+    Line:          219
+    Timestamp:     1785499776.2115955
+    Human time:    2026-07-31 08:09:36.211
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f1ed343a-3f21-40a8-9e43-8d306ad4af5c
+    Message:       Task lifecycle status updated
+
+    Line:          221
+    Timestamp:     1785499776.2118495
+    Human time:    2026-07-31 08:09:36.211
+    Event type:    TASK_EXECUTION_RESULT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        625de863-b4d7-4f66-b8dd-47e8cc3f13ef
+    Message:       Task execution result returned
+
+    Line:          222
+    Timestamp:     1785499776.211919
+    Human time:    2026-07-31 08:09:36.211
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        36f23f60-debc-4068-aeff-3a90655f0e69
+    Message:       Task lifecycle status updated
+
+    Line:          223
+    Timestamp:     1785499776.211982
+    Human time:    2026-07-31 08:09:36.211
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        03d99678-4382-496d-9b2f-de95164e719c
+    Message:       Task dequeued from priority queue
+
+    Line:          224
+    Timestamp:     1785499776.212042
+    Human time:    2026-07-31 08:09:36.212
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        bcad2f30-5edc-460f-89fa-c3b1056321c2
+    Message:       Task lifecycle status updated
+
+    Line:          225
+    Timestamp:     1785499776.212103
+    Human time:    2026-07-31 08:09:36.212
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        595e580b-f335-4836-bb95-973ab70ebfd9
+    Message:       Execution-time policy evaluated task
+
+    Line:          226
+    Timestamp:     1785499776.2121654
+    Human time:    2026-07-31 08:09:36.212
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b38a565b-28f5-472a-b732-7ffb56aa37a8
+    Message:       Task lifecycle status updated
+
+    Line:          227
+    Timestamp:     1785499776.212225
+    Human time:    2026-07-31 08:09:36.212
+    Event type:    EXECUTIVE_STATE_TRANSITION
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        e0a27fe8-b961-475e-a08b-268c892c9995
+    Message:       Episode state transition
+
+    Line:          228
+    Timestamp:     1785499776.2122831
+    Human time:    2026-07-31 08:09:36.212
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        00adc7fb-2ac6-4915-af1e-a63fbedd86db
+    Message:       Task lifecycle status updated
+
+    Line:          229
+    Timestamp:     1785499776.2123437
+    Human time:    2026-07-31 08:09:36.212
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        0ed6f171-3608-4593-9a60-685b8dc88aeb
+    Message:       Task dequeued from priority queue
+
+    Line:          230
+    Timestamp:     1785499776.212401
+    Human time:    2026-07-31 08:09:36.212
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        3673c9c8-3727-45e9-969c-cae52da1b677
+    Message:       Task lifecycle status updated
+
+    Line:          231
+    Timestamp:     1785499776.2124603
+    Human time:    2026-07-31 08:09:36.212
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        080d5806-d40f-4730-90da-df6341cbdfcb
+    Message:       Execution-time policy evaluated task
+
+    Line:          232
+    Timestamp:     1785499776.2125232
+    Human time:    2026-07-31 08:09:36.212
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        4ef5f3cd-40c3-46aa-a41b-8b5524b0fc13
+    Message:       Task lifecycle status updated
+
+    Line:          233
+    Timestamp:     1785499776.2125912
+    Human time:    2026-07-31 08:09:36.212
+    Event type:    GLOBAL_WORKSPACE_BROADCAST_STUB
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        eb48d78d-7df0-4cd3-9323-0e3984066bc0
+    Message:       Workspace change broadcast stub invoked
+
+    Line:          234
+    Timestamp:     1785499776.2126558
+    Human time:    2026-07-31 08:09:36.212
+    Event type:    TASK_EXECUTION_RESULT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        0c761599-69c2-4d3a-937d-063206fd10e1
+    Message:       Task execution result returned
+
+    Line:          235
+    Timestamp:     1785499776.2127168
+    Human time:    2026-07-31 08:09:36.212
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        5ac80f80-f9c0-468d-b144-6aa9abb91983
+    Message:       Task lifecycle status updated
+
+    Line:          236
+    Timestamp:     1785499776.2776883
+    Human time:    2026-07-31 08:09:36.277
+    Event type:    ENDPOINT_TRANSACTION_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b59cc52a-7a51-4dc7-a532-69f4f762090e
+    Message:       ModuleEndpoint AEM channel: CC outgoing message_id=93418e8b-37f8-4c65-99c4-8d2ccf59278d
+
+    Line:          238
+    Timestamp:     1785499776.2786605
+    Human time:    2026-07-31 08:09:36.278
+    Event type:    ENDPOINT_RECEIVED_ACK
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        19164994-5827-4a20-a3cc-cec1c057f121
+    Message:       ModuleEndpoint AEM received ACK for correlation_id=93418e8b-37f8-4c65-99c4-8d2ccf59278d, event=AckTransitionEvent(message_id='93418e8b-37f8-4c65-99c4-8d2ccf59278d', old_state='AWAIT_ROUTER_ACK', new_state='AWAIT_MESSAGE_DELIVERED_ACK', reason='ROUTER_ACK', timestamp=154156.1274027, retry_count=0, details=None) ack type = ROUTER_ACK
+
+    Line:          239
+    Timestamp:     1785499776.2787259
+    Human time:    2026-07-31 08:09:36.278
+    Event type:    ENDPOINT_CREATED_TRANSACTION
+    Message type:  <missing>
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        89258c71-2bc7-427e-a841-6d7c303b1f0d
+    Message:       ModuleEndpoint PLANNER  Created transaction for incoming message_id=93418e8b-37f8-4c65-99c4-8d2ccf59278d
+
+    Line:          240
+    Timestamp:     1785499776.278892
+    Human time:    2026-07-31 08:09:36.278
+    Event type:    ENDPOINT_SENT_ACK
+    Message type:  <missing>
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        ccf7c2a0-0ec1-4dc4-8a48-c243ef226ecc
+    Message:       ModuleEndpoint PLANNER sent ACK to AEM
+
+    Line:          241
+    Timestamp:     1785499776.2790558
+    Human time:    2026-07-31 08:09:36.279
+    Event type:    ENDPOINT_TRANSACTION_CREATED
+    Message type:  <missing>
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        fc9704d1-4162-4049-8f89-10dbe22a3604
+    Message:       ModuleEndpoint PLANNER channel: CC outgoing message_id=c51e2228-9232-4c9a-a573-256473dbbbe5
+
+    Line:          243
+    Timestamp:     1785499776.279662
+    Human time:    2026-07-31 08:09:36.279
+    Event type:    PLANNER_PLAN_GENERATED_STUB
+    Message type:  <missing>
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        fafd4594-07f9-496b-9f8c-a53865c34a13
+    Message:       Stub plan generated and PLAN_GENERATED sent to AEM
+
+    Line:          244
+    Timestamp:     1785499776.2798395
+    Human time:    2026-07-31 08:09:36.279
+    Event type:    ENDPOINT_RECEIVED_ACK
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        5259b5fb-1b31-40cc-884d-acd7d3c26ea0
+    Message:       ModuleEndpoint AEM received ACK for correlation_id=93418e8b-37f8-4c65-99c4-8d2ccf59278d, event=AckTransitionEvent(message_id='93418e8b-37f8-4c65-99c4-8d2ccf59278d', old_state='AWAIT_MESSAGE_DELIVERED_ACK', new_state='COMPLETED', reason='MSG_DELIVERED_ACK_SUCCESS', timestamp=154156.1285732, retry_count=0, details=None) ack type = MESSAGE_DELIVERED_ACK
+
+    Line:          246
+    Timestamp:     1785499776.280163
+    Human time:    2026-07-31 08:09:36.280
+    Event type:    ENDPOINT_TRANSACTION_CREATED
+    Message type:  <missing>
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        a3fba5ac-81a4-4552-a6df-a5c1e35f5123
+    Message:       ModuleEndpoint PLANNER channel: CC outgoing message_id=fa11950b-126f-4809-a163-da9298eb1011
+
+    Line:          248
+    Timestamp:     1785499776.2809596
+    Human time:    2026-07-31 08:09:36.280
+    Event type:    ENDPOINT_RECEIVED_ACK
+    Message type:  <missing>
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        8be68e83-3a8d-493f-9267-7386db862d22
+    Message:       ModuleEndpoint PLANNER received ACK for correlation_id=fa11950b-126f-4809-a163-da9298eb1011, event=AckTransitionEvent(message_id='fa11950b-126f-4809-a163-da9298eb1011', old_state='AWAIT_ROUTER_ACK', new_state='AWAIT_MESSAGE_DELIVERED_ACK', reason='ROUTER_ACK', timestamp=154156.129686, retry_count=0, details=None) ack type = ROUTER_ACK
+
+    Line:          249
+    Timestamp:     1785499776.2810068
+    Human time:    2026-07-31 08:09:36.281
+    Event type:    ENDPOINT_CREATED_TRANSACTION
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        d86dc689-e710-49d9-aa25-a12d91db443c
+    Message:       ModuleEndpoint AEM  Created transaction for incoming message_id=fa11950b-126f-4809-a163-da9298eb1011
+
+    Line:          250
+    Timestamp:     1785499776.2812154
+    Human time:    2026-07-31 08:09:36.281
+    Event type:    ENDPOINT_SENT_ACK
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        a814d358-7c51-4b6a-9b7a-01a645fa5237
+    Message:       ModuleEndpoint AEM sent ACK to PLANNER
+
+    Line:          251
+    Timestamp:     1785499776.2813256
+    Human time:    2026-07-31 08:09:36.281
+    Event type:    ENDPOINT_TRANSACTION_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        4a87516c-3ad7-4f05-b846-fa519999f0d0
+    Message:       ModuleEndpoint AEM channel: CC outgoing message_id=fd28ea36-55c0-4b31-bab9-402ca9dda386
+
+    Line:          254
+    Timestamp:     1785499776.2820334
+    Human time:    2026-07-31 08:09:36.282
+    Event type:    ENDPOINT_RECEIVED_ACK
+    Message type:  <missing>
+    Source:        PLANNER
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f6f2d774-8866-430d-8e88-debc7e4d59e5
+    Message:       ModuleEndpoint PLANNER received ACK for correlation_id=fa11950b-126f-4809-a163-da9298eb1011, event=AckTransitionEvent(message_id='fa11950b-126f-4809-a163-da9298eb1011', old_state='AWAIT_MESSAGE_DELIVERED_ACK', new_state='COMPLETED', reason='MSG_DELIVERED_ACK_SUCCESS', timestamp=154156.1307873, retry_count=0, details=None) ack type = MESSAGE_DELIVERED_ACK
+
+    Line:          256
+    Timestamp:     1785499776.290678
+    Human time:    2026-07-31 08:09:36.290
+    Event type:    EXECUTIVE_HANDLER_RESULT_ACCEPTED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        c2f5b837-d628-497a-ad23-a70f8a52a1f1
+    Message:       Handler result accepted
+
+    Line:          258
+    Timestamp:     1785499776.290802
+    Human time:    2026-07-31 08:09:36.290
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        9f012c4d-4438-4b8c-bb48-0a6b1b13a7fe
+    Message:       Prioritized task record created
+
+    Line:          259
+    Timestamp:     1785499776.290852
+    Human time:    2026-07-31 08:09:36.290
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        41340f62-5b02-44af-9a8e-4629283b35a0
+    Message:       Policy evaluated prioritized task
+
+    Line:          260
+    Timestamp:     1785499776.2909257
+    Human time:    2026-07-31 08:09:36.290
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        0f8e8b62-4454-43e3-b75e-778860206a4e
+    Message:       Task enqueued in priority queue
+
+    Line:          261
+    Timestamp:     1785499776.290992
+    Human time:    2026-07-31 08:09:36.290
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        3757608f-3a76-4c4d-aed5-81f92e88257f
+    Message:       Prioritized task record created
+
+    Line:          262
+    Timestamp:     1785499776.2910452
+    Human time:    2026-07-31 08:09:36.291
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        2446021d-a35b-4a24-a81b-a63f75171078
+    Message:       Policy evaluated prioritized task
+
+    Line:          263
+    Timestamp:     1785499776.2910967
+    Human time:    2026-07-31 08:09:36.291
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        07c042da-305b-4f49-b019-d6f550cb9925
+    Message:       Task enqueued in priority queue
+
+    Line:          264
+    Timestamp:     1785499776.291154
+    Human time:    2026-07-31 08:09:36.291
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f1772b5d-fb0b-4c3b-87a3-c1fe95959e56
+    Message:       Prioritized task record created
+
+    Line:          265
+    Timestamp:     1785499776.2912881
+    Human time:    2026-07-31 08:09:36.291
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        68f34c6e-93d1-40b8-93a4-7390bdc80d71
+    Message:       Policy evaluated prioritized task
+
+    Line:          266
+    Timestamp:     1785499776.2913523
+    Human time:    2026-07-31 08:09:36.291
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        abbab5cd-e5da-4571-ab5c-abdcd6b99574
+    Message:       Task enqueued in priority queue
+
+    Line:          267
+    Timestamp:     1785499776.291411
+    Human time:    2026-07-31 08:09:36.291
+    Event type:    TASK_RECORD_CREATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        c5ac2f36-1d4a-41d6-bc44-326e0c1c0785
+    Message:       Prioritized task record created
+
+    Line:          268
+    Timestamp:     1785499776.2914605
+    Human time:    2026-07-31 08:09:36.291
+    Event type:    TASK_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        5e97aa17-a076-415a-9298-0ddc191b13cc
+    Message:       Policy evaluated prioritized task
+
+    Line:          269
+    Timestamp:     1785499776.2915106
+    Human time:    2026-07-31 08:09:36.291
+    Event type:    TASK_ENQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        16a20918-8961-452a-8901-03ab652dccd0
+    Message:       Task enqueued in priority queue
+
+    Line:          270
+    Timestamp:     1785499776.2915697
+    Human time:    2026-07-31 08:09:36.291
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        a1164382-ff7b-4bce-b186-18899453e01a
+    Message:       Task dequeued from priority queue
+
+    Line:          271
+    Timestamp:     1785499776.2916214
+    Human time:    2026-07-31 08:09:36.291
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f124f1e6-895b-4428-8d0f-9d862e4cfcac
+    Message:       Task lifecycle status updated
+
+    Line:          272
+    Timestamp:     1785499776.2916722
+    Human time:    2026-07-31 08:09:36.291
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        ef702880-2197-4187-89e7-36a041d7c905
+    Message:       Execution-time policy evaluated task
+
+    Line:          273
+    Timestamp:     1785499776.2917235
+    Human time:    2026-07-31 08:09:36.291
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        af7e4cdd-ae8f-44cb-b246-0fae16f3d789
+    Message:       Task lifecycle status updated
+
+    Line:          274
+    Timestamp:     1785499776.2918925
+    Human time:    2026-07-31 08:09:36.291
+    Event type:    PLAN_RESULT_ATTACHED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        4f07eb7e-021c-4d11-b8c6-b97e7c290672
+    Message:       Plan result attached to episode
+
+    Line:          275
+    Timestamp:     1785499776.2919598
+    Human time:    2026-07-31 08:09:36.291
+    Event type:    TASK_EXECUTION_RESULT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        fa7dc1b5-4043-4e62-948c-911b01e2c39a
+    Message:       Task execution result returned
+
+    Line:          276
+    Timestamp:     1785499776.29199
+    Human time:    2026-07-31 08:09:36.291
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        cff85b43-7065-44e3-8cd0-6af665c1d764
+    Message:       Task lifecycle status updated
+
+    Line:          277
+    Timestamp:     1785499776.2920191
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b6605642-1991-426c-be4c-6809083ee8c7
+    Message:       Task dequeued from priority queue
+
+    Line:          278
+    Timestamp:     1785499776.2920434
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        007b1e2b-f5b4-4cf1-8a8d-bc0a1a9c1871
+    Message:       Task lifecycle status updated
+
+    Line:          279
+    Timestamp:     1785499776.2920704
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        1784b8e7-3978-4075-831b-eb69435a28d3
+    Message:       Execution-time policy evaluated task
+
+    Line:          280
+    Timestamp:     1785499776.2921052
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        965f92b6-8c17-4757-b1ff-883af0d09ba7
+    Message:       Task lifecycle status updated
+
+    Line:          281
+    Timestamp:     1785499776.2921326
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    EXECUTIVE_STATE_TRANSITION
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f566bec4-41cf-4d84-846a-816045c06a56
+    Message:       Episode state transition
+
+    Line:          282
+    Timestamp:     1785499776.2921565
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        048255ef-7591-47af-a1eb-445e7287a1ca
+    Message:       Task lifecycle status updated
+
+    Line:          283
+    Timestamp:     1785499776.2921805
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        46ec4798-1622-4023-9e96-9cbf653eb54d
+    Message:       Task dequeued from priority queue
+
+    Line:          284
+    Timestamp:     1785499776.2922034
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        2f0e1ce5-ed5c-4ca0-92f8-c0fbb9fc43bb
+    Message:       Task lifecycle status updated
+
+    Line:          285
+    Timestamp:     1785499776.292235
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        ff968cdd-2b4e-496a-a272-c194a4314b47
+    Message:       Execution-time policy evaluated task
+
+    Line:          286
+    Timestamp:     1785499776.2922616
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        60a48fbf-bfd7-4008-8532-58335907bf82
+    Message:       Task lifecycle status updated
+
+    Line:          287
+    Timestamp:     1785499776.2923121
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    GLOBAL_WORKSPACE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        d49e580e-1b96-40e1-8e0d-71d0c84f7533
+    Message:       Global workspace updated from episode
+
+    Line:          288
+    Timestamp:     1785499776.292343
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_EXECUTION_RESULT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        fd185c99-102d-47e9-a2b0-b78e2fee744a
+    Message:       Task execution result returned
+
+    Line:          289
+    Timestamp:     1785499776.2923832
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        75507e25-5fa7-4e74-9de0-717119aa9c26
+    Message:       Task lifecycle status updated
+
+    Line:          290
+    Timestamp:     1785499776.292415
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_DEQUEUED_PRIORITY_QUEUE
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        9daaa2fd-851a-435b-9a6c-d81ba9811852
+    Message:       Task dequeued from priority queue
+
+    Line:          291
+    Timestamp:     1785499776.2924407
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f163c476-3523-4480-90f7-8db7e9488e45
+    Message:       Task lifecycle status updated
+
+    Line:          292
+    Timestamp:     1785499776.292465
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_EXECUTION_POLICY_EVALUATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        b0b77479-dca1-457d-975a-b1dcc1880520
+    Message:       Execution-time policy evaluated task
+
+    Line:          293
+    Timestamp:     1785499776.292489
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        e259aa09-b979-40cf-919f-4c451b0ada92
+    Message:       Task lifecycle status updated
+
+    Line:          294
+    Timestamp:     1785499776.2925222
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    GLOBAL_WORKSPACE_BROADCAST_STUB
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        57a57072-8273-4d0f-a596-32b587319057
+    Message:       Workspace change broadcast stub invoked
+
+    Line:          295
+    Timestamp:     1785499776.2925572
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_EXECUTION_RESULT
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        f9641366-f8e9-42f1-8caa-2df80bb2c668
+    Message:       Task execution result returned
+
+    Line:          296
+    Timestamp:     1785499776.292587
+    Human time:    2026-07-31 08:09:36.292
+    Event type:    TASK_LIFECYCLE_UPDATED
+    Message type:  <missing>
+    Source:        AEM
+    Target:        <missing>
+    Severity:      INFO
+    Log ID:        6e79bdc5-4e99-46a9-99bb-4cbfc71fa8c3
+    Message:       Task lifecycle status updated
+
+========================================================================================
+POSSIBLE DUPLICATE LOG ENTRIES
+========================================================================================
+
+None.
+
+========================================================================================
+PARSE ISSUES
+========================================================================================
+
+None.

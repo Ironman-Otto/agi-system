@@ -1,6 +1,6 @@
 # File: src/core/modules/aem/state_transition_manager.py
-# Placement: Replace the current StateTransitionManager with this version.
-# Purpose: Add Phase 7 NLP-related episode states.
+# Placement: Replace/update current StateTransitionManager with this version.
+# Purpose: Add Phase 8 planner states.
 
 from __future__ import annotations
 
@@ -17,7 +17,10 @@ class StateTransitionManager:
             "DIRECTIVE_INTAKE_RECORDED": {"STAGED_FOR_NLP"},
             "STAGED_FOR_NLP": {"NLP_REQUEST_SENT"},
             "NLP_REQUEST_SENT": {"INTENT_EXTRACTED"},
-            "INTENT_EXTRACTED": set(),
+            "INTENT_EXTRACTED": {"STAGED_FOR_PLANNER"},
+            "STAGED_FOR_PLANNER": {"PLANNER_REQUEST_SENT"},
+            "PLANNER_REQUEST_SENT": {"PLAN_GENERATED"},
+            "PLAN_GENERATED": set(),
         }
 
     def can_transition(self, old_state: Optional[str], new_state: str) -> bool:
